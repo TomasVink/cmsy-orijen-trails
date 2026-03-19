@@ -1,4 +1,4 @@
-import { getPageBySlug } from '$lib/payload'
+import { getPageBySlug } from '$lib/payload.server'
 import { error } from '@sveltejs/kit'
 
 export const load = async ({

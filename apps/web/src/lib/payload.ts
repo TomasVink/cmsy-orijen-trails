@@ -22,8 +22,9 @@ export type PaginatedDocs<T> = {
 export async function getPageBySlug(
   slug: string,
   fetchFn: typeof fetch = fetch,
+  baseUrl = PUBLIC_PAYLOAD_URL,
 ): Promise<Page | null> {
-  const url = `${PUBLIC_PAYLOAD_URL}/api/pages?where[slug][equals]=${encodeURIComponent(slug)}&limit=1`
+  const url = `${baseUrl}/api/pages?where[slug][equals]=${encodeURIComponent(slug)}&limit=1`
 
   const response = await fetchFn(url)
   if (!response.ok) return null
@@ -35,8 +36,11 @@ export async function getPageBySlug(
 /**
  * Fetches all pages from Payload's REST API.
  */
-export async function getAllPages(fetchFn: typeof fetch = fetch): Promise<Page[]> {
-  const url = `${PUBLIC_PAYLOAD_URL}/api/pages?limit=100`
+export async function getAllPages(
+  fetchFn: typeof fetch = fetch,
+  baseUrl = PUBLIC_PAYLOAD_URL,
+): Promise<Page[]> {
+  const url = `${baseUrl}/api/pages?limit=100`
 
   const response = await fetchFn(url)
   if (!response.ok) return []

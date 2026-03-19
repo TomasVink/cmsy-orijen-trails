@@ -1,4 +1,8 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -13,6 +17,11 @@ const nextConfig = {
     return webpackConfig
   },
   output: 'standalone',
+  experimental: {
+    // Required for Next.js standalone to include monorepo workspace packages.
+    // With this set, server.js lives at apps/cms/server.js inside .next/standalone.
+    outputFileTracingRoot: path.join(__dirname, '../../'),
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
