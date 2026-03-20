@@ -8,8 +8,9 @@ RUN apk add --no-cache libc6-compat
 FROM base AS deps
 WORKDIR /app
 
-# Copy workspace manifests so Bun can resolve the full dependency graph
+# Copy all workspace manifests so Bun can resolve the full dependency graph
 COPY package.json bun.lock ./
+COPY apps/web/package.json ./apps/web/
 COPY apps/cms/package.json ./apps/cms/
 COPY packages/payload-types/package.json ./packages/payload-types/
 
