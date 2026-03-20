@@ -81,8 +81,5 @@ services:
     depends_on:
       - cms
       - web
-    # In Coolify: remove the ports mapping and configure the domain in the UI instead.
-    # Coolify's Traefik will route traffic to this container automatically.
-    ports:
-      - '80:80'
+    # No ports mapping — Coolify's Traefik routes traffic to this container via labels.
     restart: unless-stopped
