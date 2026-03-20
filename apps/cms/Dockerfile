@@ -2,7 +2,7 @@
 #   docker build -f apps/cms/Dockerfile .
 
 FROM oven/bun:1.3.11-alpine AS base
-RUN apk add --no-cache libc6-compat nodejs
+RUN apk add --no-cache libc6-compat
 
 # ── Install dependencies ───────────────────────────────────────────────────────
 FROM base AS deps
@@ -26,7 +26,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /app/apps/cms
-RUN bun run build
+RUN bun --bun run build
 
 # ── Runtime ───────────────────────────────────────────────────────────────────
 # Use Node (not Bun) to run the Next.js standalone server

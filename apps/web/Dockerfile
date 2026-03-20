@@ -2,7 +2,6 @@
 #   docker build -f apps/web/Dockerfile .
 
 FROM oven/bun:1.3.11-alpine AS base
-RUN apk add --no-cache nodejs
 
 # ── Install dependencies ───────────────────────────────────────────────────────
 FROM base AS deps
@@ -24,7 +23,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 WORKDIR /app/apps/web
-RUN bun run build
+RUN bun --bun run build
 
 # ── Runtime ───────────────────────────────────────────────────────────────────
 FROM oven/bun:1.3.11-alpine AS runner
