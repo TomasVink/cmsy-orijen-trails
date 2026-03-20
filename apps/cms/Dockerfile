@@ -1,8 +1,9 @@
 # Build context must be the monorepo root:
 #   docker build -f apps/cms/Dockerfile .
 
-FROM oven/bun:1.3.11-alpine AS base
-RUN apk add --no-cache libc6-compat
+# Builder uses Debian-based bun (glibc) so native binaries (esbuild, sharp, etc.)
+# resolve correctly. The slim runtime uses node:alpine.
+FROM oven/bun:1.3.11 AS base
 
 # ── Install dependencies ───────────────────────────────────────────────────────
 FROM base AS deps

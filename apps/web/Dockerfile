@@ -1,14 +1,15 @@
 # Build context must be the monorepo root:
 #   docker build -f apps/web/Dockerfile .
 
-FROM oven/bun:1.3.11-alpine AS base
-RUN apk add --no-cache nodejs
+# Builder uses Debian-based bun (glibc) so native binaries (esbuild, lightningcss,
+# @tailwindcss/oxide, etc.) resolve correctly. The slim runtime uses Alpine.
+FROM oven/bun:1.3.11 AS base
 
 # ── Install dependencies ───────────────────────────────────────────────────────
 FROM base AS deps
 WORKDIR /app
 
-# Copy all workspace manifests so Bun can resolve the full dependency graph
+# Copy workspace manifests so Bun can resolve the full dependency graph
 COPY package.json bun.lock ./
 COPY apps/web/package.json ./apps/web/
 COPY apps/cms/package.json ./apps/cms/

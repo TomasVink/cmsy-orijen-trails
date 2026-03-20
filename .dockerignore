@@ -1,0 +1,33 @@
+# Dependencies (installed fresh inside Docker)
+node_modules/
+apps/*/node_modules/
+packages/*/node_modules/
+
+# Build outputs
+apps/web/build/
+apps/web/.svelte-kit/
+apps/cms/.next/
+
+# Turbo cache
+.turbo/
+
+# Git
+.git/
+.gitignore
+
+# Local env files (secrets must come from Coolify env vars, not baked into the image)
+.env
+.env.*
+apps/*/.env
+apps/*/.env.*
+
+# Editor / OS
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Docs / CI config (not needed at runtime)
+*.md
+.github/
