@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types'
-  import { PUBLIC_PAYLOAD_URL } from '$env/static/public'
+  import { env } from '$env/dynamic/public'
 
   let { data }: { data: PageData } = $props()
 </script>
@@ -32,7 +32,7 @@
   </section>
 
   <a
-    href="{PUBLIC_PAYLOAD_URL}/admin"
+    href="{env.PUBLIC_PAYLOAD_URL}/admin"
     class="text-sm text-gray-400 hover:text-black transition-colors"
     target="_blank"
     rel="noreferrer"
