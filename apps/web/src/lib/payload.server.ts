@@ -9,13 +9,13 @@
  * Never import from this module in client-side code.
  */
 import { env } from '$env/dynamic/private'
-import { PUBLIC_PAYLOAD_URL } from '$env/static/public'
+import { env as publicEnv } from '$env/dynamic/public'
 import { getAllPages as _getAllPages, getPageBySlug as _getPageBySlug } from './payload'
 
 export type { Page, Media, PaginatedDocs } from './payload'
 
 function internalUrl(): string {
-  return env.PAYLOAD_INTERNAL_URL || PUBLIC_PAYLOAD_URL
+  return env.PAYLOAD_INTERNAL_URL || publicEnv.PUBLIC_PAYLOAD_URL
 }
 
 export function getPageBySlug(slug: string, fetchFn: typeof fetch = fetch) {

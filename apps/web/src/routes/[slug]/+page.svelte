@@ -2,7 +2,7 @@
   import { untrack } from "svelte";
   import type { PageData } from "./$types";
   import { useLivePreview } from "$lib/stores/live-preview.svelte.ts";
-  import { PUBLIC_PAYLOAD_URL } from "$env/static/public";
+  import { env } from "$env/dynamic/public";
   import type { Page } from "@repo/payload-types";
 
   let { data }: { data: PageData } = $props();
@@ -12,7 +12,7 @@
   // accessed directly (window.parent === window).
   const preview = useLivePreview<Page>({
     initialData: untrack(() => data.page as Page),
-    serverURL: PUBLIC_PAYLOAD_URL,
+    serverURL: env.PUBLIC_PAYLOAD_URL,
   });
 
   function renderLexical(content: Page["content"]): string {

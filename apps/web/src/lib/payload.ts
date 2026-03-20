@@ -1,4 +1,4 @@
-import { PUBLIC_PAYLOAD_URL } from '$env/static/public'
+import { env } from '$env/dynamic/public'
 import type { Page, Media } from '@repo/payload-types'
 
 export type { Page, Media }
@@ -22,7 +22,7 @@ export type PaginatedDocs<T> = {
 export async function getPageBySlug(
   slug: string,
   fetchFn: typeof fetch = fetch,
-  baseUrl = PUBLIC_PAYLOAD_URL,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
 ): Promise<Page | null> {
   const url = `${baseUrl}/api/pages?where[slug][equals]=${encodeURIComponent(slug)}&limit=1`
 
@@ -38,7 +38,7 @@ export async function getPageBySlug(
  */
 export async function getAllPages(
   fetchFn: typeof fetch = fetch,
-  baseUrl = PUBLIC_PAYLOAD_URL,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
 ): Promise<Page[]> {
   const url = `${baseUrl}/api/pages?limit=100`
 
