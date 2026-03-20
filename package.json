@@ -6,6 +6,7 @@
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "docker compose up -d --wait && turbo dev watch:types",
+    "preview": "docker compose -f docker-compose.local.yml up --build",
     "build": "turbo build",
     "generate:types": "turbo generate:types",
     "check": "turbo check",

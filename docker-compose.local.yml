@@ -1,0 +1,94 @@
+# Local production-like environment.
+#
+# Builds the exact same Docker images as production (same Dockerfiles, same nginx),
+# with a local postgres and http://localhost as the domain.
+#
+# Usage:
+#   docker compose -f docker-compose.local.yml up --build
+#
+# First run will take a few minutes to build both images. Subsequent runs use the
+# Docker layer cache and start in seconds unless you change the source code.
+#
+# To override any variable, create a .env.local file at the repo root and pass it:
+#   docker compose -f docker-compose.local.yml --env-file .env.local up --build
+#
+# See .env.local.example for available variables.
+
+services:
+
+  # ── Database ─────────────────────────────────────────────────────────────────
+  # Local postgres — mirrors the shared Coolify postgres used in production.
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: payload
+      POSTGRES_PASSWORD: payload
+      POSTGRES_DB: payload
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U payload']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Payload CMS ───────────────────────────────────────────────────────────────
+  cms:
+    build:
+      context: .
+      dockerfile: apps/cms/Dockerfile
+    environment:
+      DATABASE_URI: postgresql://payload:payload@postgres:5432/payload
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:-local-dev-secret-change-in-prod}
+      NEXT_PUBLIC_SERVER_URL: ${PUBLIC_DOMAIN:-http://localhost}
+      NEXT_PUBLIC_WEB_URL: ${PUBLIC_DOMAIN:-http://localhost}
+      # Optional — Logto OAuth
+      LOGTO_ENDPOINT: ${LOGTO_ENDPOINT:-}
+      LOGTO_APP_ID: ${LOGTO_APP_ID:-}
+      LOGTO_APP_SECRET: ${LOGTO_APP_SECRET:-}
+      LOGTO_ORG_ID: ${LOGTO_ORG_ID:-}
+      LOGTO_M2M_APP_ID: ${LOGTO_M2M_APP_ID:-}
+      LOGTO_M2M_APP_SECRET: ${LOGTO_M2M_APP_SECRET:-}
+      # Optional — cms-platform top bar
+      NEXT_PUBLIC_CMS_PLATFORM_URL: ${NEXT_PUBLIC_CMS_PLATFORM_URL:-}
+      NEXT_PUBLIC_PROJECT_SLUG: ${NEXT_PUBLIC_PROJECT_SLUG:-}
+      # Optional — S3 media storage (leave empty to use local disk)
+      S3_BUCKET: ${S3_BUCKET:-}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY:-}
+      S3_SECRET_KEY: ${S3_SECRET_KEY:-}
+      S3_REGION: ${S3_REGION:-auto}
+      S3_ENDPOINT: ${S3_ENDPOINT:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── SvelteKit web app ─────────────────────────────────────────────────────────
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    environment:
+      # Public URL of the CMS — used in the browser for live preview and admin link
+      PUBLIC_PAYLOAD_URL: ${PUBLIC_DOMAIN:-http://localhost}
+      # Internal Docker network URL — SSR requests stay on the internal network
+      PAYLOAD_INTERNAL_URL: http://cms:3000
+    depends_on:
+      - cms
+    restart: unless-stopped
+
+  # ── Nginx reverse proxy ───────────────────────────────────────────────────────
+  # Mirrors the Coolify/Traefik setup: one domain, /admin → CMS, / → web app.
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - '${PORT:-80}:80'
+    depends_on:
+      - cms
+      - web
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
