@@ -25,7 +25,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 WORKDIR /app/apps/web
-RUN bun run build
+# bunx traverses up to the workspace root to find vite, unlike `bun run build`
+# which only looks in the immediate package's node_modules/.bin
+RUN bunx vite build
 
 # ── Runtime ───────────────────────────────────────────────────────────────────
 FROM oven/bun:1.3.11-alpine AS runner
