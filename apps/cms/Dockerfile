@@ -23,7 +23,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_OPTIONS="--no-deprecation --max-old-space-size=4096"
 
 WORKDIR /app/apps/cms
-RUN ./node_modules/.bin/next build
+RUN --mount=type=cache,target=/app/apps/cms/.next/cache \
+    ./node_modules/.bin/next build
 
 # ── Runtime ───────────────────────────────────────────────────────────────────
 # Run with Bun — the standalone output uses bun's .bun/ node_modules format
