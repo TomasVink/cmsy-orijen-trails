@@ -40,6 +40,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=builder /app/apps/cms/.next/standalone ./
 COPY --from=builder /app/apps/cms/.next/static ./apps/cms/.next/static
 COPY --from=builder /app/apps/cms/public ./apps/cms/public
+COPY --from=builder /app/apps/cms/src/migrations ./apps/cms/src/migrations
 
 EXPOSE 3000
 ENV PORT=3000
