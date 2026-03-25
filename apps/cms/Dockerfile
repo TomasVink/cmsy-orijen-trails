@@ -20,11 +20,10 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 # Set here to avoid cross-env (which requires node) — matches the build script's values
-ENV NODE_OPTIONS="--no-deprecation --max-old-space-size=4096"
+ENV NODE_OPTIONS="--no-deprecation --max-old-space-size=2048"
 
 WORKDIR /app/apps/cms
-RUN --mount=type=cache,target=/app/apps/cms/.next/cache \
-    ./node_modules/.bin/next build
+RUN ./node_modules/.bin/next build
 
 # Compile migration TS files to self-contained JS bundles.
 # The standalone runtime can't import TS, and @payloadcms/db-postgres may not
