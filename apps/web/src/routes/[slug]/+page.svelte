@@ -7,6 +7,8 @@
 
   let { data }: { data: PageData } = $props();
 
+  console.log(data);
+
   // useLivePreview starts with SSR data and updates reactively via postMessage
   // when this page is embedded in the Payload admin iframe. It is a no-op when
   // accessed directly (window.parent === window).
@@ -20,6 +22,14 @@
     return renderNode(content.root as unknown as LexicalNode);
   }
 
+  type MediaValue = {
+    url?: string;
+    filename?: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+  };
+
   type LexicalNode = {
     type: string;
     text?: string;
@@ -28,7 +38,45 @@
     url?: string;
     listType?: string;
     children?: LexicalNode[];
+    // Populated by the REST API (standalone app) — full media object.
+    // In live preview, Payload sends form state where value is just the ID.
+    value?: MediaValue | string | number;
   };
+
+  // Cache for media documents fetched by ID during live preview.
+  let mediaCache = $state<Record<string | number, MediaValue>>({});
+
+  // When content changes, find any upload nodes whose value is an ID (live
+  // preview form state) and fetch the full media document to populate the cache.
+  $effect(() => {
+    const content = preview.data?.content;
+    if (!content?.root) return;
+
+    const ids: (string | number)[] = [];
+    function collectIds(node: LexicalNode) {
+      if (
+        node.type === "upload" &&
+        (typeof node.value === "string" || typeof node.value === "number")
+      ) {
+        ids.push(node.value as string | number);
+      }
+      (node.children ?? []).forEach(collectIds);
+    }
+    collectIds(content.root as unknown as LexicalNode);
+
+    for (const id of ids) {
+      // Use untrack so reading the cache here doesn't make this effect
+      // re-run when the cache is updated (which would cause an infinite loop).
+      if (!untrack(() => mediaCache[id])) {
+        fetch(`${env.PUBLIC_PAYLOAD_URL}/api/media/${id}`)
+          .then((r) => r.json())
+          .then((doc: MediaValue) => {
+            mediaCache = { ...mediaCache, [id]: doc };
+          })
+          .catch(() => {});
+      }
+    }
+  });
 
   function renderNode(node: LexicalNode): string {
     const children = () => (node.children ?? []).map(renderNode).join("");
@@ -64,6 +112,29 @@
         return `<li>${children()}</li>`;
       case "quote":
         return `<blockquote>${children()}</blockquote>`;
+      case "upload": {
+        const raw = node.value;
+        // In live preview, value is the document ID; in the REST API response
+        // it's already the populated media object.
+        const img: MediaValue | undefined =
+          typeof raw === "object" && raw !== null
+            ? (raw as MediaValue)
+            : typeof raw === "string" || typeof raw === "number"
+              ? mediaCache[raw]
+              : undefined;
+        if (!img) return "";
+        let src = img.url ?? "";
+        if (!src && img.filename) {
+          src = `${env.PUBLIC_PAYLOAD_URL}/api/media/file/${img.filename}`;
+        } else if (src && !src.startsWith("http")) {
+          src = `${env.PUBLIC_PAYLOAD_URL}${src}`;
+        }
+        if (!src) return "";
+        const alt = img.alt ? img.alt.replace(/"/g, "&quot;") : "";
+        const width = img.width ? ` width="${img.width}"` : "";
+        const height = img.height ? ` height="${img.height}"` : "";
+        return `<img src="${src}" alt="${alt}"${width}${height} class="max-w-full h-auto rounded">`;
+      }
       case "horizontalrule":
         return "<hr>";
       case "linebreak":

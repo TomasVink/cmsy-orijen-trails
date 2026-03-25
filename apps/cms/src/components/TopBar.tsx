@@ -16,6 +16,10 @@ interface TopBarData {
 
 const PLATFORM_URL = process.env.NEXT_PUBLIC_CMS_PLATFORM_URL
 
+function signOut() {
+  window.location.href = '/api/users/logto-logout'
+}
+
 export default function TopBar() {
   const [data, setData] = useState<TopBarData | null>(null)
 
@@ -26,8 +30,11 @@ export default function TopBar() {
       .catch(() => {})
   }, [])
 
+  const showProjects = data && data.projects.length > 0
+  const selectedUrl = data?.currentProject?.payload_url ?? data?.projects[0]?.payload_url ?? ''
+
   return (
-    <div
+    <nav
       style={{
         position: 'fixed',
         width: '100vw',
@@ -35,48 +42,44 @@ export default function TopBar() {
         left: 0,
         right: 0,
         zIndex: 9999,
-        height: 40,
-        background: '#111827',
-        color: '#fff',
+        background: '#ffffff',
+        borderBottom: '1px solid #e5e7eb',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 16px',
+        padding: '12px 24px',
         fontFamily: 'system-ui, sans-serif',
-        fontSize: 13,
-        boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+        fontSize: 14,
+        boxSizing: 'border-box',
       }}
     >
-      {data && (
-        <>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            {PLATFORM_URL && (
-              <a href={PLATFORM_URL} style={{ color: '#9ca3af', textDecoration: 'none' }}>
-                ← All projects
-              </a>
-            )}
-            {data.currentProject && (
-              <>
-                <span style={{ color: '#4b5563' }}>/</span>
-                <span>{data.currentProject.name}</span>
-              </>
-            )}
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            {data.projects.length > 1 && (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <a
+          href={PLATFORM_URL ?? '/'}
+          style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}
+        >
+          <img src="/cmsy_logo.svg" alt="cmsy logo" style={{ height: 32 }} />
+          <span style={{ fontWeight: 600, color: '#111827' }}>cmsy</span>
+        </a>
+        {showProjects && (
+          <>
+            <span style={{ color: '#d1d5db', fontWeight: 400, fontSize: 18, lineHeight: 1 }}>/</span>
+            {data.projects.length > 1 ? (
               <select
-                defaultValue={data.currentProject?.payload_url ?? ''}
+                value={selectedUrl}
                 onChange={(e) => {
                   window.location.href = e.target.value
                 }}
                 style={{
-                  background: '#1f2937',
-                  color: '#fff',
-                  border: '1px solid #374151',
-                  borderRadius: 4,
-                  padding: '2px 8px',
-                  fontSize: 12,
+                  background: 'transparent',
+                  color: '#111827',
+                  border: 'none',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  fontFamily: 'system-ui, sans-serif',
                   cursor: 'pointer',
+                  padding: 0,
+                  appearance: 'auto',
                 }}
               >
                 {data.projects.map((p) => (
@@ -85,11 +88,33 @@ export default function TopBar() {
                   </option>
                 ))}
               </select>
+            ) : (
+              <span style={{ fontWeight: 600, color: '#111827' }}>{data.projects[0].name}</span>
             )}
-            <span style={{ color: '#9ca3af' }}>{data.email}</span>
-          </div>
-        </>
+          </>
+        )}
+      </div>
+      {data && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 14, color: '#4b5563' }}>
+          <span>{data.email}</span>
+          <button
+            onClick={signOut}
+            style={{
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              fontSize: 14,
+              color: '#6b7280',
+              cursor: 'pointer',
+              fontFamily: 'system-ui, sans-serif',
+            }}
+            onMouseEnter={(e) => { (e.target as HTMLElement).style.color = '#111827' }}
+            onMouseLeave={(e) => { (e.target as HTMLElement).style.color = '#6b7280' }}
+          >
+            Sign out
+          </button>
+        </div>
       )}
-    </div>
+    </nav>
   )
 }

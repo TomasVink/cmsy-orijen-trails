@@ -19,6 +19,7 @@ const useS3 = Boolean(process.env.S3_BUCKET)
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  cors: (process.env.NEXT_PUBLIC_WEB_URL || 'http://localhost:5173').split(','),
 
   admin: {
     user: Users.slug,

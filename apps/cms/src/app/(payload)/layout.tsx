@@ -24,7 +24,7 @@ const serverFunction: ServerFunctionClient = async function (args) {
 
 const Layout = ({ children }: Args) => (
   <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
-    <main style={{ paddingTop: '40px' }}>{children}</main>
+    <main style={{ paddingTop: '57px' }}>{children}</main>
   </RootLayout>
 )
 
