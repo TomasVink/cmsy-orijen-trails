@@ -58,12 +58,18 @@ export default function TopBar() {
           href={PLATFORM_URL ?? '/'}
           style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}
         >
-          <img src="/cmsy_logo.svg" alt="cmsy logo" style={{ height: 32 }} />
+          <img
+            src="https://cmsy-assets.s3.eu-central-1.amazonaws.com/cmsy_logo.svg"
+            alt="cmsy logo"
+            style={{ height: 32 }}
+          />
           <span style={{ fontWeight: 600, color: '#111827' }}>cmsy</span>
         </a>
         {showProjects && (
           <>
-            <span style={{ color: '#d1d5db', fontWeight: 400, fontSize: 18, lineHeight: 1 }}>/</span>
+            <span style={{ color: '#d1d5db', fontWeight: 400, fontSize: 18, lineHeight: 1 }}>
+              /
+            </span>
             {data.projects.length > 1 ? (
               <select
                 value={selectedUrl}
@@ -95,7 +101,9 @@ export default function TopBar() {
         )}
       </div>
       {data && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 14, color: '#4b5563' }}>
+        <div
+          style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 14, color: '#4b5563' }}
+        >
           <span>{data.email}</span>
           <button
             onClick={signOut}
@@ -108,8 +116,12 @@ export default function TopBar() {
               cursor: 'pointer',
               fontFamily: 'system-ui, sans-serif',
             }}
-            onMouseEnter={(e) => { (e.target as HTMLElement).style.color = '#111827' }}
-            onMouseLeave={(e) => { (e.target as HTMLElement).style.color = '#6b7280' }}
+            onMouseEnter={(e) => {
+              ;(e.target as HTMLElement).style.color = '#111827'
+            }}
+            onMouseLeave={(e) => {
+              ;(e.target as HTMLElement).style.color = '#6b7280'
+            }}
           >
             Sign out
           </button>
