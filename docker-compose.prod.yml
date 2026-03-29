@@ -61,7 +61,6 @@ services:
       S3_ENDPOINT: ${S3_ENDPOINT:-}
     networks:
       - default
-      - coolify
     restart: unless-stopped
 
   web:
@@ -85,6 +84,11 @@ services:
       - cms
       - web
     # No ports mapping — Coolify's Traefik routes traffic to this container via labels.
+    labels:
+      - traefik.http.services.nginx.loadbalancer.server.port=80
+    networks:
+      - default  # talks to cms:3000 and web:3001
+      - coolify  # Traefik can reach it
     restart: unless-stopped
 
 networks:
