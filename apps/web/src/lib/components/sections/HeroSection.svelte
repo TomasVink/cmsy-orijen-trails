@@ -56,6 +56,7 @@
             <Button
               href={cta.ctaUrl}
               variant={cta.outline ? "outline" : "primary"}
+              icon={cta.icon ?? undefined}
             >
               {cta.ctaLabel}
             </Button>

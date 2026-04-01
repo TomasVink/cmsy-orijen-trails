@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
+  import Icon from "./Icon.svelte";
 
   type Props = {
     href?: string;
@@ -8,6 +9,7 @@
     type?: "button" | "submit" | "reset";
     disabled?: boolean;
     class?: string;
+    icon?: string;
     children: Snippet;
   };
 
@@ -18,17 +20,17 @@
     type = "button",
     disabled = false,
     class: className = "",
+    icon,
     children,
   }: Props = $props();
 
   const base =
-    "inline-flex items-center justify-center gap-2 font-display font-bold uppercase tracking-widest text-sm px-6 py-4 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
+    "inline-flex items-center justify-center gap-2 font-display font-bold uppercase tracking-widest text-xl px-6 py-4 transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
 
   const variants = {
     primary:
       "bg-orijen-red text-white hover:bg-black focus-visible:ring-orijen-red",
-    outline:
-      "border-2 border-orijen-red text-orijen-red hover:bg-orijen-red hover:text-white focus-visible:ring-orijen-red",
+    outline: "border-3 border-white text-white hover:bg-white hover:text-black",
     ghost: "text-orijen-red hover:underline underline-offset-4",
   };
 
@@ -37,10 +39,12 @@
 
 {#if href}
   <a {href} class={classes}>
+    {#if icon}<Icon name={icon} />{/if}
     {@render children()}
   </a>
 {:else}
   <button {type} {onclick} {disabled} class={classes}>
+    {#if icon}<Icon name={icon} />{/if}
     {@render children()}
   </button>
 {/if}

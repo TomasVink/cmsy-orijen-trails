@@ -170,6 +170,10 @@ export interface Page {
                    * Appearance of the CTA button
                    */
                   outline?: boolean | null;
+                  /**
+                   * Optional icon shown left of the button label.
+                   */
+                  icon?: ('map-search' | 'group' | 'route') | null;
                   id?: string | null;
                 }[]
               | null;
@@ -182,7 +186,7 @@ export interface Page {
             intro?: string | null;
             steps?:
               | {
-                  icon?: (number | null) | Media;
+                  icon?: ('map-search' | 'group' | 'route') | null;
                   title: string;
                   description?: string | null;
                   id?: string | null;
@@ -587,6 +591,7 @@ export interface PagesSelect<T extends boolean = true> {
                     ctaLabel?: T;
                     ctaUrl?: T;
                     outline?: T;
+                    icon?: T;
                     id?: T;
                   };
               id?: T;

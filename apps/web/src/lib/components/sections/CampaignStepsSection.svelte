@@ -1,15 +1,10 @@
 <script lang="ts">
-  import type { CampaignStepsBlock, Media } from '$lib/payload'
-  import { mediaUrl } from '$lib/payload'
+  import type { CampaignStepsBlock } from '$lib/payload'
   import Section from '$lib/components/ui/Section.svelte'
-  import { env } from '$env/dynamic/public'
+  import Icon from '$lib/components/ui/Icon.svelte'
 
   type Props = { block: CampaignStepsBlock }
   let { block }: Props = $props()
-
-  function stepIconSrc(icon: number | Media | null | undefined): string | null {
-    return mediaUrl(typeof icon === 'object' ? icon : null, env.PUBLIC_PAYLOAD_URL)
-  }
 </script>
 
 <Section id="campaign-steps" class="py-20 bg-white">
@@ -27,12 +22,7 @@
           <!-- Step number / icon -->
           <div class="w-16 h-16 flex items-center justify-center bg-orijen-red text-white">
             {#if step.icon}
-              {@const src = stepIconSrc(step.icon)}
-              {#if src}
-                <img src={src} alt={step.title} class="w-8 h-8 object-contain invert" />
-              {:else}
-                <span class="font-display text-2xl">{i + 1}</span>
-              {/if}
+              <Icon name={step.icon} size="2rem" />
             {:else}
               <span class="font-display text-2xl">{i + 1}</span>
             {/if}

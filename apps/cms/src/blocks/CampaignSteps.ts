@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ICON_OPTIONS } from '../icons'
 
 // "De vier stappen" / how the campaign works
 export const CampaignSteps: Block = {
@@ -27,8 +28,8 @@ export const CampaignSteps: Block = {
       fields: [
         {
           name: 'icon',
-          type: 'upload',
-          relationTo: 'media',
+          type: 'select',
+          options: [...ICON_OPTIONS],
         },
         {
           name: 'title',

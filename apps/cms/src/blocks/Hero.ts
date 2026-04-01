@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ICON_OPTIONS } from '../icons'
 
 export const Hero: Block = {
   slug: 'hero',
@@ -50,6 +51,12 @@ export const Hero: Block = {
           admin: {
             description: 'Appearance of the CTA button',
           },
+        },
+        {
+          name: 'icon',
+          type: 'select',
+          options: [...ICON_OPTIONS],
+          admin: { description: 'Optional icon shown left of the button label.' },
         },
       ],
     },

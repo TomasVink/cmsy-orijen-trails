@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@iconify/tailwind4";
 
 @theme {
   /* ── Typography ─────────────────────────────────────────────── */
@@ -42,8 +43,8 @@ html {
 
 body {
   font-family: var(--font-sans);
-  color: var(--color-orijen-black);
-  background-color: var(--color-orijen-white);
+  color: var(--color-orijen-white);
+  background-color: var(--color-orijen-black);
 }
 
 /* ── Heading defaults: League Gothic, uppercase ─────────────────── */
