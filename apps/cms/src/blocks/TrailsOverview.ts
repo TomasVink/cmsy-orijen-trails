@@ -14,6 +14,15 @@ export const TrailsOverview: Block = {
       localized: true,
     },
     {
+      name: 'sectionId',
+      type: 'text',
+      required: true,
+      defaultValue: 'trails',
+      admin: {
+        description: 'Used for internal linking using CTA buttons',
+      },
+    },
+    {
       name: 'intro',
       type: 'textarea',
       localized: true,

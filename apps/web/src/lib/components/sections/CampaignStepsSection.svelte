@@ -8,18 +8,7 @@
   let { block }: Props = $props();
 </script>
 
-<Section id={block.sectionId}>
-  <div class="text-center mb-12">
-    <Title>
-      {block.title}
-    </Title>
-    {#if block.intro}
-      <p>
-        {block.intro}
-      </p>
-    {/if}
-  </div>
-
+<Section id={block.sectionId} title={block.title} intro={block.intro ?? ""}>
   {#if block.steps?.length}
     <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {#each block.steps as step, i (step.id)}
