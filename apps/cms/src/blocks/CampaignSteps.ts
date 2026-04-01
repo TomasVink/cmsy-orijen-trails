@@ -16,6 +16,15 @@ export const CampaignSteps: Block = {
       localized: true,
     },
     {
+      name: 'sectionId',
+      type: 'text',
+      required: true,
+      defaultValue: 'campaign-steps',
+      admin: {
+        description: 'Used for internal linking using CTA buttons',
+      },
+    },
+    {
       name: 'intro',
       type: 'textarea',
       localized: true,

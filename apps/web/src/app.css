@@ -45,6 +45,9 @@ body {
   font-family: var(--font-sans);
   color: var(--color-orijen-white);
   background-color: var(--color-orijen-black);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 /* ── Heading defaults: League Gothic, uppercase ─────────────────── */

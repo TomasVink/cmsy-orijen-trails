@@ -1,37 +1,47 @@
 <script lang="ts">
-  import type { CampaignStepsBlock } from '$lib/payload'
-  import Section from '$lib/components/ui/Section.svelte'
-  import Icon from '$lib/components/ui/Icon.svelte'
+  import type { CampaignStepsBlock } from "$lib/payload";
+  import Section from "$lib/components/ui/Section.svelte";
+  import Icon from "$lib/components/ui/Icon.svelte";
+  import Title from "../ui/Title.svelte";
 
-  type Props = { block: CampaignStepsBlock }
-  let { block }: Props = $props()
+  type Props = { block: CampaignStepsBlock };
+  let { block }: Props = $props();
 </script>
 
-<Section id="campaign-steps" class="py-20 bg-white">
+<Section id={block.sectionId}>
   <div class="text-center mb-12">
-    <h2 class="font-display text-5xl md:text-6xl uppercase leading-none">{block.title}</h2>
+    <Title>
+      {block.title}
+    </Title>
     {#if block.intro}
-      <p class="font-sans text-orijen-gray mt-4 max-w-xl mx-auto">{block.intro}</p>
+      <p>
+        {block.intro}
+      </p>
     {/if}
   </div>
 
   {#if block.steps?.length}
     <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {#each block.steps as step, i (step.id)}
-        <li class="flex flex-col items-center text-center gap-4">
-          <!-- Step number / icon -->
-          <div class="w-16 h-16 flex items-center justify-center bg-orijen-red text-white">
+        <li
+          class="flex flex-col items-center text-center bg-orijen-gray/20 border border-orijen-gray/30 p-4 hover:border-orijen-red hover:bg-orijen-gray/30 transition hover:-translate-y-1 duration-300"
+        >
+          <div class="flex items-center justify-center text-orijen-red">
             {#if step.icon}
-              <Icon name={step.icon} size="2rem" />
+              <Icon name={step.icon} class="size-20" />
             {:else}
               <span class="font-display text-2xl">{i + 1}</span>
             {/if}
           </div>
 
-          <h3 class="font-display text-xl uppercase leading-none">{step.title}</h3>
+          <h3 class="text-3xl uppercase leading-none">
+            {step.title}
+          </h3>
 
           {#if step.description}
-            <p class="font-sans text-sm text-orijen-gray leading-relaxed">{step.description}</p>
+            <p class="text-sm text-orijen-gray">
+              {step.description}
+            </p>
           {/if}
         </li>
       {/each}

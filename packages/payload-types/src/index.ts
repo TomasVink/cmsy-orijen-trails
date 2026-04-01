@@ -183,6 +183,10 @@ export interface Page {
           }
         | {
             title: string;
+            /**
+             * Used for internal linking using CTA buttons
+             */
+            sectionId: string;
             intro?: string | null;
             steps?:
               | {
@@ -601,6 +605,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              sectionId?: T;
               intro?: T;
               steps?:
                 | T
