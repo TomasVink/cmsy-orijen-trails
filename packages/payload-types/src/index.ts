@@ -68,8 +68,11 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
-    media: Media;
     pages: Page;
+    posts: Post;
+    trails: Trail;
+    influencers: Influencer;
+    media: Media;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,8 +81,11 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
+    trails: TrailsSelect<false> | TrailsSelect<true>;
+    influencers: InfluencersSelect<false> | InfluencersSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -132,6 +138,186 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * URL-friendly identifier. Use "home" for the home page.
+   */
+  slug: string;
+  layout?:
+    | (
+        | {
+            /**
+             * Background video
+             */
+            video: number | Media;
+            headline: string;
+            subheadline?: string | null;
+            cta?:
+              | {
+                  /**
+                   * Call-to-action button label.
+                   */
+                  ctaLabel?: string | null;
+                  /**
+                   * Call-to-action button URL or anchor.
+                   */
+                  ctaUrl?: string | null;
+                  /**
+                   * Appearance of the CTA button
+                   */
+                  outline?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            title: string;
+            intro?: string | null;
+            steps?:
+              | {
+                  icon?: (number | null) | Media;
+                  title: string;
+                  description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'campaign-steps';
+          }
+        | {
+            title: string;
+            /**
+             * Campaign copy shown alongside the trail cards.
+             */
+            campaignText?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Select up to 5 trails. Order determines display order.
+             */
+            trails?: (number | Trail)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'top-trails';
+          }
+        | {
+            title: string;
+            intro?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'trails-overview';
+          }
+        | {
+            title: string;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Submit button label.
+             */
+            ctaLabel?: string | null;
+            nameLabel?: string | null;
+            emailLabel?: string | null;
+            trailNameLabel?: string | null;
+            descriptionLabel?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'submit-trail';
+          }
+        | {
+            title: string;
+            body: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            image: number | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog';
+          }
+        | {
+            platform: 'instagram' | 'tiktok' | 'facebook';
+            /**
+             * Handle without the @ symbol.
+             */
+            handle: string;
+            url: string;
+            /**
+             * e.g. "Join the community"
+             */
+            ctaText: string;
+            /**
+             * Optional section background image.
+             */
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'social-button';
+          }
+        | {
+            title: string;
+            /**
+             * Select influencers to display in the carousel.
+             */
+            influencers?: (number | Influencer)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'influencer-carousel';
+          }
+      )[]
+    | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -178,15 +364,82 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
+ * via the `definition` "trails".
  */
-export interface Page {
+export interface Trail {
   id: number;
   title: string;
+  published?: boolean | null;
+  featured?: boolean | null;
+  header?: (number | null) | Media;
+  photos?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  description?: string | null;
   /**
-   * URL-friendly identifier, e.g. "about" or "contact".
+   * Distance in kilometres.
+   */
+  distance?: number | null;
+  difficulty?: ('easy' | 'moderate' | 'challenging') | null;
+  /**
+   * Trail start point for the map pin.
+   */
+  coordinates?: {
+    /**
+     * Latitude
+     */
+    lat?: number | null;
+    /**
+     * Longitude
+     */
+    lng?: number | null;
+  };
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "influencers".
+ */
+export interface Influencer {
+  id: number;
+  name: string;
+  /**
+   * Social media handle without the @ symbol.
+   */
+  handle: string;
+  platform: 'instagram' | 'tiktok';
+  image: number | Media;
+  /**
+   * Full URL to their social profile.
+   */
+  profileUrl: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: number;
+  /**
+   * URL-friendly identifier, e.g. "trail-hero-of-the-week".
    */
   slug: string;
+  title: string;
+  /**
+   * Short summary shown in blog block cards.
+   */
+  excerpt?: string | null;
+  header?: (number | null) | Media;
   content?: {
     root: {
       type: string;
@@ -202,6 +455,10 @@ export interface Page {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Optional external URL. Overrides the default post URL when set.
+   */
+  link?: string | null;
   seo?: {
     title?: string | null;
     description?: string | null;
@@ -238,12 +495,24 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
-        relationTo: 'media';
-        value: number | Media;
-      } | null)
-    | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'trails';
+        value: number | Trail;
+      } | null)
+    | ({
+        relationTo: 'influencers';
+        value: number | Influencer;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -293,6 +562,183 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   logtoSub?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  layout?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              video?: T;
+              headline?: T;
+              subheadline?: T;
+              cta?:
+                | T
+                | {
+                    ctaLabel?: T;
+                    ctaUrl?: T;
+                    outline?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'campaign-steps'?:
+          | T
+          | {
+              title?: T;
+              intro?: T;
+              steps?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'top-trails'?:
+          | T
+          | {
+              title?: T;
+              campaignText?: T;
+              trails?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'trails-overview'?:
+          | T
+          | {
+              title?: T;
+              intro?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'submit-trail'?:
+          | T
+          | {
+              title?: T;
+              body?: T;
+              ctaLabel?: T;
+              nameLabel?: T;
+              emailLabel?: T;
+              trailNameLabel?: T;
+              descriptionLabel?: T;
+              id?: T;
+              blockName?: T;
+            };
+        blog?:
+          | T
+          | {
+              title?: T;
+              body?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'social-button'?:
+          | T
+          | {
+              platform?: T;
+              handle?: T;
+              url?: T;
+              ctaText?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'influencer-carousel'?:
+          | T
+          | {
+              title?: T;
+              influencers?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  excerpt?: T;
+  header?: T;
+  content?: T;
+  link?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trails_select".
+ */
+export interface TrailsSelect<T extends boolean = true> {
+  title?: T;
+  published?: T;
+  featured?: T;
+  header?: T;
+  photos?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  description?: T;
+  distance?: T;
+  difficulty?: T;
+  coordinates?:
+    | T
+    | {
+        lat?: T;
+        lng?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "influencers_select".
+ */
+export interface InfluencersSelect<T extends boolean = true> {
+  name?: T;
+  handle?: T;
+  platform?: T;
+  image?: T;
+  profileUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -348,23 +794,6 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages_select".
- */
-export interface PagesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  content?: T;
-  seo?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

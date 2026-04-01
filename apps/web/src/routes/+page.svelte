@@ -1,42 +1,46 @@
 <script lang="ts">
-  import type { PageData } from './$types'
-  import { env } from '$env/dynamic/public'
+  import { untrack } from "svelte";
+  import type { PageData } from "./$types";
+  import { useLivePreview } from "$lib/stores/live-preview.svelte.ts";
+  import { env } from "$env/dynamic/public";
+  import type { Page } from "@repo/payload-types";
+  import BlockRenderer from "$lib/components/BlockRenderer.svelte";
 
-  let { data }: { data: PageData } = $props()
+  let { data }: { data: PageData } = $props();
+
+  const preview = useLivePreview<Page>({
+    initialData: untrack(() => data.page as Page),
+    serverURL: env.PUBLIC_PAYLOAD_URL,
+  });
 </script>
 
-<main class="container mx-auto px-4 py-16 max-w-2xl">
-  <div class="mb-12">
-    <h1 class="text-3xl font-bold mb-2">SvelteKit + Payload CMS</h1>
-    <p class="text-gray-500">Headless CMS demo with live preview.</p>
-  </div>
-
-  <section class="mb-12">
-    <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Pages</h2>
-    {#if data.pages.length > 0}
-      <ul class="space-y-2">
-        {#each data.pages as page}
-          <li>
-            <a href="/{page.slug}" class="text-lg hover:underline underline-offset-4">
-              {page.title}
-            </a>
-            {#if page.seo?.description}
-              <p class="text-sm text-gray-500 mt-0.5">{page.seo.description}</p>
-            {/if}
-          </li>
-        {/each}
-      </ul>
-    {:else}
-      <p class="text-gray-400">No pages yet — create one in the CMS.</p>
-    {/if}
-  </section>
-
-  <a
-    href="{env.PUBLIC_PAYLOAD_URL}/admin"
-    class="text-sm text-gray-400 hover:text-black transition-colors"
-    target="_blank"
-    rel="noreferrer"
+<svelte:head>
+  <title
+    >{preview.data?.seo?.title ?? preview.data?.title ?? "ORIJEN Trails"}</title
   >
-    Open CMS Admin →
-  </a>
-</main>
+  {#if preview.data?.seo?.description}
+    <meta name="description" content={preview.data.seo.description} />
+  {/if}
+</svelte:head>
+
+{#if preview.isLoading}
+  <div class="fixed inset-0 flex items-center justify-center bg-white/80 z-50">
+    <span
+      class="font-sans text-sm text-orijen-gray uppercase tracking-widest animate-pulse"
+    >
+      Connecting to live preview…
+    </span>
+  </div>
+{/if}
+
+{#if preview.data?.layout?.length}
+  <BlockRenderer blocks={preview.data.layout} />
+{:else if !data.page}
+  <div class="min-h-screen flex items-center justify-center">
+    <p class="font-sans text-orijen-gray">
+      No home page found — create a page with slug <code
+        class="font-mono text-sm bg-black/5 px-1">home</code
+      > in the CMS.
+    </p>
+  </div>
+{/if}

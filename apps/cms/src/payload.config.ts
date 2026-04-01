@@ -9,6 +9,9 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { Posts } from './collections/Posts'
+import { Trails } from './collections/Trails'
+import { Influencers } from './collections/Influencers'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -39,7 +42,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Media, Pages],
+  collections: [Users, Pages, Posts, Trails, Influencers, Media],
 
   editor: lexicalEditor({}),
 

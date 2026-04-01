@@ -1,5 +1,60 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  /* ── Typography ─────────────────────────────────────────────── */
+  /* League Gothic: display/headlines (all caps, bold condensed)   */
+  --font-display: 'League Gothic', 'Impact', ui-sans-serif, sans-serif;
+  /* Barlow stands in for DIN (self-host DIN files to override)    */
+  --font-sans: 'Barlow', 'DIN', ui-sans-serif, system-ui, sans-serif;
+  /* Larissa Bold: accent script — self-host .woff2 files          */
+  --font-accent: 'Larissa Script Bold', 'Brush Script MT', cursive;
+
+  /* ── Primary colours (50 / 40 / 10 split) ───────────────────── */
+  --color-orijen-black: #000000;
+  --color-orijen-white: #ffffff;
+  --color-orijen-red:   #dc2726;   /* Pantone 485 C */
+
+  /* ── Secondary colours ───────────────────────────────────────── */
+  --color-orijen-blue: #0061a2;    /* Pantone 2384 C */
+  --color-orijen-gray: #a3a7aa;    /* Pantone Cool Gray 6 C */
+
+  /* ── Recipe accent palette ───────────────────────────────────── */
+  --color-orijen-sky:    #6cc8e8;  /* Pantone 2985 C */
+  --color-orijen-mauve:  #be95c4;  /* Pantone 2573 C */
+  --color-orijen-olive:  #c4c638;  /* Pantone 7744 C */
+  --color-orijen-gold:   #f5a700;  /* Pantone 130 C  */
+
+  /* ── Section background ──────────────────────────────────────── */
+  --color-orijen-cream: #f5f5f0;   /* Warm off-white for alternating sections */
+}
+
+/* ── Base resets ───────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-orijen-black);
+  background-color: var(--color-orijen-white);
+}
+
+/* ── Heading defaults: League Gothic, uppercase ─────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.01em;
 }

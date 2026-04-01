@@ -1,5 +1,14 @@
 import type { CollectionConfig } from 'payload'
 
+import { Hero } from '../blocks/Hero'
+import { CampaignSteps } from '../blocks/CampaignSteps'
+import { TopTrails } from '../blocks/TopTrails'
+import { TrailsOverview } from '../blocks/TrailsOverview'
+import { SubmitTrail } from '../blocks/SubmitTrail'
+import { BlogBlock } from '../blocks/BlogBlock'
+import { SocialButton } from '../blocks/SocialButton'
+import { InfluencerCarousel } from '../blocks/InfluencerCarousel'
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   access: {
@@ -28,12 +37,22 @@ export const Pages: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        description: 'URL-friendly identifier, e.g. "about" or "contact".',
+        description: 'URL-friendly identifier. Use "home" for the home page.',
       },
     },
     {
-      name: 'content',
-      type: 'richText',
+      name: 'layout',
+      type: 'blocks',
+      blocks: [
+        Hero,
+        CampaignSteps,
+        TopTrails,
+        TrailsOverview,
+        SubmitTrail,
+        BlogBlock,
+        SocialButton,
+        InfluencerCarousel,
+      ],
     },
     {
       name: 'seo',
