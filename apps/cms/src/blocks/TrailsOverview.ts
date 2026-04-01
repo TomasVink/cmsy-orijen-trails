@@ -11,10 +11,12 @@ export const TrailsOverview: Block = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'intro',
       type: 'textarea',
+      localized: true,
     },
   ],
 }

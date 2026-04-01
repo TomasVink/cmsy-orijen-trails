@@ -11,6 +11,7 @@ export const InfluencerCarousel: Block = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'influencers',

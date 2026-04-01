@@ -20,10 +20,12 @@ export const Hero: Block = {
       name: 'headline',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'subheadline',
       type: 'text',
+      localized: true,
     },
     {
       name: 'cta',
@@ -33,6 +35,7 @@ export const Hero: Block = {
         {
           name: 'ctaLabel',
           type: 'text',
+          localized: true,
           admin: { description: 'Call-to-action button label.' },
         },
         {

@@ -1,7 +1,5 @@
-import { getPageBySlug } from "$lib/payload.server";
+import { redirect } from '@sveltejs/kit'
 
-export const load = async ({ fetch }: { fetch: typeof globalThis.fetch }) => {
-  // Home page is stored in the CMS with slug ""
-  const page = await getPageBySlug("home", fetch);
-  return { page };
-};
+export const load = () => {
+  redirect(307, '/nl')
+}

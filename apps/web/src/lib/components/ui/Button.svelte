@@ -1,36 +1,38 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte'
+  import type { Snippet } from "svelte";
 
   type Props = {
-    href?: string
-    onclick?: () => void
-    variant?: 'primary' | 'outline' | 'ghost'
-    type?: 'button' | 'submit' | 'reset'
-    disabled?: boolean
-    class?: string
-    children: Snippet
-  }
+    href?: string;
+    onclick?: () => void;
+    variant?: "primary" | "outline" | "ghost";
+    type?: "button" | "submit" | "reset";
+    disabled?: boolean;
+    class?: string;
+    children: Snippet;
+  };
 
   let {
     href,
     onclick,
-    variant = 'primary',
-    type = 'button',
+    variant = "primary",
+    type = "button",
     disabled = false,
-    class: className = '',
+    class: className = "",
     children,
-  }: Props = $props()
+  }: Props = $props();
 
   const base =
-    'inline-flex items-center justify-center gap-2 font-sans font-bold uppercase tracking-widest text-sm px-6 py-3 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none'
+    "inline-flex items-center justify-center gap-2 font-display font-bold uppercase tracking-widest text-sm px-6 py-4 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
 
   const variants = {
-    primary: 'bg-orijen-red text-white hover:bg-black focus-visible:ring-orijen-red',
-    outline: 'border-2 border-orijen-red text-orijen-red hover:bg-orijen-red hover:text-white focus-visible:ring-orijen-red',
-    ghost: 'text-orijen-red hover:underline underline-offset-4',
-  }
+    primary:
+      "bg-orijen-red text-white hover:bg-black focus-visible:ring-orijen-red",
+    outline:
+      "border-2 border-orijen-red text-orijen-red hover:bg-orijen-red hover:text-white focus-visible:ring-orijen-red",
+    ghost: "text-orijen-red hover:underline underline-offset-4",
+  };
 
-  const classes = `${base} ${variants[variant]} ${className}`
+  const classes = `${base} ${variants[variant]} ${className}`;
 </script>
 
 {#if href}

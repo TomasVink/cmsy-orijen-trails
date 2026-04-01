@@ -13,6 +13,7 @@ export const Posts: CollectionConfig = {
       type: 'text',
       required: true,
       unique: true,
+      localized: true,
       admin: {
         description: 'URL-friendly identifier, e.g. "trail-hero-of-the-week".',
       },
@@ -21,10 +22,12 @@ export const Posts: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'excerpt',
       type: 'textarea',
+      localized: true,
       admin: {
         description: 'Short summary shown in blog block cards.',
       },
@@ -37,6 +40,7 @@ export const Posts: CollectionConfig = {
     {
       name: 'content',
       type: 'richText',
+      localized: true,
     },
     {
       name: 'link',
@@ -52,10 +56,12 @@ export const Posts: CollectionConfig = {
         {
           name: 'title',
           type: 'text',
+          localized: true,
         },
         {
           name: 'description',
           type: 'textarea',
+          localized: true,
         },
       ],
     },

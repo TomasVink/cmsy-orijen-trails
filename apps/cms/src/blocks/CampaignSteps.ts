@@ -12,10 +12,12 @@ export const CampaignSteps: Block = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'intro',
       type: 'textarea',
+      localized: true,
     },
     {
       name: 'steps',
@@ -32,10 +34,12 @@ export const CampaignSteps: Block = {
           name: 'title',
           type: 'text',
           required: true,
+          localized: true,
         },
         {
           name: 'description',
           type: 'textarea',
+          localized: true,
         },
       ],
     },

@@ -3,6 +3,8 @@ import type { Page, Media, Trail, Influencer } from '@repo/payload-types'
 
 export type { Page, Media, Trail, Influencer }
 
+export type Locale = 'nl' | 'en'
+
 // ── Block types extracted from the Page layout union ─────────────
 type LayoutBlock = NonNullable<Page['layout']>[number]
 export type HeroBlock = Extract<LayoutBlock, { blockType: 'hero' }>
@@ -48,8 +50,9 @@ export async function getPageBySlug(
   slug: string,
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl',
 ): Promise<Page | null> {
-  const url = `${baseUrl}/api/pages?where[slug][equals]=${encodeURIComponent(slug)}&depth=2&limit=1`
+  const url = `${baseUrl}/api/pages?where[slug][equals]=${encodeURIComponent(slug)}&depth=2&limit=1&locale=${locale}`
   const response = await fetchFn(url)
   if (!response.ok) return null
   const data = (await response.json()) as PaginatedDocs<Page>
@@ -59,8 +62,9 @@ export async function getPageBySlug(
 export async function getAllPages(
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl',
 ): Promise<Page[]> {
-  const url = `${baseUrl}/api/pages?limit=100`
+  const url = `${baseUrl}/api/pages?limit=100&locale=${locale}`
   const response = await fetchFn(url)
   if (!response.ok) return []
   const data = (await response.json()) as PaginatedDocs<Page>
@@ -79,11 +83,13 @@ export async function getTrails(
   filters: TrailFilters = {},
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl',
 ): Promise<Trail[]> {
   const params = new URLSearchParams()
   params.set('where[published][equals]', 'true')
   params.set('depth', '1')
   params.set('limit', '100')
+  params.set('locale', locale)
 
   if (filters.difficulty) {
     params.set('where[difficulty][equals]', filters.difficulty)

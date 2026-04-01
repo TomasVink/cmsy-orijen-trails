@@ -160,7 +160,7 @@
 
 <article class="container mx-auto px-4 py-16 max-w-2xl">
   <a
-    href="/"
+    href="/{data.locale}"
     class="text-sm text-gray-400 hover:text-black transition-colors mb-8 inline-block"
   >
     ← Back

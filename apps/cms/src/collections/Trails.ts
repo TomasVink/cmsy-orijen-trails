@@ -12,6 +12,7 @@ export const Trails: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'published',
@@ -43,6 +44,7 @@ export const Trails: CollectionConfig = {
     {
       name: 'description',
       type: 'textarea',
+      localized: true,
     },
     // ── Trail metadata ────────────────────────────────────────────
     {
@@ -87,10 +89,12 @@ export const Trails: CollectionConfig = {
         {
           name: 'title',
           type: 'text',
+          localized: true,
         },
         {
           name: 'description',
           type: 'textarea',
+          localized: true,
         },
       ],
     },

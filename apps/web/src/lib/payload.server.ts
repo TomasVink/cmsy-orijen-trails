@@ -10,18 +10,22 @@
  */
 import { env } from '$env/dynamic/private'
 import { env as publicEnv } from '$env/dynamic/public'
-import { getAllPages as _getAllPages, getPageBySlug as _getPageBySlug } from './payload'
+import { getAllPages as _getAllPages, getPageBySlug as _getPageBySlug, getTrails as _getTrails } from './payload'
 
-export type { Page, Media, PaginatedDocs } from './payload'
+export type { Page, Media, PaginatedDocs, Locale, TrailFilters } from './payload'
 
 function internalUrl(): string {
   return env.PAYLOAD_INTERNAL_URL || publicEnv.PUBLIC_PAYLOAD_URL
 }
 
-export function getPageBySlug(slug: string, fetchFn: typeof fetch = fetch) {
-  return _getPageBySlug(slug, fetchFn, internalUrl())
+export function getPageBySlug(slug: string, fetchFn: typeof fetch = fetch, locale: import('./payload').Locale = 'nl') {
+  return _getPageBySlug(slug, fetchFn, internalUrl(), locale)
 }
 
-export function getAllPages(fetchFn: typeof fetch = fetch) {
-  return _getAllPages(fetchFn, internalUrl())
+export function getAllPages(fetchFn: typeof fetch = fetch, locale: import('./payload').Locale = 'nl') {
+  return _getAllPages(fetchFn, internalUrl(), locale)
+}
+
+export function getTrails(filters: import('./payload').TrailFilters = {}, fetchFn: typeof fetch = fetch, locale: import('./payload').Locale = 'nl') {
+  return _getTrails(filters, fetchFn, internalUrl(), locale)
 }

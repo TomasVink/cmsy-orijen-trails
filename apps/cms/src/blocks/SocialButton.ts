@@ -34,6 +34,7 @@ export const SocialButton: Block = {
       name: 'ctaText',
       type: 'text',
       required: true,
+      localized: true,
       admin: {
         description: 'e.g. "Join the community"',
       },

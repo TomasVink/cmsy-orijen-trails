@@ -11,10 +11,12 @@ export const TopTrails: Block = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'campaignText',
       type: 'richText',
+      localized: true,
       admin: {
         description: 'Campaign copy shown alongside the trail cards.',
       },
