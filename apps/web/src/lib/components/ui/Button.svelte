@@ -25,7 +25,7 @@
   }: Props = $props();
 
   const base =
-    "inline-flex items-center justify-center gap-2 font-display font-bold uppercase tracking-widest text-xl px-6 py-4 transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
+    "inline-flex items-center justify-center gap-2 font-display font-bold uppercase tracking-widest text-xl px-6 py-3 transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
 
   const variants = {
     primary:

@@ -173,7 +173,7 @@ export interface Page {
                   /**
                    * Optional icon shown left of the button label.
                    */
-                  icon?: ('map-search' | 'group' | 'route') | null;
+                  icon?: ('map-search' | 'group' | 'route' | 'clock') | null;
                   id?: string | null;
                 }[]
               | null;
@@ -190,7 +190,7 @@ export interface Page {
             intro?: string | null;
             steps?:
               | {
-                  icon?: ('map-search' | 'group' | 'route') | null;
+                  icon?: ('map-search' | 'group' | 'route' | 'clock') | null;
                   title: string;
                   description?: string | null;
                   id?: string | null;
@@ -203,25 +203,12 @@ export interface Page {
         | {
             title: string;
             /**
-             * Campaign copy shown alongside the trail cards.
+             * Used for internal linking using CTA buttons
              */
-            campaignText?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
+            sectionId: string;
+            intro?: string | null;
             /**
-             * Select up to 5 trails. Order determines display order.
+             * Select trails to be featured. Order determines display order.
              */
             trails?: (number | Trail)[] | null;
             id?: string | null;
@@ -391,10 +378,29 @@ export interface Trail {
       }[]
     | null;
   description?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * Distance in kilometres.
    */
   distance?: number | null;
+  /**
+   * Duration in hours
+   */
+  duration?: number | null;
   difficulty?: ('easy' | 'moderate' | 'challenging') | null;
   /**
    * Trail start point for the map pin.
@@ -626,7 +632,8 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              campaignText?: T;
+              sectionId?: T;
+              intro?: T;
               trails?: T;
               id?: T;
               blockName?: T;
@@ -727,7 +734,9 @@ export interface TrailsSelect<T extends boolean = true> {
         id?: T;
       };
   description?: T;
+  content?: T;
   distance?: T;
+  duration?: T;
   difficulty?: T;
   coordinates?:
     | T

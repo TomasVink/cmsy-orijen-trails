@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import SectionBase from './SectionBase'
 
 export const TrailsOverview: Block = {
   slug: 'trails-overview',
@@ -6,26 +7,5 @@ export const TrailsOverview: Block = {
     singular: 'Trails Overview',
     plural: 'Trails Overviews',
   },
-  fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-      localized: true,
-    },
-    {
-      name: 'sectionId',
-      type: 'text',
-      required: true,
-      defaultValue: 'trails',
-      admin: {
-        description: 'Used for internal linking using CTA buttons',
-      },
-    },
-    {
-      name: 'intro',
-      type: 'textarea',
-      localized: true,
-    },
-  ],
+  fields: SectionBase,
 }

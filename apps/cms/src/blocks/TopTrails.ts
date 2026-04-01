@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import SectionBase from './SectionBase'
 
 export const TopTrails: Block = {
   slug: 'top-trails',
@@ -7,28 +8,15 @@ export const TopTrails: Block = {
     plural: 'Top Trails',
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-      localized: true,
-    },
-    {
-      name: 'campaignText',
-      type: 'richText',
-      localized: true,
-      admin: {
-        description: 'Campaign copy shown alongside the trail cards.',
-      },
-    },
+    ...SectionBase,
     {
       name: 'trails',
       type: 'relationship',
       relationTo: 'trails',
       hasMany: true,
-      maxDepth: 1,
+      maxDepth: 2,
       admin: {
-        description: 'Select up to 5 trails. Order determines display order.',
+        description: 'Select trails to be featured. Order determines display order.',
       },
     },
   ],

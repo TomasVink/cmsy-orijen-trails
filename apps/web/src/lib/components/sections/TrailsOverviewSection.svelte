@@ -2,8 +2,8 @@
   import type { TrailsOverviewBlock, Trail } from "$lib/payload";
   import { getTrails } from "$lib/payload";
   import Section from "$lib/components/ui/Section.svelte";
-  import TrailDetailCard from "$lib/components/ui/TrailDetailCard.svelte";
   import HereMap from "$lib/components/ui/HereMap.svelte";
+  import TrailCard from "../ui/TrailCard.svelte";
 
   type Props = { block: TrailsOverviewBlock };
   let { block }: Props = $props();
@@ -39,7 +39,11 @@
   let selectedTrail = $state<Trail | null>(null);
 </script>
 
-<Section id={block.sectionId} title={block.title}>
+<Section
+  title={block.title}
+  intro={block.intro ?? undefined}
+  id={block.sectionId}
+>
   <!-- Filters -->
   <div class="flex flex-wrap gap-3 mb-8">
     {#each difficultyOptions as opt}
@@ -66,9 +70,9 @@
 
     {#if selectedTrail}
       <div
-        class="absolute top-4 right-4 bottom-4 w-80 xl:w-96 bg-white overflow-y-auto z-10 p-6 shadow-2xl"
+        class="absolute top-4 right-4 bottom-4 w-80 xl:w-96 bg-black overflow-y-auto z-10 shadow-2xl"
       >
-        <TrailDetailCard
+        <TrailCard
           trail={selectedTrail}
           onClose={() => (selectedTrail = null)}
         />

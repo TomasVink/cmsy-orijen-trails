@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 import { ICON_OPTIONS } from '../icons'
+import SectionBase from './SectionBase'
 
 // "De vier stappen" / how the campaign works
 export const CampaignSteps: Block = {
@@ -9,26 +10,7 @@ export const CampaignSteps: Block = {
     plural: 'Campaign Steps',
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-      localized: true,
-    },
-    {
-      name: 'sectionId',
-      type: 'text',
-      required: true,
-      defaultValue: 'campaign-steps',
-      admin: {
-        description: 'Used for internal linking using CTA buttons',
-      },
-    },
-    {
-      name: 'intro',
-      type: 'textarea',
-      localized: true,
-    },
+    ...SectionBase,
     {
       name: 'steps',
       type: 'array',

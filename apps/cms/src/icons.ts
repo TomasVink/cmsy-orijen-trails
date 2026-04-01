@@ -8,6 +8,7 @@ export const ICON_OPTIONS = [
   { label: 'Map Search', value: 'map-search' },
   { label: 'Group', value: 'group' },
   { label: 'Route', value: 'route' },
+  { label: 'Clock', value: 'clock' },
 ] as const
 
 export type IconName = (typeof ICON_OPTIONS)[number]['value']

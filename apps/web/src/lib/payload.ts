@@ -79,6 +79,17 @@ export type TrailFilters = {
   featured?: boolean
 }
 
+export async function getTrailById(
+  id: string,
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl',
+): Promise<Trail | null> {
+  const response = await fetchFn(`${baseUrl}/api/trails/${id}?depth=1&locale=${locale}`)
+  if (!response.ok) return null
+  return (await response.json()) as Trail
+}
+
 export async function getTrails(
   filters: TrailFilters = {},
   fetchFn: typeof fetch = fetch,

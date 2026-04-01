@@ -2,7 +2,12 @@ import { CollectionConfig } from 'payload'
 
 export const Trails: CollectionConfig = {
   slug: 'trails',
-  access: { read: () => true },
+  access: {
+    read: ({ req: { user } }) => {
+      if (user) return true
+      return { published: { equals: true } }
+    },
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'distance', 'published', 'updatedAt'],
@@ -45,13 +50,25 @@ export const Trails: CollectionConfig = {
       name: 'description',
       type: 'textarea',
       localized: true,
+      maxLength: 120,
     },
-    // ── Trail metadata ────────────────────────────────────────────
+    {
+      name: 'content',
+      type: 'richText',
+      localized: true,
+    },
     {
       name: 'distance',
       type: 'number',
       admin: {
         description: 'Distance in kilometres.',
+      },
+    },
+    {
+      name: 'duration',
+      type: 'number',
+      admin: {
+        description: 'Duration in hours',
       },
     },
     {

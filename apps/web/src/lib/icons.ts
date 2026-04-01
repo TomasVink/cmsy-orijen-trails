@@ -7,7 +7,10 @@
 //   3. Also add the entry (label + value) to apps/cms/src/icons.ts
 
 export const ICONS: Record<string, string> = {
-  'map-search': 'icon-[material-symbols-light--map-search]',
-  'group':      'icon-[material-symbols-light--group]',
-  'route':      'icon-[material-symbols-light--route]',
-}
+  "map-search": "icon-[material-symbols-light--map-search]",
+  group: "icon-[material-symbols-light--group]",
+  route: "icon-[material-symbols-light--route]",
+  clock: "icon-[material-symbols-light--nest-clock-farsight-analog-rounded]",
+  "arrow-right": "icon-[material-symbols--arrow-right-alt-rounded]",
+  "arrow-left": "icon-[material-symbols--arrow-left-alt-rounded]",
+};
