@@ -8,5 +8,11 @@
       "default": "./src/index.ts"
     }
   },
-  "files": ["src"]
+  "files": ["src"],
+  "peerDependencies": {
+    "payload": ">=3"
+  },
+  "devDependencies": {
+    "payload": "3.79.0"
+  }
 }

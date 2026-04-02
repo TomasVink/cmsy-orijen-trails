@@ -27,6 +27,7 @@
         "sharp": "0.34.2",
       },
       "devDependencies": {
+        "@eslint/eslintrc": "^3.3.5",
         "@playwright/test": "1.58.2",
         "@testing-library/react": "16.3.0",
         "@types/node": "22.19.9",
@@ -67,6 +68,12 @@
     "packages/payload-types": {
       "name": "@repo/payload-types",
       "version": "0.0.1",
+      "devDependencies": {
+        "payload": "3.79.0",
+      },
+      "peerDependencies": {
+        "payload": ">=3",
+      },
     },
   },
   "packages": {
