@@ -29,7 +29,7 @@ export async function GET(request: Request) {
       code,
       client_id: process.env.LOGTO_APP_ID!,
       client_secret: process.env.LOGTO_APP_SECRET!,
-      redirect_uri: `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/oauth/logto/callback`,
+      redirect_uri: `${new URL(request.url).origin}/api/users/oauth/logto/callback`,
     }),
   })
 
@@ -73,8 +73,13 @@ export async function GET(request: Request) {
   const userId =
     existing.docs[0]?.id ??
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (await payload.create({ collection: 'users', data: { email, logtoSub } as any, overrideAccess: true }))
-      .id
+    (
+      await payload.create({
+        collection: 'users',
+        data: { email, logtoSub } as any,
+        overrideAccess: true,
+      })
+    ).id
 
   // Issue a JWT signed with payload.secret (the derived key Payload uses internally).
   // payload.secret = sha256(PAYLOAD_SECRET).slice(0,32) — NOT the raw env var.
