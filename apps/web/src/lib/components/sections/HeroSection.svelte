@@ -30,7 +30,7 @@
 
   <!-- Overlay gradient -->
   <div
-    class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"
+    class="absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/60"
   ></div>
 
   <!-- Content -->
