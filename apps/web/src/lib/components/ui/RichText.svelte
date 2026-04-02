@@ -1,5 +1,8 @@
 <script lang="ts">
   // Renders Payload Lexical rich text content as HTML.
+  import { env } from '$env/dynamic/public'
+
+  type MediaValue = { url?: string; filename?: string; alt?: string; width?: number; height?: number }
 
   type LexicalNode = {
     type: string
@@ -9,7 +12,7 @@
     url?: string
     listType?: string
     children?: LexicalNode[]
-    value?: { url?: string; filename?: string; alt?: string; width?: number; height?: number } | string | number
+    value?: MediaValue | string | number
   }
 
   type LexicalContent = {
@@ -55,6 +58,23 @@
         return `<li>${children()}</li>`
       case 'quote':
         return `<blockquote>${children()}</blockquote>`
+      case 'upload': {
+        const raw = node.value
+        const img: MediaValue | undefined =
+          typeof raw === 'object' && raw !== null ? (raw as MediaValue) : undefined
+        if (!img) return ''
+        let src = img.url ?? ''
+        if (!src && img.filename) {
+          src = `${env.PUBLIC_PAYLOAD_URL}/api/media/file/${img.filename}`
+        } else if (src && !src.startsWith('http')) {
+          src = `${env.PUBLIC_PAYLOAD_URL}${src}`
+        }
+        if (!src) return ''
+        const alt = img.alt ? img.alt.replace(/"/g, '&quot;') : ''
+        const width = img.width ? ` width="${img.width}"` : ''
+        const height = img.height ? ` height="${img.height}"` : ''
+        return `<img src="${src}" alt="${alt}"${width}${height} class="max-w-full h-auto">`
+      }
       case 'horizontalrule':
         return '<hr>'
       case 'linebreak':
