@@ -102,8 +102,7 @@ services:
       # Internal Docker network URL — used for SSR fetches, never hits nginx
       PAYLOAD_INTERNAL_URL: http://cms:3000
     depends_on:
-      cms:
-        condition: service_healthy
+      - cms
     restart: unless-stopped
 
   nginx:
@@ -112,10 +111,8 @@ services:
       context: .
       dockerfile: nginx/Dockerfile
     depends_on:
-      cms:
-        condition: service_healthy
-      web:
-        condition: service_started
+      - cms
+      - web
     # No ports mapping — Coolify's Traefik routes traffic to this container via labels.
     # Project-specific service name prevents Traefik from merging nginx containers
     # across stacks when multiple projects run on the same Coolify server.
