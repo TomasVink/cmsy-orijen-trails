@@ -78,6 +78,12 @@ services:
       S3_SECRET_KEY: ${S3_SECRET_KEY:-}
       S3_REGION: ${S3_REGION:-auto}
       S3_ENDPOINT: ${S3_ENDPOINT:-}
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3000/api/health || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
     depends_on:
       postgres:
         condition: service_healthy
@@ -96,7 +102,8 @@ services:
       # Internal Docker network URL — used for SSR fetches, never hits nginx
       PAYLOAD_INTERNAL_URL: http://cms:3000
     depends_on:
-      - cms
+      cms:
+        condition: service_healthy
     restart: unless-stopped
 
   nginx:
@@ -105,8 +112,10 @@ services:
       context: .
       dockerfile: nginx/Dockerfile
     depends_on:
-      - cms
-      - web
+      cms:
+        condition: service_healthy
+      web:
+        condition: service_started
     # No ports mapping — Coolify's Traefik routes traffic to this container via labels.
     # Project-specific service name prevents Traefik from merging nginx containers
     # across stacks when multiple projects run on the same Coolify server.
