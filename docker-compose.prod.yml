@@ -79,7 +79,7 @@ services:
       S3_REGION: ${S3_REGION:-auto}
       S3_ENDPOINT: ${S3_ENDPOINT:-}
     healthcheck:
-      test: ['CMD-SHELL', 'curl -f http://localhost:3000/api/health || exit 1']
+      test: ['CMD-SHELL', 'wget -qO /dev/null http://localhost:3000/api/health || exit 1']
       interval: 10s
       timeout: 5s
       retries: 12
