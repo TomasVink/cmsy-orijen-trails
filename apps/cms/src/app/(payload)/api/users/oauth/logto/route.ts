@@ -13,7 +13,7 @@ export async function GET(request: Request) {
 
   const params = new URLSearchParams({
     client_id: process.env.LOGTO_APP_ID!,
-    redirect_uri: `${new URL(request.url).origin}/api/users/oauth/logto/callback`,
+    redirect_uri: `${process.env.NEXT_PUBLIC_SERVER_URL || new URL(request.url).origin}/api/users/oauth/logto/callback`,
     response_type: 'code',
     scope: 'openid email profile urn:logto:scope:organizations',
     state,

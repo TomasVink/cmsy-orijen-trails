@@ -29,7 +29,7 @@ export async function GET(request: Request) {
       code,
       client_id: process.env.LOGTO_APP_ID!,
       client_secret: process.env.LOGTO_APP_SECRET!,
-      redirect_uri: `${new URL(request.url).origin}/api/users/oauth/logto/callback`,
+      redirect_uri: `${process.env.NEXT_PUBLIC_SERVER_URL || new URL(request.url).origin}/api/users/oauth/logto/callback`,
     }),
   })
 
