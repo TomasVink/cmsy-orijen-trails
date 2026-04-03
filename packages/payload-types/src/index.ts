@@ -492,10 +492,6 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
-  /**
-   * Optional external URL. Overrides the default post URL when set.
-   */
-  link?: string | null;
   seo?: {
     title?: string | null;
     description?: string | null;
@@ -739,7 +735,6 @@ export interface PostsSelect<T extends boolean = true> {
   excerpt?: T;
   header?: T;
   content?: T;
-  link?: T;
   seo?:
     | T
     | {

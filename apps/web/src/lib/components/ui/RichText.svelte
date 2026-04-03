@@ -2,7 +2,13 @@
   // Renders Payload Lexical rich text content as HTML.
   import { env } from '$env/dynamic/public'
 
-  type MediaValue = { url?: string; filename?: string; alt?: string; width?: number; height?: number }
+  type MediaValue = {
+    url?: string
+    filename?: string
+    alt?: string
+    width?: number
+    height?: number
+  }
 
   type LexicalNode = {
     type: string
@@ -27,6 +33,11 @@
 
   let { content, class: className = '' }: Props = $props()
 
+  const headingClass: Record<string, string> = {
+    h2: 'text-2xl',
+    h3: 'text-xl',
+  }
+
   function renderNode(node: LexicalNode): string {
     const children = () => (node.children ?? []).map(renderNode).join('')
 
@@ -34,9 +45,9 @@
       case 'root':
         return children()
       case 'paragraph':
-        return `<p>${children()}</p>`
+        return `<p class='my-4'>${children()}</p>`
       case 'heading':
-        return `<${node.tag}>${children()}</${node.tag}>`
+        return `<${node.tag} class=${headingClass[node.tag as string] ?? ''}>${children()}</${node.tag}>`
       case 'text': {
         if (!node.text) return ''
         let t = node.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -73,7 +84,7 @@
         const alt = img.alt ? img.alt.replace(/"/g, '&quot;') : ''
         const width = img.width ? ` width="${img.width}"` : ''
         const height = img.height ? ` height="${img.height}"` : ''
-        return `<img src="${src}" alt="${alt}"${width}${height} class="max-w-full h-auto">`
+        return `<div><img src="${src}" alt="${alt}"${width}${height} class="max-w-2xl h-auto mx-auto"></div>`
       }
       case 'horizontalrule':
         return '<hr>'

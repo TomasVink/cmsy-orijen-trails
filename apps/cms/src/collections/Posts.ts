@@ -43,13 +43,6 @@ export const Posts: CollectionConfig = {
       localized: true,
     },
     {
-      name: 'link',
-      type: 'text',
-      admin: {
-        description: 'Optional external URL. Overrides the default post URL when set.',
-      },
-    },
-    {
       name: 'seo',
       type: 'group',
       fields: [

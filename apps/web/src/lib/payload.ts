@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/public'
-import type { Page, Media, Trail, Influencer } from '@repo/payload-types'
+import type { Page, Media, Trail, Influencer, Post } from '@repo/payload-types'
 
-export type { Page, Media, Trail, Influencer }
+export type { Page, Media, Trail, Influencer, Post }
 
 export type Locale = 'nl' | 'en'
 
@@ -69,6 +69,20 @@ export async function getAllPages(
   if (!response.ok) return []
   const data = (await response.json()) as PaginatedDocs<Page>
   return data.docs
+}
+
+// ── Posts ─────────────────────────────────────────────────────────
+export async function getPostBySlug(
+  slug: string,
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl',
+): Promise<Post | null> {
+  const url = `${baseUrl}/api/posts?where[slug][equals]=${encodeURIComponent(slug)}&depth=2&limit=1&locale=${locale}`
+  const response = await fetchFn(url)
+  if (!response.ok) return null
+  const data = (await response.json()) as PaginatedDocs<Post>
+  return data.docs[0] ?? null
 }
 
 // ── Trails ────────────────────────────────────────────────────────
