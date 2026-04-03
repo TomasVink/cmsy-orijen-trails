@@ -29,9 +29,9 @@ export function middleware(request: NextRequest) {
       ).toString()
       const cmsyUrl = process.env.NEXT_PUBLIC_CMS_PLATFORM_URL
 
-      const redirectTarget = cmsyUrl
-        ? `${cmsyUrl}/auth/sign-in?return_to=${encodeURIComponent(oauthStartUrl)}`
-        : oauthStartUrl
+      console.log(cmsyUrl, oauthStartUrl, encodeURIComponent(oauthStartUrl))
+
+      const redirectTarget = `${cmsyUrl}/auth/sign-in?return_to=${encodeURIComponent(oauthStartUrl)}`
 
       const response = NextResponse.redirect(redirectTarget)
 
