@@ -23,7 +23,10 @@ export function middleware(request: NextRequest) {
   if (pathname.startsWith('/admin')) {
     const token = request.cookies.get('payload-token')
     if (!token) {
-      const oauthStartUrl = new URL('/api/users/oauth/logto', request.nextUrl.origin).toString()
+      const oauthStartUrl = new URL(
+        '/api/users/oauth/logto',
+        process.env.NEXT_PUBLIC_SERVER_URL,
+      ).toString()
       const cmsyUrl = process.env.NEXT_PUBLIC_CMS_PLATFORM_URL
 
       const redirectTarget = cmsyUrl
