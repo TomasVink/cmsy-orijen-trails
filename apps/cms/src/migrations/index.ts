@@ -1,9 +1,15 @@
 import * as migration_20260402_073026_init from './20260402_073026_init';
+import * as migration_20260403_150426_trails_update from './20260403_150426_trails_update';
 
 export const migrations = [
   {
     up: migration_20260402_073026_init.up,
     down: migration_20260402_073026_init.down,
-    name: '20260402_073026_init'
+    name: '20260402_073026_init',
+  },
+  {
+    up: migration_20260403_150426_trails_update.up,
+    down: migration_20260403_150426_trails_update.down,
+    name: '20260403_150426_trails_update'
   },
 ];
