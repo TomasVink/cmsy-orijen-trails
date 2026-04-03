@@ -38,6 +38,7 @@
 services:
   postgres:
     image: postgres:18-alpine
+    container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -54,6 +55,7 @@ services:
     restart: unless-stopped
 
   cms:
+    container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-cms
     build:
       context: .
       dockerfile: apps/cms/Dockerfile
@@ -84,6 +86,7 @@ services:
     restart: unless-stopped
 
   web:
+    container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-web
     build:
       context: .
       dockerfile: apps/web/Dockerfile
@@ -97,6 +100,7 @@ services:
     restart: unless-stopped
 
   nginx:
+    container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-nginx
     build:
       context: .
       dockerfile: nginx/Dockerfile
