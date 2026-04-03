@@ -120,6 +120,8 @@ services:
 
 volumes:
   postgres_data:
+    external: true
+    name: orijen-trails-postgres-db
 
 networks:
   default: {}
