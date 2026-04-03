@@ -110,8 +110,7 @@ services:
     # No ports mapping — Coolify's Traefik routes traffic to this container via labels.
     # Project-specific service name prevents Traefik from merging nginx containers
     # across stacks when multiple projects run on the same Coolify server.
-    labels:
-      - traefik.http.services.orijen-trails-nginx.loadbalancer.server.port=80
+    labels: {}
     expose:
       - "80"
     networks:
