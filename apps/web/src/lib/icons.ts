@@ -13,4 +13,8 @@ export const ICONS: Record<string, string> = {
   clock: "icon-[material-symbols-light--nest-clock-farsight-analog-rounded]",
   "arrow-right": "icon-[material-symbols--arrow-right-alt-rounded]",
   "arrow-left": "icon-[material-symbols--arrow-left-alt-rounded]",
+  add: "icon-[material-symbols-light--add]",
+  send: "icon-[material-symbols-light--send]",
+  close: "icon-[material-symbols-light--close]",
+  check: "icon-[material-symbols--check]",
 };

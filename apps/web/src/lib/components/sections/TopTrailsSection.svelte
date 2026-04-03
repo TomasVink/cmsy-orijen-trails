@@ -3,15 +3,8 @@
   import Section from "$lib/components/ui/Section.svelte";
   import TrailCard from "$lib/components/ui/TrailCard.svelte";
 
-  type Props = { block: TopTrailsBlock };
-  let { block }: Props = $props();
-
-  // Payload populates relations at depth ≥ 1; filter out any un-populated IDs
-  const trails = $derived(
-    (block.trails ?? []).filter(
-      (t): t is Trail => typeof t === "object" && t.featured === true,
-    ),
-  );
+  type Props = { block: TopTrailsBlock; trails: Trail[] };
+  let { block, trails }: Props = $props();
 </script>
 
 <Section

@@ -1,5 +1,7 @@
 <script lang="ts">
-  import type { Page } from '$lib/payload'
+  import type { Page, Trail } from '$lib/payload'
+  import type { SuperValidated, Infer } from 'sveltekit-superforms'
+  import type { TrailSubmitSchema } from '$lib/trail-submit-schema'
 
   import HeroSection from './sections/HeroSection.svelte'
   import CampaignStepsSection from './sections/CampaignStepsSection.svelte'
@@ -12,9 +14,10 @@
 
   type Props = {
     blocks: Page['layout']
+    form?: SuperValidated<Infer<TrailSubmitSchema>>
   }
 
-  let { blocks }: Props = $props()
+  let { blocks, form }: Props = $props()
 </script>
 
 {#if blocks?.length}
@@ -24,11 +27,11 @@
     {:else if block.blockType === 'campaign-steps'}
       <CampaignStepsSection {block} />
     {:else if block.blockType === 'top-trails'}
-      <TopTrailsSection {block} />
+      <TopTrailsSection {block} trails={(block.trails ?? []).filter((t): t is Trail => typeof t === 'object')} />
     {:else if block.blockType === 'trails-overview'}
       <TrailsOverviewSection {block} />
     {:else if block.blockType === 'submit-trail'}
-      <SubmitTrailSection {block} />
+      <SubmitTrailSection {block} {form} />
     {:else if block.blockType === 'blog'}
       <BlogSection {block} />
     {:else if block.blockType === 'social-button'}

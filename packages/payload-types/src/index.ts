@@ -228,21 +228,11 @@ export interface Page {
           }
         | {
             title: string;
-            body?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
+            /**
+             * Used for internal linking using CTA buttons
+             */
+            sectionId: string;
+            intro?: string | null;
             /**
              * Submit button label.
              */
@@ -251,6 +241,23 @@ export interface Page {
             emailLabel?: string | null;
             trailNameLabel?: string | null;
             descriptionLabel?: string | null;
+            addressLabel?: string | null;
+            distanceLabel?: string | null;
+            offLeashAreaLabel?: string | null;
+            hospitalityLabel?: string | null;
+            waterLabel?: string | null;
+            offLeashAreaPlaceholder?: string | null;
+            offLeashAreaFullyLabel?: string | null;
+            offLeashAreaPartialLabel?: string | null;
+            offLeashAreaNoneLabel?: string | null;
+            /**
+             * Heading shown after a successful submission.
+             */
+            successTitle?: string | null;
+            /**
+             * Body text shown after a successful submission.
+             */
+            successMessage?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'submit-trail';
@@ -369,7 +376,7 @@ export interface Trail {
   id: number;
   title: string;
   published?: boolean | null;
-  featured?: boolean | null;
+  community?: boolean | null;
   header?: (number | null) | Media;
   photos?:
     | {
@@ -402,6 +409,18 @@ export interface Trail {
    */
   duration?: number | null;
   difficulty?: ('easy' | 'moderate' | 'challenging') | null;
+  /**
+   * What are the off leash rules along this route.
+   */
+  offLeashArea?: ('fully' | 'partial' | 'none') | null;
+  /**
+   * Is there any hospitality nearby or on the route.
+   */
+  hospitality?: boolean | null;
+  /**
+   * Is there any accessible natural water on the route, like a river, lake or sea.
+   */
+  water?: boolean | null;
   /**
    * Trail start point for the map pin.
    */
@@ -651,12 +670,24 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              body?: T;
+              sectionId?: T;
+              intro?: T;
               ctaLabel?: T;
               nameLabel?: T;
               emailLabel?: T;
               trailNameLabel?: T;
               descriptionLabel?: T;
+              addressLabel?: T;
+              distanceLabel?: T;
+              offLeashAreaLabel?: T;
+              hospitalityLabel?: T;
+              waterLabel?: T;
+              offLeashAreaPlaceholder?: T;
+              offLeashAreaFullyLabel?: T;
+              offLeashAreaPartialLabel?: T;
+              offLeashAreaNoneLabel?: T;
+              successTitle?: T;
+              successMessage?: T;
               id?: T;
               blockName?: T;
             };
@@ -725,7 +756,7 @@ export interface PostsSelect<T extends boolean = true> {
 export interface TrailsSelect<T extends boolean = true> {
   title?: T;
   published?: T;
-  featured?: T;
+  community?: T;
   header?: T;
   photos?:
     | T
@@ -738,6 +769,9 @@ export interface TrailsSelect<T extends boolean = true> {
   distance?: T;
   duration?: T;
   difficulty?: T;
+  offLeashArea?: T;
+  hospitality?: T;
+  water?: T;
   coordinates?:
     | T
     | {

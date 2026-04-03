@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import SectionBase from './SectionBase'
 
 export const SubmitTrail: Block = {
   slug: 'submit-trail',
@@ -7,17 +8,7 @@ export const SubmitTrail: Block = {
     plural: 'Submit Trail',
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-      localized: true,
-    },
-    {
-      name: 'body',
-      type: 'richText',
-      localized: true,
-    },
+    ...SectionBase,
     {
       name: 'ctaLabel',
       type: 'text',
@@ -48,6 +39,74 @@ export const SubmitTrail: Block = {
       type: 'text',
       localized: true,
       defaultValue: 'Trail description',
+    },
+    {
+      name: 'addressLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Address / start point',
+    },
+    {
+      name: 'distanceLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Distance (km)',
+    },
+    {
+      name: 'offLeashAreaLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Off-leash area',
+    },
+    {
+      name: 'hospitalityLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Hospitality nearby (café, restaurant, etc.)',
+    },
+    {
+      name: 'waterLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Natural water on route (river, lake, sea)',
+    },
+    {
+      name: 'offLeashAreaPlaceholder',
+      type: 'text',
+      localized: true,
+      defaultValue: '— select —',
+    },
+    {
+      name: 'offLeashAreaFullyLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Fully',
+    },
+    {
+      name: 'offLeashAreaPartialLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Partial',
+    },
+    {
+      name: 'offLeashAreaNoneLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: 'None',
+    },
+    {
+      name: 'successTitle',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Thank you!',
+      admin: { description: 'Heading shown after a successful submission.' },
+    },
+    {
+      name: 'successMessage',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Your trail has been submitted and will be reviewed shortly.',
+      admin: { description: 'Body text shown after a successful submission.' },
     },
   ],
 }

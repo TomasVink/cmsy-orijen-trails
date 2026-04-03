@@ -7,6 +7,7 @@ export const Trails: CollectionConfig = {
       if (user) return true
       return { published: { equals: true } }
     },
+    create: () => true,
   },
   admin: {
     useAsTitle: 'title',
@@ -25,7 +26,7 @@ export const Trails: CollectionConfig = {
       defaultValue: false,
     },
     {
-      name: 'featured',
+      name: 'community',
       type: 'checkbox',
       defaultValue: false,
     },
@@ -79,6 +80,42 @@ export const Trails: CollectionConfig = {
         { label: 'Moderate', value: 'moderate' },
         { label: 'Challenging', value: 'challenging' },
       ],
+    },
+    {
+      name: 'offLeashArea',
+      type: 'select',
+      options: [
+        {
+          label: 'Fully',
+          value: 'fully',
+        },
+        {
+          label: 'Partial',
+          value: 'partial',
+        },
+        {
+          label: 'None',
+          value: 'none',
+        },
+      ],
+      admin: {
+        description: 'What are the off leash rules along this route.',
+      },
+    },
+    {
+      name: 'hospitality',
+      type: 'checkbox',
+      admin: {
+        description: 'Is there any hospitality nearby or on the route.',
+      },
+    },
+    {
+      name: 'water',
+      type: 'checkbox',
+      admin: {
+        description:
+          'Is there any accessible natural water on the route, like a river, lake or sea.',
+      },
     },
     {
       name: 'coordinates',

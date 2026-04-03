@@ -34,7 +34,7 @@
 {/if}
 
 {#if preview.data?.layout?.length}
-  <BlockRenderer blocks={preview.data.layout} />
+  <BlockRenderer blocks={preview.data.layout} form={data.form} />
 {:else if !data.page}
   <div class="min-h-screen flex items-center justify-center">
     <p class="font-sans text-orijen-gray">
