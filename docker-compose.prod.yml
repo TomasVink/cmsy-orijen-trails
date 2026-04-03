@@ -44,7 +44,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: cms
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - /var/lib/orijen-trails/postgres:/var/lib/postgresql/data
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 5s
@@ -117,11 +117,6 @@ services:
       - default  # talks to cms:3000 and web:3001
       - coolify  # Traefik can reach it
     restart: unless-stopped
-
-volumes:
-  postgres_data:
-    external: true
-    name: orijen-trails-postgres-db
 
 networks:
   default: {}
