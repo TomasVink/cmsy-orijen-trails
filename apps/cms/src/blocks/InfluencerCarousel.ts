@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import SectionBase from './SectionBase'
 
 export const InfluencerCarousel: Block = {
   slug: 'influencer-carousel',
@@ -7,20 +8,15 @@ export const InfluencerCarousel: Block = {
     plural: 'Influencer Carousels',
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-      localized: true,
-    },
+    ...SectionBase,
     {
       name: 'influencers',
       type: 'relationship',
       relationTo: 'influencers',
       hasMany: true,
-      maxDepth: 1,
+      maxDepth: 2,
       admin: {
-        description: 'Select influencers to display in the carousel.',
+        description: 'Select influencers to display.',
       },
     },
   ],

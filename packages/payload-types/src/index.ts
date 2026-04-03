@@ -299,7 +299,12 @@ export interface Page {
         | {
             title: string;
             /**
-             * Select influencers to display in the carousel.
+             * Used for internal linking using CTA buttons
+             */
+            sectionId: string;
+            intro?: string | null;
+            /**
+             * Select influencers to display.
              */
             influencers?: (number | Influencer)[] | null;
             id?: string | null;
@@ -479,16 +484,14 @@ export interface Post {
 export interface Influencer {
   id: number;
   name: string;
-  /**
-   * Social media handle without the @ symbol.
-   */
-  handle: string;
-  platform: 'instagram' | 'tiktok';
   image: number | Media;
-  /**
-   * Full URL to their social profile.
-   */
-  profileUrl: string;
+  bio?: string | null;
+  accounts: {
+    platform: 'instagram' | 'facebook' | 'linkedin' | 'tiktok' | 'twitter' | 'youtube' | 'website';
+    handle?: string | null;
+    url: string;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -705,6 +708,8 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              sectionId?: T;
+              intro?: T;
               influencers?: T;
               id?: T;
               blockName?: T;
@@ -782,10 +787,16 @@ export interface TrailsSelect<T extends boolean = true> {
  */
 export interface InfluencersSelect<T extends boolean = true> {
   name?: T;
-  handle?: T;
-  platform?: T;
   image?: T;
-  profileUrl?: T;
+  bio?: T;
+  accounts?:
+    | T
+    | {
+        platform?: T;
+        handle?: T;
+        url?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

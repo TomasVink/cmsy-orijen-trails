@@ -25,8 +25,8 @@
 <nav
   class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 pointer-events-none"
 >
-  <div class="pointer-events-auto bg-orijen-black/60 px-4 py-2">
-    {#if !isRoot}
+  {#if !isRoot}
+    <div class="pointer-events-auto bg-orijen-black/60 px-4 py-2">
       <a
         href={backHref}
         class="flex items-center gap-1 text-white uppercase tracking-widest text-sm font-bold"
@@ -34,8 +34,10 @@
         <Icon name="arrow-left" class="size-6" />
         <span>Back</span>
       </a>
-    {/if}
-  </div>
+    </div>
+  {:else}
+    <span></span>
+  {/if}
 
   <div class="pointer-events-auto bg-orijen-black/60 px-4 py-2">
     <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">

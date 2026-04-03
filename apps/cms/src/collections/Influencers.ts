@@ -14,35 +14,38 @@ export const Influencers: CollectionConfig = {
       required: true,
     },
     {
-      name: 'handle',
-      type: 'text',
-      required: true,
-      admin: {
-        description: 'Social media handle without the @ symbol.',
-      },
-    },
-    {
-      name: 'platform',
-      type: 'select',
-      required: true,
-      options: [
-        { label: 'Instagram', value: 'instagram' },
-        { label: 'TikTok', value: 'tiktok' },
-      ],
-    },
-    {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
       required: true,
     },
     {
-      name: 'profileUrl',
-      type: 'text',
+      name: 'bio',
+      type: 'textarea',
+    },
+    {
+      name: 'accounts',
+      type: 'array',
       required: true,
-      admin: {
-        description: 'Full URL to their social profile.',
-      },
+      minRows: 1,
+      fields: [
+        {
+          name: 'platform',
+          type: 'select',
+          required: true,
+          options: [
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'LinkedIn', value: 'linkedin' },
+            { label: 'TikTok', value: 'tiktok' },
+            { label: 'Twitter / X', value: 'twitter' },
+            { label: 'YouTube', value: 'youtube' },
+            { label: 'Website', value: 'website' },
+          ],
+        },
+        { name: 'handle', type: 'text' },
+        { name: 'url', type: 'text', required: true, admin: { placeholder: 'https://...' } },
+      ],
     },
   ],
 }

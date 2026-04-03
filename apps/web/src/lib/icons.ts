@@ -6,7 +6,7 @@
 //      The full class string MUST be a static literal so Tailwind can detect it.
 //   3. Also add the entry (label + value) to apps/cms/src/icons.ts
 
-export const ICONS: Record<string, string> = {
+export const ICONS = {
   "map-search": "icon-[material-symbols-light--map-search]",
   group: "icon-[material-symbols-light--group]",
   route: "icon-[material-symbols-light--route]",
@@ -17,4 +17,12 @@ export const ICONS: Record<string, string> = {
   send: "icon-[material-symbols-light--send]",
   close: "icon-[material-symbols-light--close]",
   check: "icon-[material-symbols--check]",
-};
+  // Platforms
+  instagram: "icon-[simple-icons--instagram]",
+  facebook: "icon-[simple-icons--facebook]",
+  linkedin: "icon-[simple-icons--linkedin]",
+  tiktok: "icon-[simple-icons--tiktok]",
+  twitter: "icon-[simple-icons--x]",
+  youtube: "icon-[simple-icons--youtube]",
+  website: "icon-[material-symbols-light--language]",
+} as const;

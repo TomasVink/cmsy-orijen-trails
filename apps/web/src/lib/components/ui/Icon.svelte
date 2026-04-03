@@ -2,7 +2,7 @@
   import { ICONS } from "$lib/icons";
 
   type Props = {
-    name: string;
+    name: keyof typeof ICONS;
     class?: string;
   };
 
