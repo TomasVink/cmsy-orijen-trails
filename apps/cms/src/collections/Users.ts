@@ -25,17 +25,6 @@ export const Users: CollectionConfig = {
           const claims = verifyJwt(token, payload.secret)
           if (!claims?.email || !claims.id || claims.collection !== 'users') return { user: null }
 
-          // Verify the user still exists in the DB. If the DB was reset or the
-          // user was deleted, a stale JWT would otherwise let Payload write
-          // preferences rows with a dangling FK and crash with a 23503 error.
-          const existing = await payload.find({
-            collection: 'users',
-            where: { id: { equals: claims.id } },
-            limit: 1,
-            overrideAccess: true,
-          })
-          if (!existing.docs.length) return { user: null }
-
           return {
             user: {
               id: claims.id as number,
