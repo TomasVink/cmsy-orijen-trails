@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import SectionBase from './SectionBase'
 
 export const BlogBlock: Block = {
   slug: 'blog',
@@ -7,23 +8,16 @@ export const BlogBlock: Block = {
     plural: 'Blog Blocks',
   },
   fields: [
+    ...SectionBase,
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-      localized: true,
-    },
-    {
-      name: 'body',
-      type: 'richText',
-      required: true,
-      localized: true,
-    },
-    {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
+      name: 'featuredPosts',
+      type: 'relationship',
+      relationTo: 'posts',
+      hasMany: true,
+      maxDepth: 2,
+      admin: {
+        description: 'Select blog posts to be featured. Order determines display order.',
+      },
     },
   ],
 }

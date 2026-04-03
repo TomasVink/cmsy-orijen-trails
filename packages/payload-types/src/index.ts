@@ -264,22 +264,15 @@ export interface Page {
           }
         | {
             title: string;
-            body: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            image: number | Media;
+            /**
+             * Used for internal linking using CTA buttons
+             */
+            sectionId: string;
+            intro?: string | null;
+            /**
+             * Select blog posts to be featured. Order determines display order.
+             */
+            featuredPosts?: (number | Post)[] | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'blog';
@@ -443,26 +436,6 @@ export interface Trail {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "influencers".
- */
-export interface Influencer {
-  id: number;
-  name: string;
-  /**
-   * Social media handle without the @ symbol.
-   */
-  handle: string;
-  platform: 'instagram' | 'tiktok';
-  image: number | Media;
-  /**
-   * Full URL to their social profile.
-   */
-  profileUrl: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -496,6 +469,26 @@ export interface Post {
     title?: string | null;
     description?: string | null;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "influencers".
+ */
+export interface Influencer {
+  id: number;
+  name: string;
+  /**
+   * Social media handle without the @ symbol.
+   */
+  handle: string;
+  platform: 'instagram' | 'tiktok';
+  image: number | Media;
+  /**
+   * Full URL to their social profile.
+   */
+  profileUrl: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -691,8 +684,9 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              body?: T;
-              image?: T;
+              sectionId?: T;
+              intro?: T;
+              featuredPosts?: T;
               id?: T;
               blockName?: T;
             };

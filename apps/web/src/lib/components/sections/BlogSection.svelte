@@ -1,35 +1,35 @@
 <script lang="ts">
-  import type { BlogBlock, Media } from '$lib/payload'
-  import { mediaUrl } from '$lib/payload'
+  import type { BlogBlock, Post } from '$lib/payload'
   import Section from '$lib/components/ui/Section.svelte'
-  import RichText from '$lib/components/ui/RichText.svelte'
-  import { env } from '$env/dynamic/public'
+  import Icon from '../ui/Icon.svelte'
+  import { page } from '$app/state'
 
-  type Props = { block: BlogBlock }
-  let { block }: Props = $props()
+  type Props = { block: BlogBlock; posts: Post[] }
+  let { block, posts }: Props = $props()
 
-  const image = $derived(typeof block.image === 'object' ? (block.image as Media) : null)
-  const imageSrc = $derived(mediaUrl(image, env.PUBLIC_PAYLOAD_URL))
+  const locale = $derived(page.params.locale ?? 'nl')
 </script>
 
-<Section id="blog" class="py-20 bg-orijen-cream">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-    <!-- Image -->
-    {#if imageSrc}
-      <div class="aspect-4/3 overflow-hidden bg-orijen-gray/10">
-        <img
-          src={imageSrc}
-          alt={image?.alt ?? block.title}
-          class="w-full h-full object-cover"
-        />
+<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId}>
+  {#each posts as post}
+    <a
+      href="/{locale}/blog/{post.slug}"
+      class="bg-orijen-gray/20 border border-orijen-gray/30 hover:border-orijen-red hover:bg-orijen-gray/30 grid grid-cols-3 p-8 gap-8"
+    >
+      {#if typeof post.header === 'object' && post.header?.url}
+        <img src={post.header.url} alt={post.header.alt} class="w-full h-full object-cover" />
+      {:else}
+        <div class="bg-orijen-gray/40"></div>
+      {/if}
+      <div class="col-span-2 flex flex-col gap-2">
+        <h3 class="text-3xl">{post.title}</h3>
+        {#if post.excerpt}
+          <p class="text-orijen-gray">{post.excerpt}</p>
+        {/if}
+        <span class="text-sm text-orijen-red hover:underline mt-auto self-end flex align-middle"
+          >Continue reading <Icon name="arrow-right" class="size-6" /></span
+        >
       </div>
-    {/if}
-
-    <!-- Text -->
-    <div class="flex flex-col gap-6">
-      <h2 class="font-display text-5xl md:text-6xl uppercase leading-none">{block.title}</h2>
-      <RichText content={block.body} class="text-orijen-gray" />
-
-    </div>
-  </div>
+    </a>
+  {/each}
 </Section>

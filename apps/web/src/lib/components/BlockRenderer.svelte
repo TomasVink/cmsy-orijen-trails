@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Page, Trail } from '$lib/payload'
+  import type { Page, Post, Trail } from '$lib/payload'
   import type { SuperValidated, Infer } from 'sveltekit-superforms'
   import type { TrailSubmitSchema } from '$lib/trail-submit-schema'
 
@@ -27,13 +27,19 @@
     {:else if block.blockType === 'campaign-steps'}
       <CampaignStepsSection {block} />
     {:else if block.blockType === 'top-trails'}
-      <TopTrailsSection {block} trails={(block.trails ?? []).filter((t): t is Trail => typeof t === 'object')} />
+      <TopTrailsSection
+        {block}
+        trails={(block.trails ?? []).filter((t): t is Trail => typeof t === 'object')}
+      />
     {:else if block.blockType === 'trails-overview'}
       <TrailsOverviewSection {block} />
     {:else if block.blockType === 'submit-trail'}
       <SubmitTrailSection {block} {form} />
     {:else if block.blockType === 'blog'}
-      <BlogSection {block} />
+      <BlogSection
+        {block}
+        posts={(block.featuredPosts ?? []).filter((t): t is Post => typeof t === 'object')}
+      />
     {:else if block.blockType === 'social-button'}
       <SocialButtonSection {block} />
     {:else if block.blockType === 'influencer-carousel'}
