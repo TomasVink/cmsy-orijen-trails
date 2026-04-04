@@ -18,7 +18,7 @@
 #
 # Required environment variables (set in Coolify's Environment tab):
 #
-#   DATABASE_URI     Full connection string to the project database, e.g.:
+#   DATABASE_URI     Full connection string to an external PostgreSQL database, e.g.:
 #                    postgresql://postgres:pass@postgresql-abc123:5432/payload-myproject
 #                    Use the *internal* URL from Coolify — stays on the Docker network.
 #
@@ -36,31 +36,13 @@
 #   NEXT_PUBLIC_CMS_PLATFORM_URL, NEXT_PUBLIC_PROJECT_SLUG
 
 services:
-  postgres:
-    image: postgres:18-alpine
-    container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-db
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: cms
-    volumes:
-      - /var/lib/orijen-trails/postgres:/var/lib/postgresql/data
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres']
-      interval: 5s
-      timeout: 5s
-      retries: 10
-    networks:
-      - default
-    restart: unless-stopped
-
   cms:
     container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-cms
     build:
       context: .
       dockerfile: apps/cms/Dockerfile
     environment:
-      DATABASE_URI: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/cms
+      DATABASE_URI: ${DATABASE_URI}
       PAYLOAD_SECRET: ${PAYLOAD_SECRET}
       NEXT_PUBLIC_SERVER_URL: ${PUBLIC_DOMAIN}
       NEXT_PUBLIC_WEB_URL: ${PUBLIC_DOMAIN}
@@ -84,9 +66,6 @@ services:
       timeout: 5s
       retries: 12
       start_period: 60s
-    depends_on:
-      postgres:
-        condition: service_healthy
     networks:
       - default
     restart: unless-stopped
