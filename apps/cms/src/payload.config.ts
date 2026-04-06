@@ -12,6 +12,8 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Trails } from './collections/Trails'
 import { Influencers } from './collections/Influencers'
+import { TrailLabels } from './globals/TrailLabels'
+import { UiLabels } from './globals/UiLabels'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -52,6 +54,7 @@ export default buildConfig({
   },
 
   collections: [Users, Pages, Posts, Trails, Influencers, Media],
+  globals: [TrailLabels, UiLabels],
 
   editor: lexicalEditor({}),
 

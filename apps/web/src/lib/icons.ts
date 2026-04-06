@@ -11,6 +11,10 @@ export const ICONS = {
   group: 'icon-[material-symbols-light--group]',
   route: 'icon-[material-symbols-light--route]',
   clock: 'icon-[material-symbols-light--nest-clock-farsight-analog-rounded]',
+  terrain: 'icon-[ic--baseline-terrain]',
+  pets: 'icon-[material-symbols-light--pets]',
+  restaurant: 'icon-[material-symbols-light--restaurant]',
+  water: 'icon-[material-symbols-light--water]',
   'arrow-right': 'icon-[material-symbols--arrow-right-alt-rounded]',
   'arrow-left': 'icon-[material-symbols--arrow-left-alt-rounded]',
   add: 'icon-[material-symbols-light--add]',
@@ -26,5 +30,5 @@ export const ICONS = {
   youtube: 'icon-[simple-icons--youtube]',
   website: 'icon-[material-symbols-light--language]',
   komoot: 'icon-[simple-icons--komoot]',
-  allTrails: 'icon-[simple-icons--alltrails]',
+  allTrails: 'icon-[simple-icons--alltrails]'
 } as const

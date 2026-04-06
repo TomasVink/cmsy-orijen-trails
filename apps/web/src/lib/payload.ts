@@ -85,6 +85,58 @@ export async function getPostBySlug(
   return data.docs[0] ?? null
 }
 
+// ── Trail Labels global ───────────────────────────────────────────
+export type TrailLabelsData = {
+  difficulty?: { easy?: string | null; moderate?: string | null; challenging?: string | null } | null
+  offLeash?: { fully?: string | null; partial?: string | null; none?: string | null } | null
+  hospitality?: string | null
+  water?: string | null
+  allDifficulties?: string | null
+  viewTrail?: string | null
+  form?: {
+    nameLabel?: string | null
+    emailLabel?: string | null
+    trailNameLabel?: string | null
+    descriptionLabel?: string | null
+    descriptionHint?: string | null
+    addressLabel?: string | null
+    distanceLabel?: string | null
+    offLeashAreaLabel?: string | null
+    offLeashAreaPlaceholder?: string | null
+    hospitalityLabel?: string | null
+    waterLabel?: string | null
+  } | null
+}
+
+export type UiLabelsData = {
+  back?: string | null
+  continueReading?: string | null
+  followOn?: string | null
+  submitting?: string | null
+  mapZoomHint?: string | null
+  mapZoomHintMac?: string | null
+}
+
+export async function getUiLabels(
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl',
+): Promise<UiLabelsData | null> {
+  const response = await fetchFn(`${baseUrl}/api/globals/ui-labels?locale=${locale}`)
+  if (!response.ok) return null
+  return (await response.json()) as UiLabelsData
+}
+
+export async function getTrailLabels(
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl',
+): Promise<TrailLabelsData | null> {
+  const response = await fetchFn(`${baseUrl}/api/globals/trail-labels?locale=${locale}`)
+  if (!response.ok) return null
+  return (await response.json()) as TrailLabelsData
+}
+
 // ── Trails ────────────────────────────────────────────────────────
 export type TrailFilters = {
   difficulty?: Trail['difficulty']
@@ -99,7 +151,7 @@ export async function getTrailById(
   baseUrl = env.PUBLIC_PAYLOAD_URL,
   locale: Locale = 'nl',
 ): Promise<Trail | null> {
-  const response = await fetchFn(`${baseUrl}/api/trails/${id}?depth=1&locale=${locale}`)
+  const response = await fetchFn(`${baseUrl}/api/trails/${id}?depth=2&locale=${locale}`)
   if (!response.ok) return null
   return (await response.json()) as Trail
 }

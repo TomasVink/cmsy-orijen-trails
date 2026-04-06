@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import Icon from '$lib/components/ui/Icon.svelte'
+  import type { UiLabelsData } from '$lib/payload'
 
   const LOCALES = ['nl', 'en']
 
@@ -11,6 +12,7 @@
   )
 
   const backHref = $derived(`/${locale}`)
+  const uiLabels = $derived($page.data.uiLabels as UiLabelsData | null)
 
   function localeSwitchHref(target: string): string {
     const { pathname } = $page.url
@@ -32,7 +34,7 @@
         class="flex items-center gap-1 text-white uppercase tracking-widest text-sm font-bold"
       >
         <Icon name="arrow-left" class="size-6" />
-        <span>Back</span>
+        <span>{uiLabels?.back ?? 'Back'}</span>
       </a>
     </div>
   {:else}

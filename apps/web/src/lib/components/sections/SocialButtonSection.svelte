@@ -1,11 +1,14 @@
 <script lang="ts">
-  import type { SocialButtonBlock, Media } from '$lib/payload'
+  import type { SocialButtonBlock, Media, UiLabelsData } from '$lib/payload'
   import { mediaUrl } from '$lib/payload'
   import Button from '$lib/components/ui/Button.svelte'
   import { env } from '$env/dynamic/public'
+  import { page } from '$app/state'
 
   type Props = { block: SocialButtonBlock }
   let { block }: Props = $props()
+
+  const uiLabels = $derived(page.data.uiLabels as UiLabelsData | null)
 
   const bgImage = $derived(
     typeof block.backgroundImage === 'object' ? (block.backgroundImage as Media) : null
@@ -50,7 +53,7 @@
     <h2 class="font-display text-5xl md:text-6xl uppercase leading-none mb-8">{block.ctaText}</h2>
 
     <Button href={block.url} variant="outline">
-      Follow on {block.platform}
+      {uiLabels?.followOn ?? 'Follow on'} {block.platform}
     </Button>
   </div>
 </div>

@@ -95,8 +95,14 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('nl' | 'en') | ('nl' | 'en')[];
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'trail-labels': TrailLabel;
+    'ui-labels': UiLabel;
+  };
+  globalsSelect: {
+    'trail-labels': TrailLabelsSelect<false> | TrailLabelsSelect<true>;
+    'ui-labels': UiLabelsSelect<false> | UiLabelsSelect<true>;
+  };
   locale: 'nl' | 'en';
   widgets: {
     collections: CollectionsWidget;
@@ -237,19 +243,6 @@ export interface Page {
              * Submit button label.
              */
             ctaLabel?: string | null;
-            nameLabel?: string | null;
-            emailLabel?: string | null;
-            trailNameLabel?: string | null;
-            descriptionLabel?: string | null;
-            addressLabel?: string | null;
-            distanceLabel?: string | null;
-            offLeashAreaLabel?: string | null;
-            hospitalityLabel?: string | null;
-            waterLabel?: string | null;
-            offLeashAreaPlaceholder?: string | null;
-            offLeashAreaFullyLabel?: string | null;
-            offLeashAreaPartialLabel?: string | null;
-            offLeashAreaNoneLabel?: string | null;
             /**
              * Heading shown after a successful submission.
              */
@@ -398,6 +391,13 @@ export interface Trail {
     };
     [k: string]: unknown;
   } | null;
+  links?:
+    | {
+        url: string;
+        type?: ('komoot' | 'allTrails' | 'other') | null;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * Distance in kilometres.
    */
@@ -432,10 +432,33 @@ export interface Trail {
      */
     lng?: number | null;
   };
+  related?: {
+    influencers?: (number | Influencer)[] | null;
+    trails?: (number | Trail)[] | null;
+    posts?: (number | Post)[] | null;
+  };
   seo?: {
     title?: string | null;
     description?: string | null;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "influencers".
+ */
+export interface Influencer {
+  id: number;
+  name: string;
+  image: number | Media;
+  bio?: string | null;
+  accounts: {
+    platform: 'instagram' | 'facebook' | 'linkedin' | 'tiktok' | 'twitter' | 'youtube' | 'website';
+    handle?: string | null;
+    url: string;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -470,28 +493,15 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
+  related?: {
+    influencers?: (number | Influencer)[] | null;
+    trails?: (number | Trail)[] | null;
+    posts?: (number | Post)[] | null;
+  };
   seo?: {
     title?: string | null;
     description?: string | null;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "influencers".
- */
-export interface Influencer {
-  id: number;
-  name: string;
-  image: number | Media;
-  bio?: string | null;
-  accounts: {
-    platform: 'instagram' | 'facebook' | 'linkedin' | 'tiktok' | 'twitter' | 'youtube' | 'website';
-    handle?: string | null;
-    url: string;
-    id?: string | null;
-  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -665,19 +675,6 @@ export interface PagesSelect<T extends boolean = true> {
               sectionId?: T;
               intro?: T;
               ctaLabel?: T;
-              nameLabel?: T;
-              emailLabel?: T;
-              trailNameLabel?: T;
-              descriptionLabel?: T;
-              addressLabel?: T;
-              distanceLabel?: T;
-              offLeashAreaLabel?: T;
-              hospitalityLabel?: T;
-              waterLabel?: T;
-              offLeashAreaPlaceholder?: T;
-              offLeashAreaFullyLabel?: T;
-              offLeashAreaPartialLabel?: T;
-              offLeashAreaNoneLabel?: T;
               successTitle?: T;
               successMessage?: T;
               id?: T;
@@ -734,6 +731,13 @@ export interface PostsSelect<T extends boolean = true> {
   excerpt?: T;
   header?: T;
   content?: T;
+  related?:
+    | T
+    | {
+        influencers?: T;
+        trails?: T;
+        posts?: T;
+      };
   seo?:
     | T
     | {
@@ -760,6 +764,13 @@ export interface TrailsSelect<T extends boolean = true> {
       };
   description?: T;
   content?: T;
+  links?:
+    | T
+    | {
+        url?: T;
+        type?: T;
+        id?: T;
+      };
   distance?: T;
   duration?: T;
   difficulty?: T;
@@ -771,6 +782,13 @@ export interface TrailsSelect<T extends boolean = true> {
     | {
         lat?: T;
         lng?: T;
+      };
+  related?:
+    | T
+    | {
+        influencers?: T;
+        trails?: T;
+        posts?: T;
       };
   seo?:
     | T
@@ -892,6 +910,141 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trail-labels".
+ */
+export interface TrailLabel {
+  id: number;
+  difficulty?: {
+    easy?: string | null;
+    moderate?: string | null;
+    challenging?: string | null;
+    /**
+     * Filter button label for showing all difficulties.
+     */
+    allDifficulties?: string | null;
+  };
+  offLeash?: {
+    fully?: string | null;
+    partial?: string | null;
+    none?: string | null;
+  };
+  hospitality?: string | null;
+  water?: string | null;
+  /**
+   * CTA button on trail cards.
+   */
+  viewTrail?: string | null;
+  form?: {
+    nameLabel?: string | null;
+    emailLabel?: string | null;
+    trailNameLabel?: string | null;
+    descriptionLabel?: string | null;
+    /**
+     * Shown next to the description field label.
+     */
+    descriptionHint?: string | null;
+    addressLabel?: string | null;
+    distanceLabel?: string | null;
+    offLeashAreaLabel?: string | null;
+    offLeashAreaPlaceholder?: string | null;
+    hospitalityLabel?: string | null;
+    waterLabel?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ui-labels".
+ */
+export interface UiLabel {
+  id: number;
+  /**
+   * Back navigation button in the top bar.
+   */
+  back?: string | null;
+  /**
+   * Link text on blog post cards.
+   */
+  continueReading?: string | null;
+  /**
+   * Prefix for social follow button, e.g. "Follow on" → "Follow on Instagram".
+   */
+  followOn?: string | null;
+  /**
+   * Submit button label while a form is being submitted.
+   */
+  submitting?: string | null;
+  /**
+   * Overlay hint shown when scrolling the map without Ctrl (non-Mac).
+   */
+  mapZoomHint?: string | null;
+  /**
+   * Overlay hint shown when scrolling the map without ⌘ (Mac).
+   */
+  mapZoomHintMac?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trail-labels_select".
+ */
+export interface TrailLabelsSelect<T extends boolean = true> {
+  difficulty?:
+    | T
+    | {
+        easy?: T;
+        moderate?: T;
+        challenging?: T;
+        allDifficulties?: T;
+      };
+  offLeash?:
+    | T
+    | {
+        fully?: T;
+        partial?: T;
+        none?: T;
+      };
+  hospitality?: T;
+  water?: T;
+  viewTrail?: T;
+  form?:
+    | T
+    | {
+        nameLabel?: T;
+        emailLabel?: T;
+        trailNameLabel?: T;
+        descriptionLabel?: T;
+        descriptionHint?: T;
+        addressLabel?: T;
+        distanceLabel?: T;
+        offLeashAreaLabel?: T;
+        offLeashAreaPlaceholder?: T;
+        hospitalityLabel?: T;
+        waterLabel?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ui-labels_select".
+ */
+export interface UiLabelsSelect<T extends boolean = true> {
+  back?: T;
+  continueReading?: T;
+  followOn?: T;
+  submitting?: T;
+  mapZoomHint?: T;
+  mapZoomHintMac?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

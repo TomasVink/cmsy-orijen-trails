@@ -1,4 +1,4 @@
-import { getTrailById } from '$lib/payload.server'
+import { getTrailById, getTrailLabels } from '$lib/payload.server'
 import { error } from '@sveltejs/kit'
 import type { Locale } from '$lib/payload'
 
@@ -9,11 +9,14 @@ export const load = async ({
   params: { locale: Locale; id: string }
   fetch: typeof globalThis.fetch
 }) => {
-  const trail = await getTrailById(params.id, fetch, params.locale)
+  const [trail, trailLabels] = await Promise.all([
+    getTrailById(params.id, fetch, params.locale),
+    getTrailLabels(fetch, params.locale),
+  ])
 
   if (!trail) {
     error(404, 'Trail not found')
   }
 
-  return { trail }
+  return { trail, trailLabels }
 }

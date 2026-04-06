@@ -5,7 +5,7 @@ export const TopTrails: Block = {
   slug: 'top-trails',
   labels: {
     singular: 'Top Trails',
-    plural: 'Top Trails',
+    plural: 'Top Trails'
   },
   fields: [
     ...SectionBase,
@@ -16,8 +16,8 @@ export const TopTrails: Block = {
       hasMany: true,
       maxDepth: 2,
       admin: {
-        description: 'Select trails to be featured. Order determines display order.',
-      },
-    },
-  ],
+        description: 'Select trails to be featured. Order determines display order.'
+      }
+    }
+  ]
 }

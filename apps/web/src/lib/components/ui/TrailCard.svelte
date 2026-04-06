@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Trail, Media } from "$lib/payload";
+  import type { Trail, Media, TrailLabelsData } from "$lib/payload";
   import { mediaUrl } from "$lib/payload";
   import { env } from "$env/dynamic/public";
   import { page } from "$app/state";
@@ -17,12 +17,7 @@
     typeof trail.header === "object" ? (trail.header as Media) : null,
   );
   const imageSrc = $derived(mediaUrl(image, env.PUBLIC_PAYLOAD_URL));
-
-  const difficultyLabel: Record<string, string> = {
-    easy: "Easy",
-    moderate: "Moderate",
-    challenging: "Challenging",
-  };
+  const trailLabels = $derived(page.data.trailLabels as TrailLabelsData | null);
 </script>
 
 <div
@@ -60,7 +55,7 @@
       <span
         class="absolute top-3 left-3 bg-orijen-red text-white text-xs font-bold uppercase tracking-widest px-2 py-1"
       >
-        {difficultyLabel[trail.difficulty] ?? trail.difficulty}
+        {trailLabels?.difficulty?.[trail.difficulty] ?? trail.difficulty}
       </span>
     {/if}
   </div>
@@ -86,7 +81,7 @@
 
   <div class="mt-auto pt-4">
     <Button href="/{page.params.locale}/trails/{trail.id}"
-      >View trail <Icon name="arrow-right" /></Button
+      >{trailLabels?.viewTrail ?? 'View trail'} <Icon name="arrow-right" /></Button
     >
   </div>
 </div>

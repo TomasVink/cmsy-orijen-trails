@@ -50,7 +50,12 @@ body {
   letter-spacing: 0.02em;
 }
 
-/* ── Heading defaults: League Gothic, uppercase ─────────────────── */
+hr.divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-orijen-red) 50%, transparent 100%);
+}
+
 h1,
 h2,
 h3,

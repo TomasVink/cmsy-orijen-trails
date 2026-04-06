@@ -1,7 +1,8 @@
 <script lang="ts">
   import { untrack } from 'svelte'
-  import type { SubmitTrailBlock } from '$lib/payload'
+  import type { SubmitTrailBlock, TrailLabelsData, UiLabelsData } from '$lib/payload'
   import type { SuperValidated, Infer } from 'sveltekit-superforms'
+  import { page } from '$app/state'
   import type { TrailSubmitSchema } from '$lib/trail-submit-schema'
   import { superForm } from 'sveltekit-superforms'
   import { zod4 } from 'sveltekit-superforms/adapters'
@@ -91,6 +92,10 @@
     submitted = false
   }
 
+  const trailLabels = $derived(page.data.trailLabels as TrailLabelsData | null)
+  const uiLabels = $derived(page.data.uiLabels as UiLabelsData | null)
+  const f = $derived(trailLabels?.form)
+
   const fieldBase =
     'w-full border-2 border-orijen-gray/30 bg-white px-4 py-3 font-sans text-sm text-black focus:outline-none focus:border-orijen-red transition-colors'
   const labelBase = 'text-sm font-bold uppercase tracking-widest text-orijen-black/80 mb-1'
@@ -156,7 +161,7 @@
             <FormInput
               id="st-name"
               name="name"
-              label={block.nameLabel}
+              label={f?.nameLabel ?? 'Your name'}
               bind:value={$form.name}
               error={$errors.name}
             />
@@ -164,7 +169,7 @@
               id="st-email"
               type="email"
               name="email"
-              label={block.emailLabel}
+              label={f?.emailLabel ?? 'Email address'}
               bind:value={$form.email}
               error={$errors.email}
             />
@@ -175,7 +180,7 @@
             <FormInput
               id="st-title"
               name="title"
-              label={block.trailNameLabel}
+              label={f?.trailNameLabel ?? 'Trail name'}
               bind:value={$form.title}
               error={$errors.title}
             />
@@ -183,13 +188,13 @@
               id="st-description"
               type="textarea"
               name="description"
-              label={block.descriptionLabel}
-              labelSuffix="(max 120 chars)"
+              label={f?.descriptionLabel ?? 'Trail description'}
+              labelSuffix={f?.descriptionHint ?? '(max 120 chars)'}
               bind:value={$form.description}
               error={$errors.description}
             />
             <div>
-              <label class={labelBase} for="st-address">{block.addressLabel}</label>
+              <label class={labelBase} for="st-address">{f?.addressLabel ?? 'Address / start point'}</label>
               <div class="relative">
                 <input
                   id="st-address"
@@ -229,7 +234,7 @@
               id="st-distance"
               type="number"
               name="distance"
-              label={block.distanceLabel}
+              label={f?.distanceLabel ?? 'Distance (km)'}
               bind:value={$form.distance}
               error={$errors.distance}
               step="0.1"
@@ -238,26 +243,26 @@
             <FormSelect
               id="st-offleash"
               name="offLeashArea"
-              label={block.offLeashAreaLabel ?? ''}
+              label={f?.offLeashAreaLabel ?? 'Off-leash area'}
               bind:value={$form.offLeashArea}
               error={$errors.offLeashArea}
             >
-              <option value={undefined}>{block.offLeashAreaPlaceholder}</option>
-              <option value="fully">{block.offLeashAreaFullyLabel}</option>
-              <option value="partial">{block.offLeashAreaPartialLabel}</option>
-              <option value="none">{block.offLeashAreaNoneLabel}</option>
+              <option value={undefined}>{f?.offLeashAreaPlaceholder ?? '— select —'}</option>
+              <option value="fully">{trailLabels?.offLeash?.fully ?? 'Fully'}</option>
+              <option value="partial">{trailLabels?.offLeash?.partial ?? 'Partial'}</option>
+              <option value="none">{trailLabels?.offLeash?.none ?? 'None'}</option>
             </FormSelect>
 
             <!-- Checkboxes -->
             <div class="flex flex-col gap-3">
               <FormCheckbox
                 name="hospitality"
-                label={block.hospitalityLabel ?? ''}
+                label={f?.hospitalityLabel ?? 'Hospitality nearby (café, restaurant, etc.)'}
                 bind:checked={$form.hospitality}
               />
               <FormCheckbox
                 name="water"
-                label={block.waterLabel ?? ''}
+                label={f?.waterLabel ?? 'Natural water on route (river, lake, sea)'}
                 bind:checked={$form.water}
               />
             </div>
@@ -267,7 +272,7 @@
             {/if}
 
             <Button type="submit" icon="send" disabled={$submitting}>
-              {$submitting ? 'Submitting…' : (block.ctaLabel ?? 'Submit trail')}
+              {$submitting ? (uiLabels?.submitting ?? 'Submitting…') : (block.ctaLabel ?? 'Submit trail')}
             </Button>
           </form>
         {/if}

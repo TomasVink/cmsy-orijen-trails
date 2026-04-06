@@ -17,14 +17,14 @@
     <img {src} alt={image?.alt ?? title} class="w-full h-full object-cover" />
     <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
 
-    <div class="absolute bottom-6 left-6 right-6 mx-auto max-w-4xl">
+    <div class="absolute bottom-6 left-6 right-6 mx-auto max-w-6xl">
       <h1 class="font-display text-5xl uppercase leading-none text-white">
         {title}
       </h1>
     </div>
   </div>
 {:else}
-  <div class="pt-16 pb-8 px-6 container mx-auto max-w-4xl">
+  <div class="pt-16 pb-8 px-6 container mx-auto max-w-6xl">
     <h1 class="font-display text-5xl uppercase leading-none">{title}</h1>
   </div>
 {/if}

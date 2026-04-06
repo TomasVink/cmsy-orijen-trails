@@ -1,6 +1,7 @@
 <script lang="ts">
   // Renders Payload Lexical rich text content as HTML.
   import { env } from '$env/dynamic/public'
+  import ImageModal from '$lib/components/ui/ImageModal.svelte'
 
   type MediaValue = {
     url?: string
@@ -33,9 +34,21 @@
 
   let { content, class: className = '' }: Props = $props()
 
+  let modalOpen = $state(false)
+  let modalImages = $state<{ src: string; alt?: string }[]>([])
+
+  function handleClick(e: MouseEvent) {
+    const target = e.target as HTMLElement
+    if (target.tagName !== 'IMG') return
+    const src = target.getAttribute('src')
+    if (!src) return
+    modalImages = [{ src, alt: target.getAttribute('alt') ?? '' }]
+    modalOpen = true
+  }
+
   const headingClass: Record<string, string> = {
     h2: 'text-2xl',
-    h3: 'text-xl',
+    h3: 'text-xl'
   }
 
   function renderNode(node: LexicalNode): string {
@@ -84,7 +97,7 @@
         const alt = img.alt ? img.alt.replace(/"/g, '&quot;') : ''
         const width = img.width ? ` width="${img.width}"` : ''
         const height = img.height ? ` height="${img.height}"` : ''
-        return `<div><img src="${src}" alt="${alt}"${width}${height} class="max-w-2xl h-auto mx-auto"></div>`
+        return `<div class="my-8 cursor-zoom-in"><img src="${src}" alt="${alt}"${width}${height} class="max-w-2xl w-full h-auto mx-auto"></div>`
       }
       case 'horizontalrule':
         return '<hr>'
@@ -99,7 +112,11 @@
 </script>
 
 {#if html}
-  <div class="prose max-w-none {className}">
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div class="prose max-w-none {className}" onclick={handleClick}>
     {@html html}
   </div>
 {/if}
+
+<ImageModal images={modalImages} bind:open={modalOpen} />

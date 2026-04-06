@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount, mount, unmount, untrack } from "svelte";
-  import type { Trail } from "$lib/payload";
+  import type { Trail, UiLabelsData } from "$lib/payload";
   import { env } from "$env/dynamic/public";
+  import { page } from "$app/state";
   import TrailMarker from "./TrailMarker.svelte";
 
   /* HERE Maps JS is loaded synchronously via CDN in app.html */
@@ -44,6 +45,7 @@
   let showScrollHint = $state(false);
   let scrollHintTimer: ReturnType<typeof setTimeout> | null = null;
   let isMac = $state(false);
+  const uiLabels = $derived(page.data.uiLabels as UiLabelsData | null);
 
   function fitBounds(trailList: Trail[]) {
     if (!map || !markersGroup) return;
@@ -174,7 +176,7 @@
   {#if showScrollHint}
     <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
       <div class="bg-black/70 text-white px-4 py-2 rounded text-sm select-none">
-        {isMac ? "Hold ⌘ to zoom the map" : "Hold Ctrl to zoom the map"}
+        {isMac ? (uiLabels?.mapZoomHintMac ?? "Hold ⌘ to zoom the map") : (uiLabels?.mapZoomHint ?? "Hold Ctrl to zoom the map")}
       </div>
     </div>
   {/if}

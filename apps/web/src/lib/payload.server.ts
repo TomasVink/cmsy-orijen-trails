@@ -16,9 +16,11 @@ import {
   getPostBySlug as _getPostBySlug,
   getTrails as _getTrails,
   getTrailById as _getTrailById,
+  getTrailLabels as _getTrailLabels,
+  getUiLabels as _getUiLabels,
 } from './payload'
 
-export type { Page, Media, PaginatedDocs, Locale, TrailFilters, Post } from './payload'
+export type { Page, Media, PaginatedDocs, Locale, TrailFilters, Post, TrailLabelsData, UiLabelsData } from './payload'
 
 function internalUrl(): string {
   return env.PAYLOAD_INTERNAL_URL || publicEnv.PUBLIC_PAYLOAD_URL
@@ -61,4 +63,18 @@ export function getTrailById(
   locale: import('./payload').Locale = 'nl',
 ) {
   return _getTrailById(id, fetchFn, internalUrl(), locale)
+}
+
+export function getTrailLabels(
+  fetchFn: typeof fetch = fetch,
+  locale: import('./payload').Locale = 'nl',
+) {
+  return _getTrailLabels(fetchFn, internalUrl(), locale)
+}
+
+export function getUiLabels(
+  fetchFn: typeof fetch = fetch,
+  locale: import('./payload').Locale = 'nl',
+) {
+  return _getUiLabels(fetchFn, internalUrl(), locale)
 }

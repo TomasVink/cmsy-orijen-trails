@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TrailsOverviewBlock, Trail, Locale } from "$lib/payload";
+  import type { TrailsOverviewBlock, Trail, Locale, TrailLabelsData } from "$lib/payload";
   import { getTrails } from "$lib/payload";
   import { env } from "$env/dynamic/public";
   import { page } from "$app/stores";
@@ -11,6 +11,7 @@
   let { block }: Props = $props();
 
   const locale = $derived(($page.params.locale ?? "nl") as Locale);
+  const trailLabels = $derived($page.data.trailLabels as TrailLabelsData | null);
 
   // ── Filters ──────────────────────────────────────────────────────
   let filterDifficulty = $state<Trail["difficulty"] | "">("");
@@ -33,15 +34,12 @@
     load();
   });
 
-  const difficultyOptions: {
-    label: string;
-    value: Trail["difficulty"] | "";
-  }[] = [
-    { label: "All difficulties", value: "" },
-    { label: "Easy", value: "easy" },
-    { label: "Moderate", value: "moderate" },
-    { label: "Challenging", value: "challenging" },
-  ];
+  const difficultyOptions = $derived<{ label: string; value: Trail["difficulty"] | "" }[]>([
+    { label: trailLabels?.allDifficulties ?? "All difficulties", value: "" },
+    { label: trailLabels?.difficulty?.easy ?? "Easy", value: "easy" },
+    { label: trailLabels?.difficulty?.moderate ?? "Moderate", value: "moderate" },
+    { label: trailLabels?.difficulty?.challenging ?? "Challenging", value: "challenging" },
+  ]);
 
   // ── Selection ─────────────────────────────────────────────────────
   let selectedTrail = $state<Trail | null>(null);

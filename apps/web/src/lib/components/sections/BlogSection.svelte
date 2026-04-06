@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { BlogBlock, Post } from '$lib/payload'
+  import type { BlogBlock, Post, UiLabelsData } from '$lib/payload'
   import Section from '$lib/components/ui/Section.svelte'
   import Icon from '../ui/Icon.svelte'
   import { page } from '$app/state'
@@ -8,6 +8,7 @@
   let { block, posts }: Props = $props()
 
   const locale = $derived(page.params.locale ?? 'nl')
+  const uiLabels = $derived(page.data.uiLabels as UiLabelsData | null)
 </script>
 
 <Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId}>
@@ -27,7 +28,7 @@
           <p class="text-orijen-gray">{post.excerpt}</p>
         {/if}
         <span class="text-sm text-orijen-red hover:underline mt-auto self-end flex align-middle"
-          >Continue reading <Icon name="arrow-right" class="size-6" /></span
+          >{uiLabels?.continueReading ?? 'Continue reading'} <Icon name="arrow-right" class="size-6" /></span
         >
       </div>
     </a>
