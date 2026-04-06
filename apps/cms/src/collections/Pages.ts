@@ -12,7 +12,7 @@ import { InfluencerCarousel } from '../blocks/InfluencerCarousel'
 export const Pages: CollectionConfig = {
   slug: 'pages',
   access: {
-    read: () => true,
+    read: () => true
   },
   admin: {
     useAsTitle: 'title',
@@ -23,15 +23,15 @@ export const Pages: CollectionConfig = {
         const loc = (locale as unknown as string | undefined) ?? 'nl'
         const slug = data?.slug as string | undefined
         return slug === 'home' ? `${webURL}/${loc}` : `${webURL}/${loc}/${slug ?? ''}`
-      },
-    },
+      }
+    }
   },
   fields: [
     {
       name: 'title',
       type: 'text',
       required: true,
-      localized: true,
+      localized: true
     },
     {
       name: 'slug',
@@ -40,8 +40,8 @@ export const Pages: CollectionConfig = {
       unique: true,
       localized: true,
       admin: {
-        description: 'URL-friendly identifier. Use "home" for the home page.',
-      },
+        description: 'URL-friendly identifier. Use "home" for the home page.'
+      }
     },
     {
       name: 'layout',
@@ -53,9 +53,9 @@ export const Pages: CollectionConfig = {
         TrailsOverview,
         SubmitTrail,
         BlogBlock,
-        SocialButton,
-        InfluencerCarousel,
-      ],
+        // SocialButton,
+        InfluencerCarousel
+      ]
     },
     {
       name: 'seo',
@@ -64,14 +64,14 @@ export const Pages: CollectionConfig = {
         {
           name: 'title',
           type: 'text',
-          localized: true,
+          localized: true
         },
         {
           name: 'description',
           type: 'textarea',
-          localized: true,
-        },
-      ],
-    },
-  ],
+          localized: true
+        }
+      ]
+    }
+  ]
 }

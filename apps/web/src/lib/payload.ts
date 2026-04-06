@@ -33,7 +33,7 @@ export type PaginatedDocs<T> = {
 // ── Media URL helper ──────────────────────────────────────────────
 export function mediaUrl(
   media: Media | number | null | undefined,
-  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  baseUrl = env.PUBLIC_PAYLOAD_URL
 ): string | null {
   if (!media || typeof media === 'number') return null
   if (media.url) {
@@ -50,7 +50,7 @@ export async function getPageBySlug(
   slug: string,
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
-  locale: Locale = 'nl',
+  locale: Locale = 'nl'
 ): Promise<Page | null> {
   const url = `${baseUrl}/api/pages?where[slug][equals]=${encodeURIComponent(slug)}&depth=2&limit=1&locale=${locale}`
   const response = await fetchFn(url)
@@ -62,7 +62,7 @@ export async function getPageBySlug(
 export async function getAllPages(
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
-  locale: Locale = 'nl',
+  locale: Locale = 'nl'
 ): Promise<Page[]> {
   const url = `${baseUrl}/api/pages?limit=100&locale=${locale}`
   const response = await fetchFn(url)
@@ -76,7 +76,7 @@ export async function getPostBySlug(
   slug: string,
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
-  locale: Locale = 'nl',
+  locale: Locale = 'nl'
 ): Promise<Post | null> {
   const url = `${baseUrl}/api/posts?where[slug][equals]=${encodeURIComponent(slug)}&depth=2&limit=1&locale=${locale}`
   const response = await fetchFn(url)
@@ -85,9 +85,42 @@ export async function getPostBySlug(
   return data.docs[0] ?? null
 }
 
+export async function getPosts(
+  page = 1,
+  limit = 12,
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl'
+): Promise<PaginatedDocs<Post>> {
+  const params = new URLSearchParams()
+  params.set('depth', '1')
+  params.set('limit', String(limit))
+  params.set('page', String(page))
+  params.set('locale', locale)
+  const response = await fetchFn(`${baseUrl}/api/posts?${params}`)
+  if (!response.ok)
+    return {
+      docs: [],
+      totalDocs: 0,
+      limit,
+      totalPages: 0,
+      page,
+      pagingCounter: 0,
+      hasPrevPage: false,
+      hasNextPage: false,
+      prevPage: null,
+      nextPage: null
+    }
+  return (await response.json()) as PaginatedDocs<Post>
+}
+
 // ── Trail Labels global ───────────────────────────────────────────
 export type TrailLabelsData = {
-  difficulty?: { easy?: string | null; moderate?: string | null; challenging?: string | null } | null
+  difficulty?: {
+    easy?: string | null
+    moderate?: string | null
+    challenging?: string | null
+  } | null
   offLeash?: { fully?: string | null; partial?: string | null; none?: string | null } | null
   hospitality?: string | null
   water?: string | null
@@ -115,12 +148,24 @@ export type UiLabelsData = {
   submitting?: string | null
   mapZoomHint?: string | null
   mapZoomHintMac?: string | null
+  trailFilters?: {
+    difficulty?: string | null
+    offLeash?: string | null
+    distance?: string | null
+    features?: string | null
+    community?: string | null
+    clear?: string | null
+    distanceRange0to5?: string | null
+    distanceRange5to10?: string | null
+    distanceRange10to15?: string | null
+    distanceRange15plus?: string | null
+  } | null
 }
 
 export async function getUiLabels(
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
-  locale: Locale = 'nl',
+  locale: Locale = 'nl'
 ): Promise<UiLabelsData | null> {
   const response = await fetchFn(`${baseUrl}/api/globals/ui-labels?locale=${locale}`)
   if (!response.ok) return null
@@ -130,7 +175,7 @@ export async function getUiLabels(
 export async function getTrailLabels(
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
-  locale: Locale = 'nl',
+  locale: Locale = 'nl'
 ): Promise<TrailLabelsData | null> {
   const response = await fetchFn(`${baseUrl}/api/globals/trail-labels?locale=${locale}`)
   if (!response.ok) return null
@@ -140,16 +185,19 @@ export async function getTrailLabels(
 // ── Trails ────────────────────────────────────────────────────────
 export type TrailFilters = {
   difficulty?: Trail['difficulty']
-  terrain?: string
-  region?: string
-  featured?: boolean
+  offLeashArea?: Trail['offLeashArea']
+  hospitality?: boolean
+  water?: boolean
+  community?: boolean
+  distanceMin?: number
+  distanceMax?: number
 }
 
 export async function getTrailById(
   id: string,
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
-  locale: Locale = 'nl',
+  locale: Locale = 'nl'
 ): Promise<Trail | null> {
   const response = await fetchFn(`${baseUrl}/api/trails/${id}?depth=2&locale=${locale}`)
   if (!response.ok) return null
@@ -160,7 +208,7 @@ export async function getTrails(
   filters: TrailFilters = {},
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,
-  locale: Locale = 'nl',
+  locale: Locale = 'nl'
 ): Promise<Trail[]> {
   const params = new URLSearchParams()
   params.set('where[published][equals]', 'true')
@@ -171,12 +219,81 @@ export async function getTrails(
   if (filters.difficulty) {
     params.set('where[difficulty][equals]', filters.difficulty)
   }
-  if (filters.featured) {
-    params.set('where[featured][equals]', 'true')
+  if (filters.offLeashArea) {
+    params.set('where[offLeashArea][equals]', filters.offLeashArea)
+  }
+  if (filters.hospitality) {
+    params.set('where[hospitality][equals]', 'true')
+  }
+  if (filters.water) {
+    params.set('where[water][equals]', 'true')
+  }
+  if (filters.community) {
+    params.set('where[community][equals]', 'true')
+  }
+  if (filters.distanceMin !== undefined) {
+    params.set('where[distance][greater_than_equal]', String(filters.distanceMin))
+  }
+  if (filters.distanceMax !== undefined) {
+    params.set('where[distance][less_than_equal]', String(filters.distanceMax))
   }
 
   const response = await fetchFn(`${baseUrl}/api/trails?${params}`)
   if (!response.ok) return []
   const data = (await response.json()) as PaginatedDocs<Trail>
   return data.docs
+}
+
+export async function getTrailsPaginated(
+  page = 1,
+  limit = 12,
+  filters: TrailFilters = {},
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl'
+): Promise<PaginatedDocs<Trail>> {
+  const params = new URLSearchParams()
+  params.set('where[published][equals]', 'true')
+  params.set('depth', '1')
+  params.set('limit', String(limit))
+  params.set('page', String(page))
+  params.set('locale', locale)
+
+  if (filters.difficulty) {
+    params.set('where[difficulty][equals]', filters.difficulty)
+  }
+  if (filters.offLeashArea) {
+    params.set('where[offLeashArea][equals]', filters.offLeashArea)
+  }
+  if (filters.hospitality) {
+    params.set('where[hospitality][equals]', 'true')
+  }
+  if (filters.water) {
+    params.set('where[water][equals]', 'true')
+  }
+  if (filters.community) {
+    params.set('where[community][equals]', 'true')
+  }
+  if (filters.distanceMin !== undefined) {
+    params.set('where[distance][greater_than_equal]', String(filters.distanceMin))
+  }
+  if (filters.distanceMax !== undefined) {
+    params.set('where[distance][less_than_equal]', String(filters.distanceMax))
+  }
+
+  const response = await fetchFn(`${baseUrl}/api/trails?${params}`)
+  if (!response.ok)
+    return {
+      docs: [],
+      totalDocs: 0,
+      limit,
+      totalPages: 0,
+      page,
+      pagingCounter: 0,
+      hasPrevPage: false,
+      hasNextPage: false,
+      prevPage: null,
+      nextPage: null
+    }
+  return (await response.json()) as PaginatedDocs<Trail>
 }

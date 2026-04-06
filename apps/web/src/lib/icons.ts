@@ -17,6 +17,7 @@ export const ICONS = {
   water: 'icon-[material-symbols-light--water]',
   'arrow-right': 'icon-[material-symbols--arrow-right-alt-rounded]',
   'arrow-left': 'icon-[material-symbols--arrow-left-alt-rounded]',
+  'chevron-down': 'icon-[material-symbols-light--keyboard-arrow-down]',
   add: 'icon-[material-symbols-light--add]',
   send: 'icon-[material-symbols-light--send]',
   close: 'icon-[material-symbols-light--close]',

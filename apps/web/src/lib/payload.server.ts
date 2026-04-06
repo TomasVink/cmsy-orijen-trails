@@ -14,7 +14,9 @@ import {
   getAllPages as _getAllPages,
   getPageBySlug as _getPageBySlug,
   getPostBySlug as _getPostBySlug,
+  getPosts as _getPosts,
   getTrails as _getTrails,
+  getTrailsPaginated as _getTrailsPaginated,
   getTrailById as _getTrailById,
   getTrailLabels as _getTrailLabels,
   getUiLabels as _getUiLabels,
@@ -49,12 +51,31 @@ export function getPostBySlug(
   return _getPostBySlug(slug, fetchFn, internalUrl(), locale)
 }
 
+export function getPosts(
+  page = 1,
+  limit = 12,
+  fetchFn: typeof fetch = fetch,
+  locale: import('./payload').Locale = 'nl',
+) {
+  return _getPosts(page, limit, fetchFn, internalUrl(), locale)
+}
+
 export function getTrails(
   filters: import('./payload').TrailFilters = {},
   fetchFn: typeof fetch = fetch,
   locale: import('./payload').Locale = 'nl',
 ) {
   return _getTrails(filters, fetchFn, internalUrl(), locale)
+}
+
+export function getTrailsPaginated(
+  page = 1,
+  limit = 12,
+  filters: import('./payload').TrailFilters = {},
+  fetchFn: typeof fetch = fetch,
+  locale: import('./payload').Locale = 'nl',
+) {
+  return _getTrailsPaginated(page, limit, filters, fetchFn, internalUrl(), locale)
 }
 
 export function getTrailById(

@@ -71,6 +71,8 @@ export interface Config {
     pages: Page;
     posts: Post;
     trails: Trail;
+    events: Event;
+    registrations: Registration;
     influencers: Influencer;
     media: Media;
     'payload-kv': PayloadKv;
@@ -84,6 +86,8 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     trails: TrailsSelect<false> | TrailsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    registrations: RegistrationsSelect<false> | RegistrationsSelect<true>;
     influencers: InfluencersSelect<false> | InfluencersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -273,25 +277,6 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'blog';
-          }
-        | {
-            platform: 'instagram' | 'tiktok' | 'facebook';
-            /**
-             * Handle without the @ symbol.
-             */
-            handle: string;
-            url: string;
-            /**
-             * e.g. "Join the community"
-             */
-            ctaText: string;
-            /**
-             * Optional section background image.
-             */
-            backgroundImage?: (number | null) | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'social-button';
           }
         | {
             title: string;
@@ -511,6 +496,41 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  description?: string | null;
+  trail: number | Trail;
+  date: string;
+  start?: string | null;
+  slots?:
+    | {
+        start: string;
+        end: string;
+        available?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  influencers?: (number | Influencer)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "registrations".
+ */
+export interface Registration {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+  event: number | Event;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -548,6 +568,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'trails';
         value: number | Trail;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'registrations';
+        value: number | Registration;
       } | null)
     | ({
         relationTo: 'influencers';
@@ -694,17 +722,6 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        'social-button'?:
-          | T
-          | {
-              platform?: T;
-              handle?: T;
-              url?: T;
-              ctaText?: T;
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
         'influencer-carousel'?:
           | T
           | {
@@ -800,6 +817,39 @@ export interface TrailsSelect<T extends boolean = true> {
         title?: T;
         description?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  description?: T;
+  trail?: T;
+  date?: T;
+  start?: T;
+  slots?:
+    | T
+    | {
+        start?: T;
+        end?: T;
+        available?: T;
+        id?: T;
+      };
+  influencers?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "registrations_select".
+ */
+export interface RegistrationsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  event?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -967,6 +1017,14 @@ export interface TrailLabel {
 export interface UiLabel {
   id: number;
   /**
+   * Title on the blog overview page
+   */
+  blogTitle?: string | null;
+  /**
+   * Title on the trails overview page
+   */
+  trailsTitle?: string | null;
+  /**
    * Back navigation button in the top bar.
    */
   back?: string | null;
@@ -990,6 +1048,32 @@ export interface UiLabel {
    * Overlay hint shown when scrolling the map without ⌘ (Mac).
    */
   mapZoomHintMac?: string | null;
+  trailFilters?: {
+    /**
+     * Section header for the difficulty filter.
+     */
+    difficulty?: string | null;
+    /**
+     * Section header for the off-leash filter.
+     */
+    offLeash?: string | null;
+    /**
+     * Section header for the distance filter.
+     */
+    distance?: string | null;
+    /**
+     * Section header for the features filter (hospitality, water, community).
+     */
+    features?: string | null;
+    /**
+     * Label for the community trail filter button.
+     */
+    community?: string | null;
+    /**
+     * Label for the clear filters button.
+     */
+    clear?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1040,12 +1124,24 @@ export interface TrailLabelsSelect<T extends boolean = true> {
  * via the `definition` "ui-labels_select".
  */
 export interface UiLabelsSelect<T extends boolean = true> {
+  blogTitle?: T;
+  trailsTitle?: T;
   back?: T;
   continueReading?: T;
   followOn?: T;
   submitting?: T;
   mapZoomHint?: T;
   mapZoomHintMac?: T;
+  trailFilters?:
+    | T
+    | {
+        difficulty?: T;
+        offLeash?: T;
+        distance?: T;
+        features?: T;
+        community?: T;
+        clear?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
