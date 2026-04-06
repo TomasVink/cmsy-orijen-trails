@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { untrack } from "svelte";
   import type { PageData } from "./$types";
   import { useLivePreview } from "$lib/stores/live-preview.svelte.ts";
   import { env } from "$env/dynamic/public";
@@ -9,7 +8,7 @@
   let { data }: { data: PageData } = $props();
 
   const preview = useLivePreview<Page>({
-    initialData: untrack(() => data.page as Page),
+    get initialData() { return data.page as Page },
     serverURL: env.PUBLIC_PAYLOAD_URL,
   });
 </script>

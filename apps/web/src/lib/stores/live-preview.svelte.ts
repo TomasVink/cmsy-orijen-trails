@@ -49,6 +49,11 @@ export function useLivePreview<T extends object>(
   // signal, so we show a loading state until that first message arrives.
   let isLoading = $state(true)
 
+  // Sync when initialData changes (e.g. locale navigation without component remount)
+  $effect(() => {
+    data = options.initialData
+  })
+
   $effect(() => {
     if (typeof window === 'undefined') return
 

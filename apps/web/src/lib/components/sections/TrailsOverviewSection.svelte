@@ -1,12 +1,16 @@
 <script lang="ts">
-  import type { TrailsOverviewBlock, Trail } from "$lib/payload";
+  import type { TrailsOverviewBlock, Trail, Locale } from "$lib/payload";
   import { getTrails } from "$lib/payload";
+  import { env } from "$env/dynamic/public";
+  import { page } from "$app/stores";
   import Section from "$lib/components/ui/Section.svelte";
   import HereMap from "$lib/components/ui/HereMap.svelte";
   import TrailCard from "../ui/TrailCard.svelte";
 
   type Props = { block: TrailsOverviewBlock };
   let { block }: Props = $props();
+
+  const locale = $derived(($page.params.locale ?? "nl") as Locale);
 
   // ── Filters ──────────────────────────────────────────────────────
   let filterDifficulty = $state<Trail["difficulty"] | "">("");
@@ -15,13 +19,17 @@
   let trails = $state<Trail[]>([]);
 
   async function load() {
-    trails = await getTrails({
-      difficulty: filterDifficulty || undefined,
-    });
+    trails = await getTrails(
+      { difficulty: filterDifficulty || undefined },
+      fetch,
+      env.PUBLIC_PAYLOAD_URL,
+      locale,
+    );
   }
 
   $effect(() => {
     void filterDifficulty;
+    void locale;
     load();
   });
 
