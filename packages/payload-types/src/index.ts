@@ -179,7 +179,9 @@ export interface Page {
                   /**
                    * Optional icon shown left of the button label.
                    */
-                  icon?: ('map-search' | 'group' | 'route' | 'clock') | null;
+                  icon?:
+                    | ('map-search' | 'group' | 'route' | 'clock' | 'hike' | 'prize' | 'camera' | 'terrain' | 'pets')
+                    | null;
                   id?: string | null;
                 }[]
               | null;
@@ -196,7 +198,9 @@ export interface Page {
             intro?: string | null;
             steps?:
               | {
-                  icon?: ('map-search' | 'group' | 'route' | 'clock') | null;
+                  icon?:
+                    | ('map-search' | 'group' | 'route' | 'clock' | 'hike' | 'prize' | 'camera' | 'terrain' | 'pets')
+                    | null;
                   title: string;
                   description?: string | null;
                   id?: string | null;

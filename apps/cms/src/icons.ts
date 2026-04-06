@@ -9,6 +9,11 @@ export const ICON_OPTIONS = [
   { label: 'Group', value: 'group' },
   { label: 'Route', value: 'route' },
   { label: 'Clock', value: 'clock' },
+  { label: 'Hike', value: 'hike' },
+  { label: 'Prize', value: 'prize' },
+  { label: 'Camera', value: 'camera' },
+  { label: 'Terrain', value: 'terrain' },
+  { label: 'Pets', value: 'pets' }
 ] as const
 
 export type IconName = (typeof ICON_OPTIONS)[number]['value']

@@ -5,6 +5,7 @@ import * as migration_20260403_163008_influencers from './20260403_163008_influe
 import * as migration_20260404_000000_fix_submit_trail_intro from './20260404_000000_fix_submit_trail_intro';
 import * as migration_20260404_000001_fix_blog_intro from './20260404_000001_fix_blog_intro';
 import * as migration_20260406_104449_related_content from './20260406_104449_related_content';
+import * as migration_20260406_120122_icons_update from './20260406_120122_icons_update';
 
 export const migrations = [
   {
@@ -40,6 +41,11 @@ export const migrations = [
   {
     up: migration_20260406_104449_related_content.up,
     down: migration_20260406_104449_related_content.down,
-    name: '20260406_104449_related_content'
+    name: '20260406_104449_related_content',
+  },
+  {
+    up: migration_20260406_120122_icons_update.up,
+    down: migration_20260406_120122_icons_update.down,
+    name: '20260406_120122_icons_update'
   },
 ];

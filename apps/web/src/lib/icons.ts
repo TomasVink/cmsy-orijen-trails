@@ -30,5 +30,8 @@ export const ICONS = {
   youtube: 'icon-[simple-icons--youtube]',
   website: 'icon-[material-symbols-light--language]',
   komoot: 'icon-[simple-icons--komoot]',
-  allTrails: 'icon-[simple-icons--alltrails]'
+  allTrails: 'icon-[simple-icons--alltrails]',
+  hike: 'icon-[ph--person-simple-hike]',
+  prize: 'icon-[mdi--prize]',
+  camera: 'icon-[mdi--camera]'
 } as const
