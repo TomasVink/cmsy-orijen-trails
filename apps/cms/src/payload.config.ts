@@ -14,6 +14,9 @@ import { Trails } from './collections/Trails'
 import { Influencers } from './collections/Influencers'
 import { TrailLabels } from './globals/TrailLabels'
 import { UiLabels } from './globals/UiLabels'
+import { SignUpLabels } from './globals/SignUpLabels'
+import { Events } from './collections/Events'
+import { Registrations } from './collections/Registrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -29,10 +32,10 @@ export default buildConfig({
   localization: {
     locales: [
       { label: 'Nederlands', code: 'nl' },
-      { label: 'English', code: 'en' },
+      { label: 'English', code: 'en' }
     ],
     defaultLocale: 'nl',
-    fallback: true,
+    fallback: true
   },
 
   admin: {
@@ -40,29 +43,29 @@ export default buildConfig({
     components: {
       afterNavLinks: [{ path: '/src/components/TopBar', exportName: 'default' }],
       graphics: {
-        Icon: '/src/components/Icon',
-      },
+        Icon: '/src/components/Icon'
+      }
     },
     livePreview: {
       collections: ['pages'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 375, height: 812 },
         { label: 'Tablet', name: 'tablet', width: 768, height: 1024 },
-        { label: 'Desktop', name: 'desktop', width: 1280, height: 800 },
-      ],
-    },
+        { label: 'Desktop', name: 'desktop', width: 1280, height: 800 }
+      ]
+    }
   },
 
-  collections: [Users, Pages, Posts, Trails, Influencers, Media],
-  globals: [TrailLabels, UiLabels],
+  collections: [Users, Pages, Posts, Trails, Events, Registrations, Influencers, Media],
+  globals: [TrailLabels, UiLabels, SignUpLabels],
 
   editor: lexicalEditor({}),
 
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URI || ''
     },
-    migrationDir: path.resolve(dirname, 'migrations'),
+    migrationDir: path.resolve(dirname, 'migrations')
   }),
 
   plugins: useS3
@@ -70,28 +73,28 @@ export default buildConfig({
         s3Storage({
           collections: {
             media: {
-              prefix: process.env.NEXT_PUBLIC_PROJECT_SLUG,
-            },
+              prefix: process.env.NEXT_PUBLIC_PROJECT_SLUG
+            }
           },
           bucket: process.env.S3_BUCKET!,
           config: {
             credentials: {
               accessKeyId: process.env.S3_ACCESS_KEY!,
-              secretAccessKey: process.env.S3_SECRET_KEY!,
+              secretAccessKey: process.env.S3_SECRET_KEY!
             },
-            region: process.env.S3_REGION || 'auto',
-          },
-        }),
+            region: process.env.S3_REGION || 'auto'
+          }
+        })
       ]
     : [],
 
   // Writes generated types directly into the shared workspace package.
   typescript: {
-    outputFile: path.resolve(dirname, '../../../packages/payload-types/src/index.ts'),
+    outputFile: path.resolve(dirname, '../../../packages/payload-types/src/index.ts')
   },
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sharp: sharp as any,
 
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET || ''
 })

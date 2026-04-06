@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit'
 import type { Locale } from '$lib/payload'
-import { getTrailLabels, getUiLabels } from '$lib/payload.server'
+import { getTrailLabels, getUiLabels, getSignUpLabels } from '$lib/payload.server'
 
 const LOCALES: Locale[] = ['nl', 'en']
 
@@ -15,9 +15,10 @@ export const load = async ({
     error(404, 'Not found')
   }
   const locale = params.locale as Locale
-  const [trailLabels, uiLabels] = await Promise.all([
+  const [trailLabels, uiLabels, signUpLabels] = await Promise.all([
     getTrailLabels(fetch, locale),
     getUiLabels(fetch, locale),
+    getSignUpLabels(fetch, locale),
   ])
-  return { locale, trailLabels, uiLabels }
+  return { locale, trailLabels, uiLabels, signUpLabels }
 }

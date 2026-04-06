@@ -102,10 +102,12 @@ export interface Config {
   globals: {
     'trail-labels': TrailLabel;
     'ui-labels': UiLabel;
+    'sign-up-labels': SignUpLabel;
   };
   globalsSelect: {
     'trail-labels': TrailLabelsSelect<false> | TrailLabelsSelect<true>;
     'ui-labels': UiLabelsSelect<false> | UiLabelsSelect<true>;
+    'sign-up-labels': SignUpLabelsSelect<false> | SignUpLabelsSelect<true>;
   };
   locale: 'nl' | 'en';
   widgets: {
@@ -292,6 +294,17 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'influencer-carousel';
+          }
+        | {
+            title: string;
+            /**
+             * Used for internal linking using CTA buttons
+             */
+            sectionId: string;
+            intro?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'events';
           }
       )[]
     | null;
@@ -500,9 +513,17 @@ export interface Post {
  */
 export interface Event {
   id: number;
+  title?: string | null;
+  /**
+   * Only published events are visible to the public.
+   */
+  published?: boolean | null;
   description?: string | null;
   trail: number | Trail;
   date: string;
+  /**
+   * Either set a global start time for participation without restrictions or at time slots to restrict participation.
+   */
   start?: string | null;
   slots?:
     | {
@@ -526,6 +547,10 @@ export interface Registration {
   email: string;
   phone?: string | null;
   event: number | Event;
+  /**
+   * The chosen time slot, e.g. "10:00" or "10:00 – 11:00".
+   */
+  slot?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -732,6 +757,15 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        events?:
+          | T
+          | {
+              title?: T;
+              sectionId?: T;
+              intro?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   seo?:
     | T
@@ -825,6 +859,8 @@ export interface TrailsSelect<T extends boolean = true> {
  * via the `definition` "events_select".
  */
 export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  published?: T;
   description?: T;
   trail?: T;
   date?: T;
@@ -850,6 +886,7 @@ export interface RegistrationsSelect<T extends boolean = true> {
   email?: T;
   phone?: T;
   event?: T;
+  slot?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1079,6 +1116,26 @@ export interface UiLabel {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sign-up-labels".
+ */
+export interface SignUpLabel {
+  id: number;
+  nameLabel?: string | null;
+  emailLabel?: string | null;
+  phoneLabel?: string | null;
+  signupCta?: string | null;
+  submitLabel?: string | null;
+  successTitle?: string | null;
+  successMessage?: string | null;
+  /**
+   * Label shown when all slots of an event are unavailable.
+   */
+  fullyBooked?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "trail-labels_select".
  */
 export interface TrailLabelsSelect<T extends boolean = true> {
@@ -1142,6 +1199,23 @@ export interface UiLabelsSelect<T extends boolean = true> {
         community?: T;
         clear?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sign-up-labels_select".
+ */
+export interface SignUpLabelsSelect<T extends boolean = true> {
+  nameLabel?: T;
+  emailLabel?: T;
+  phoneLabel?: T;
+  signupCta?: T;
+  submitLabel?: T;
+  successTitle?: T;
+  successMessage?: T;
+  fullyBooked?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

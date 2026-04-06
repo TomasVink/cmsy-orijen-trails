@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/public'
-import type { Page, Media, Trail, Influencer, Post } from '@repo/payload-types'
+import type { Page, Media, Trail, Influencer, Post, Event } from '@repo/payload-types'
 
-export type { Page, Media, Trail, Influencer, Post }
+export type { Page, Media, Trail, Influencer, Post, Event }
 
 export type Locale = 'nl' | 'en'
 
@@ -15,6 +15,7 @@ export type SubmitTrailBlock = Extract<LayoutBlock, { blockType: 'submit-trail' 
 export type BlogBlock = Extract<LayoutBlock, { blockType: 'blog' }>
 export type SocialButtonBlock = Extract<LayoutBlock, { blockType: 'social-button' }>
 export type InfluencerCarouselBlock = Extract<LayoutBlock, { blockType: 'influencer-carousel' }>
+export type EventsBlock = Extract<LayoutBlock, { blockType: 'events' }>
 
 // ── Pagination wrapper ────────────────────────────────────────────
 export type PaginatedDocs<T> = {
@@ -241,6 +242,48 @@ export async function getTrails(
   const response = await fetchFn(`${baseUrl}/api/trails?${params}`)
   if (!response.ok) return []
   const data = (await response.json()) as PaginatedDocs<Trail>
+  return data.docs
+}
+
+// ── Sign Up Labels global ─────────────────────────────────────────
+export type SignUpLabelsData = {
+  nameLabel?: string | null
+  emailLabel?: string | null
+  phoneLabel?: string | null
+  phonePlaceholder?: string | null
+  submitLabel?: string | null
+  successTitle?: string | null
+  successMessage?: string | null
+  fullyBooked?: string | null
+}
+
+export async function getSignUpLabels(
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl'
+): Promise<SignUpLabelsData | null> {
+  const response = await fetchFn(`${baseUrl}/api/globals/sign-up-labels?locale=${locale}`)
+  if (!response.ok) return null
+  return (await response.json()) as SignUpLabelsData
+}
+
+// ── Events ────────────────────────────────────────────────────────
+export async function getEvents(
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl'
+): Promise<Event[]> {
+  const today = new Date().toISOString().slice(0, 10)
+  const params = new URLSearchParams()
+  params.set('where[published][equals]', 'true')
+  params.set('where[date][greater_than_equal]', today)
+  params.set('depth', '2')
+  params.set('limit', '50')
+  params.set('sort', 'date')
+  params.set('locale', locale)
+  const response = await fetchFn(`${baseUrl}/api/events?${params}`)
+  if (!response.ok) return []
+  const data = (await response.json()) as PaginatedDocs<Event>
   return data.docs
 }
 

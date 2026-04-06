@@ -1,7 +1,8 @@
 <script lang="ts">
-  import type { Page, Post, Trail } from '$lib/payload'
+  import type { Page, Post, Trail, Event } from '$lib/payload'
   import type { SuperValidated, Infer } from 'sveltekit-superforms'
   import type { TrailSubmitSchema } from '$lib/trail-submit-schema'
+  import type { EventsSignUpSchema } from '$lib/events-signup-schema'
 
   import HeroSection from './sections/HeroSection.svelte'
   import CampaignStepsSection from './sections/CampaignStepsSection.svelte'
@@ -9,15 +10,17 @@
   import TrailsOverviewSection from './sections/TrailsOverviewSection.svelte'
   import SubmitTrailSection from './sections/SubmitTrailSection.svelte'
   import BlogSection from './sections/BlogSection.svelte'
-  import SocialButtonSection from './sections/SocialButtonSection.svelte'
   import InfluencerCarouselSection from './sections/InfluencerCarouselSection.svelte'
+  import EventsSection from './sections/EventsSection.svelte'
 
   type Props = {
     blocks: Page['layout']
     form?: SuperValidated<Infer<TrailSubmitSchema>>
+    signUpForm?: SuperValidated<Infer<EventsSignUpSchema>>
+    events?: Event[]
   }
 
-  let { blocks, form }: Props = $props()
+  let { blocks, form, signUpForm, events = [] }: Props = $props()
 </script>
 
 {#if blocks?.length}
@@ -40,10 +43,10 @@
         {block}
         posts={(block.featuredPosts ?? []).filter((t): t is Post => typeof t === 'object')}
       />
-    {:else if block.blockType === 'social-button'}
-      <SocialButtonSection {block} />
     {:else if block.blockType === 'influencer-carousel'}
       <InfluencerCarouselSection {block} />
+    {:else if block.blockType === 'events'}
+      <EventsSection {block} {events} {signUpForm} />
     {/if}
   {/each}
 {/if}

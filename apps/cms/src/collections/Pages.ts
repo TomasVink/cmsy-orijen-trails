@@ -8,6 +8,7 @@ import { SubmitTrail } from '../blocks/SubmitTrail'
 import { BlogBlock } from '../blocks/BlogBlock'
 import { SocialButton } from '../blocks/SocialButton'
 import { InfluencerCarousel } from '../blocks/InfluencerCarousel'
+import { EventsBlock } from '../blocks/EventsBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -54,7 +55,8 @@ export const Pages: CollectionConfig = {
         SubmitTrail,
         BlogBlock,
         // SocialButton,
-        InfluencerCarousel
+        InfluencerCarousel,
+        EventsBlock
       ]
     },
     {
