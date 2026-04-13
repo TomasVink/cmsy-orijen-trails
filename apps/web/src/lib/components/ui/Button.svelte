@@ -4,6 +4,7 @@
 
   type Props = {
     href?: string;
+    target?: string;
     onclick?: () => void;
     variant?: "primary" | "outline" | "ghost";
     type?: "button" | "submit" | "reset";
@@ -15,6 +16,7 @@
 
   let {
     href,
+    target,
     onclick,
     variant = "primary",
     type = "button",
@@ -38,7 +40,7 @@
 </script>
 
 {#if href}
-  <a {href} class={classes}>
+  <a {href} {target} class={classes}>
     {#if icon}<Icon name={icon} />{/if}
     {@render children()}
   </a>

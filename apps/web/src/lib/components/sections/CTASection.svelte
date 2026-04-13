@@ -10,6 +10,10 @@
 
   const image = $derived(typeof block.image === 'object' ? (block.image as Media) : null)
   const imageSrc = $derived(mediaUrl(image, env.PUBLIC_PAYLOAD_URL))
+
+  const isExternal = $derived(block.url?.startsWith('http'))
+  const locale = $derived(page.params.locale ?? 'nl')
+  const href = $derived(isExternal ? block.url : `/${locale}${block.url}`)
 </script>
 
 <section class="py-16 px-4">
@@ -21,7 +25,7 @@
     </div>
     <div class="flex flex-col items-center justify-center gap-6">
       <p>{block.description}</p>
-      <Button href={block.url}>{block.cta}</Button>
+      <Button {href} target={isExternal ? '_blank' : undefined}>{block.cta}</Button>
     </div>
   </div>
 </section>

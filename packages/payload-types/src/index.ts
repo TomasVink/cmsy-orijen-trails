@@ -326,6 +326,39 @@ export interface Page {
             blockName?: string | null;
             blockType: 'cta-block';
           }
+        | {
+            title: string;
+            /**
+             * Used for internal linking using CTA buttons
+             */
+            sectionId: string;
+            intro?: string | null;
+            faq?:
+              | {
+                  itemId: string;
+                  question: string;
+                  answer: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
       )[]
     | null;
   seo?: {
@@ -872,6 +905,23 @@ export interface PagesSelect<T extends boolean = true> {
               cta?: T;
               url?: T;
               description?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              title?: T;
+              sectionId?: T;
+              intro?: T;
+              faq?:
+                | T
+                | {
+                    itemId?: T;
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

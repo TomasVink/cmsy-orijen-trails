@@ -1,4 +1,5 @@
 import { Field } from 'payload'
+import { sanitizeSlugId, validateSlugId } from '../lib/sectionId'
 
 const SectionBase: Field[] = [
   {
@@ -11,6 +12,10 @@ const SectionBase: Field[] = [
     name: 'sectionId',
     type: 'text',
     required: true,
+    validate: validateSlugId,
+    hooks: {
+      beforeValidate: [({ value }) => (value ? sanitizeSlugId(value) : value)],
+    },
     admin: {
       description: 'Used for internal linking using CTA buttons',
     },
