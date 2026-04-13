@@ -97,6 +97,14 @@ export const TrailLabels: GlobalConfig = {
         locale === 'nl' ? 'Bekijk route' : 'View trail'
     },
     {
+      name: 'viewAllTrails',
+      type: 'text',
+      localized: true,
+      admin: { description: 'Link below the top trails carousel.' },
+      defaultValue: ({ locale }: { locale?: string }) =>
+        locale === 'nl' ? 'Bekijk alle routes' : 'View all trails'
+    },
+    {
       name: 'form',
       type: 'group',
       label: 'Submit Trail Form Labels',

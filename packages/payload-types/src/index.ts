@@ -1028,6 +1028,10 @@ export interface TrailLabel {
    * CTA button on trail cards.
    */
   viewTrail?: string | null;
+  /**
+   * Link below the top trails carousel.
+   */
+  viewAllTrails?: string | null;
   form?: {
     nameLabel?: string | null;
     emailLabel?: string | null;
@@ -1157,6 +1161,7 @@ export interface TrailLabelsSelect<T extends boolean = true> {
   hospitality?: T;
   water?: T;
   viewTrail?: T;
+  viewAllTrails?: T;
   form?:
     | T
     | {

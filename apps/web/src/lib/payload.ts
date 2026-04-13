@@ -127,6 +127,7 @@ export type TrailLabelsData = {
   water?: string | null
   allDifficulties?: string | null
   viewTrail?: string | null
+  viewAllTrails?: string | null
   form?: {
     nameLabel?: string | null
     emailLabel?: string | null
