@@ -5,7 +5,7 @@ export const BlogBlock: Block = {
   slug: 'blog',
   labels: {
     singular: 'Blog',
-    plural: 'Blog Blocks',
+    plural: 'Blog Blocks'
   },
   fields: [
     ...SectionBase,
@@ -16,8 +16,15 @@ export const BlogBlock: Block = {
       hasMany: true,
       maxDepth: 2,
       admin: {
-        description: 'Select blog posts to be featured. Order determines display order.',
-      },
+        description: 'Select blog posts to be featured. Order determines display order.'
+      }
     },
-  ],
+    {
+      name: 'viewAllLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: ({ locale }: { locale?: string }) =>
+        locale === 'nl' ? 'Bekijk alle berichten' : 'View all posts'
+    }
+  ]
 }

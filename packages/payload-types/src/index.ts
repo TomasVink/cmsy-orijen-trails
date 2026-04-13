@@ -276,6 +276,7 @@ export interface Page {
              * Select blog posts to be featured. Order determines display order.
              */
             featuredPosts?: (number | Post)[] | null;
+            viewAllLabel?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'blog';
@@ -753,6 +754,7 @@ export interface PagesSelect<T extends boolean = true> {
               sectionId?: T;
               intro?: T;
               featuredPosts?: T;
+              viewAllLabel?: T;
               id?: T;
               blockName?: T;
             };
