@@ -8,7 +8,7 @@ import { SubmitTrail } from '../blocks/SubmitTrail'
 import { BlogBlock } from '../blocks/BlogBlock'
 import { InfluencerCarousel } from '../blocks/InfluencerCarousel'
 import { EventsBlock } from '../blocks/EventsBlock'
-import { CTABlock } from '@/blocks/CTABlock'
+import { CTABlock } from '../blocks/CTABlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
