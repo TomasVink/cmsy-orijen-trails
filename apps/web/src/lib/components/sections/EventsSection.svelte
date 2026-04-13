@@ -97,6 +97,10 @@
             {/if}
           </p>
 
+          <p>
+            {event.description}
+          </p>
+
           {#if influencerList.length > 0}
             <p class="font-sans text-sm text-orijen-black/60">
               {influencerList.map((i) => i.name).join(', ')}
