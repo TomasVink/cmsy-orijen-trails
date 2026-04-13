@@ -17,6 +17,9 @@ import { UiLabels } from './globals/UiLabels'
 import { SignUpLabels } from './globals/SignUpLabels'
 import { Events } from './collections/Events'
 import { Registrations } from './collections/Registrations'
+import { Patches } from './collections/Patches'
+import { PatchRequests } from './collections/PatchRequests'
+import { UserMedia } from './collections/UserMedia'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -56,7 +59,19 @@ export default buildConfig({
     }
   },
 
-  collections: [Users, Pages, Posts, Trails, Events, Registrations, Influencers, Media],
+  collections: [
+    Users,
+    Pages,
+    Posts,
+    Trails,
+    Events,
+    Registrations,
+    Patches,
+    PatchRequests,
+    UserMedia,
+    Influencers,
+    Media
+  ],
   globals: [TrailLabels, UiLabels, SignUpLabels],
 
   editor: lexicalEditor({}),
@@ -74,6 +89,9 @@ export default buildConfig({
           collections: {
             media: {
               prefix: process.env.NEXT_PUBLIC_PROJECT_SLUG
+            },
+            'user-media': {
+              prefix: `${process.env.NEXT_PUBLIC_PROJECT_SLUG}/user`
             }
           },
           bucket: process.env.S3_BUCKET!,

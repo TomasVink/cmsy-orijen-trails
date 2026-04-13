@@ -1,5 +1,4 @@
 import { Block } from 'payload'
-import SectionBase from './SectionBase'
 
 export const CTABlock: Block = {
   slug: 'cta-block',

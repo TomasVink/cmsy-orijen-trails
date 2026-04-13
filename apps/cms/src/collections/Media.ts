@@ -3,7 +3,10 @@ import type { CollectionConfig } from 'payload'
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-    read: () => true,
+    read: () => true
+  },
+  admin: {
+    group: 'Content'
   },
   upload: {
     // Local dev: files served from /media on the Next.js server.
@@ -14,20 +17,20 @@ export const Media: CollectionConfig = {
         name: 'thumbnail',
         width: 400,
         height: 300,
-        position: 'centre',
+        position: 'centre'
       },
       {
         name: 'card',
         width: 768,
         height: 512,
-        position: 'centre',
+        position: 'centre'
       },
       {
         name: 'tablet',
         width: 1024,
         height: undefined,
-        position: 'centre',
-      },
+        position: 'centre'
+      }
     ],
     adminThumbnail: 'thumbnail',
     mimeTypes: [
@@ -38,15 +41,15 @@ export const Media: CollectionConfig = {
       'image/svg+xml',
       'video/mp4',
       'video/webm',
-      'video/quicktime',
-    ],
+      'video/quicktime'
+    ]
   },
   fields: [
     {
       name: 'alt',
       type: 'text',
       required: true,
-      localized: true,
-    },
-  ],
+      localized: true
+    }
+  ]
 }

@@ -72,6 +72,71 @@ export const UiLabels: GlobalConfig = {
         locale === 'nl' ? 'Houd ⌘ ingedrukt om te zoomen' : 'Hold ⌘ to zoom the map'
     },
     {
+      name: 'patchRequestForm',
+      type: 'group',
+      label: 'Patch Request Form',
+      fields: [
+        {
+          name: 'nameLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) => (locale === 'nl' ? 'Naam' : 'Name')
+        },
+        {
+          name: 'emailLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) =>
+            locale === 'nl' ? 'E-mailadres' : 'Email address'
+        },
+        {
+          name: 'streetAddressLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) =>
+            locale === 'nl' ? 'Straat en huisnummer' : 'Street address'
+        },
+        {
+          name: 'postcodeLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) =>
+            locale === 'nl' ? 'Postcode' : 'Postcode'
+        },
+        {
+          name: 'cityLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) => (locale === 'nl' ? 'Gemeente' : 'City')
+        },
+        {
+          name: 'countryLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) => (locale === 'nl' ? 'Land' : 'Country')
+        },
+        {
+          name: 'imageLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) => (locale === 'nl' ? 'Foto' : 'Photo')
+        },
+        {
+          name: 'patchLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: 'Patch'
+        },
+        {
+          name: 'submitLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) =>
+            locale === 'nl' ? 'Versturen' : 'Submit'
+        }
+      ]
+    },
+    {
       name: 'trailFilters',
       type: 'group',
       label: 'Trail Filters',

@@ -6,6 +6,7 @@ export const Registrations: CollectionConfig = {
     create: () => true
   },
   admin: {
+    group: 'Events',
     defaultColumns: ['event', 'slot', 'name']
   },
   fields: [

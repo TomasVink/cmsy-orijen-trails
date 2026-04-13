@@ -3,12 +3,13 @@
   import type { SuperValidated, Infer } from 'sveltekit-superforms'
   import type { TrailSubmitSchema } from '$lib/trail-submit-schema'
   import type { EventsSignUpSchema } from '$lib/events-signup-schema'
+  import type { PatchRequestSchema } from '$lib/patch-request-schema'
 
   import HeroSection from './sections/HeroSection.svelte'
   import CampaignStepsSection from './sections/CampaignStepsSection.svelte'
   import TopTrailsSection from './sections/TopTrailsSection.svelte'
   import TrailsOverviewSection from './sections/TrailsOverviewSection.svelte'
-  import SubmitTrailSection from './sections/SubmitTrailSection.svelte'
+  import UserFormSection from './sections/UserFormSection.svelte'
   import BlogSection from './sections/BlogSection.svelte'
   import InfluencerCarouselSection from './sections/InfluencerCarouselSection.svelte'
   import EventsSection from './sections/EventsSection.svelte'
@@ -18,10 +19,11 @@
     blocks: Page['layout']
     form?: SuperValidated<Infer<TrailSubmitSchema>>
     signUpForm?: SuperValidated<Infer<EventsSignUpSchema>>
+    patchRequestForm?: SuperValidated<Infer<PatchRequestSchema>>
     events?: Event[]
   }
 
-  let { blocks, form, signUpForm, events = [] }: Props = $props()
+  let { blocks, form, signUpForm, patchRequestForm, events = [] }: Props = $props()
 </script>
 
 {#if blocks?.length}
@@ -37,8 +39,8 @@
       />
     {:else if block.blockType === 'trails-overview'}
       <TrailsOverviewSection {block} />
-    {:else if block.blockType === 'submit-trail'}
-      <SubmitTrailSection {block} {form} />
+    {:else if block.blockType === 'user-form'}
+      <UserFormSection {block} trailForm={form} {patchRequestForm} />
     {:else if block.blockType === 'blog'}
       <BlogSection
         {block}

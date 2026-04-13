@@ -4,7 +4,7 @@ import { Hero } from '../blocks/Hero'
 import { CampaignSteps } from '../blocks/CampaignSteps'
 import { TopTrails } from '../blocks/TopTrails'
 import { TrailsOverview } from '../blocks/TrailsOverview'
-import { SubmitTrail } from '../blocks/SubmitTrail'
+import { UserForm } from '../blocks/UserForm'
 import { BlogBlock } from '../blocks/BlogBlock'
 import { InfluencerCarousel } from '../blocks/InfluencerCarousel'
 import { EventsBlock } from '../blocks/EventsBlock'
@@ -16,6 +16,7 @@ export const Pages: CollectionConfig = {
     read: () => true
   },
   admin: {
+    group: 'Content',
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
@@ -52,7 +53,7 @@ export const Pages: CollectionConfig = {
         CampaignSteps,
         TopTrails,
         TrailsOverview,
-        SubmitTrail,
+        UserForm,
         BlogBlock,
         InfluencerCarousel,
         EventsBlock,

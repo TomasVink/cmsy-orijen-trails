@@ -11,6 +11,7 @@ export const Trails: CollectionConfig = {
     create: () => true
   },
   admin: {
+    group: 'Content',
     useAsTitle: 'title',
     defaultColumns: ['title', 'distance', 'published', 'updatedAt']
   },

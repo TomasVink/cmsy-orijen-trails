@@ -1,14 +1,13 @@
 <script lang="ts">
-  import type { CampaignStepsBlock } from "$lib/payload";
-  import Section from "$lib/components/ui/Section.svelte";
-  import Icon from "$lib/components/ui/Icon.svelte";
-  import Title from "../ui/Title.svelte";
+  import type { CampaignStepsBlock } from '$lib/payload'
+  import Section from '$lib/components/ui/Section.svelte'
+  import Icon from '$lib/components/ui/Icon.svelte'
 
-  type Props = { block: CampaignStepsBlock };
-  let { block }: Props = $props();
+  type Props = { block: CampaignStepsBlock }
+  let { block }: Props = $props()
 </script>
 
-<Section id={block.sectionId} title={block.title} intro={block.intro ?? ""}>
+<Section id={block.sectionId} title={block.title} intro={block.intro ?? ''}>
   {#if block.steps?.length}
     <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {#each block.steps as step, i (step.id)}

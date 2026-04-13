@@ -9,6 +9,7 @@ export const Events: CollectionConfig = {
   slug: 'events',
   admin: {
     useAsTitle: 'title',
+    group: 'Events'
   },
   hooks: {
     beforeChange: [
@@ -27,10 +28,13 @@ export const Events: CollectionConfig = {
         const formatted = date
           ? `${String(date.getUTCDate()).padStart(2, '0')}/${String(date.getUTCMonth() + 1).padStart(2, '0')}/${date.getUTCFullYear()}`
           : null
-        data.title = trailTitle && formatted ? `${trailTitle} – ${formatted}` : trailTitle ?? formatted ?? 'Event'
+        data.title =
+          trailTitle && formatted
+            ? `${trailTitle} – ${formatted}`
+            : (trailTitle ?? formatted ?? 'Event')
         return data
-      },
-    ],
+      }
+    ]
   },
   access: {
     read: ({ req: { user } }) => {
@@ -42,7 +46,7 @@ export const Events: CollectionConfig = {
     {
       name: 'title',
       type: 'text',
-      admin: { hidden: true },
+      admin: { hidden: true }
     },
     {
       name: 'published',

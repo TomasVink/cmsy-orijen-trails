@@ -73,6 +73,9 @@ export interface Config {
     trails: Trail;
     events: Event;
     registrations: Registration;
+    patches: Patch;
+    'patch-requests': PatchRequest;
+    'user-media': UserMedia;
     influencers: Influencer;
     media: Media;
     'payload-kv': PayloadKv;
@@ -88,6 +91,9 @@ export interface Config {
     trails: TrailsSelect<false> | TrailsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     registrations: RegistrationsSelect<false> | RegistrationsSelect<true>;
+    patches: PatchesSelect<false> | PatchesSelect<true>;
+    'patch-requests': PatchRequestsSelect<false> | PatchRequestsSelect<true>;
+    'user-media': UserMediaSelect<false> | UserMediaSelect<true>;
     influencers: InfluencersSelect<false> | InfluencersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -243,12 +249,16 @@ export interface Page {
             blockType: 'trails-overview';
           }
         | {
+            requestType: 'trail' | 'patch-request';
             title: string;
             /**
              * Used for internal linking using CTA buttons
              */
             sectionId: string;
             intro?: string | null;
+            icon?:
+              | ('map-search' | 'group' | 'route' | 'clock' | 'hike' | 'prize' | 'camera' | 'terrain' | 'pets')
+              | null;
             /**
              * Submit button label.
              */
@@ -263,7 +273,7 @@ export interface Page {
             successMessage?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'submit-trail';
+            blockType: 'user-form';
           }
         | {
             title: string;
@@ -566,6 +576,70 @@ export interface Registration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "patches".
+ */
+export interface Patch {
+  id: number;
+  patch: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "patch-requests".
+ */
+export interface PatchRequest {
+  id: number;
+  name: string;
+  email: string;
+  address: {
+    streetAddress: string;
+    postcode: string;
+    city: string;
+    country: string;
+  };
+  images?:
+    | {
+        image: number | UserMedia;
+        id?: string | null;
+      }[]
+    | null;
+  patch: number | Patch;
+  status?: ('draft' | 'requested' | 'send') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "user-media".
+ */
+export interface UserMedia {
+  id: number;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -611,6 +685,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'registrations';
         value: number | Registration;
+      } | null)
+    | ({
+        relationTo: 'patches';
+        value: number | Patch;
+      } | null)
+    | ({
+        relationTo: 'patch-requests';
+        value: number | PatchRequest;
+      } | null)
+    | ({
+        relationTo: 'user-media';
+        value: number | UserMedia;
       } | null)
     | ({
         relationTo: 'influencers';
@@ -735,12 +821,14 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        'submit-trail'?:
+        'user-form'?:
           | T
           | {
+              requestType?: T;
               title?: T;
               sectionId?: T;
               intro?: T;
+              icon?: T;
               ctaLabel?: T;
               successTitle?: T;
               successMessage?: T;
@@ -910,6 +998,73 @@ export interface RegistrationsSelect<T extends boolean = true> {
   slot?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "patches_select".
+ */
+export interface PatchesSelect<T extends boolean = true> {
+  patch?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "patch-requests_select".
+ */
+export interface PatchRequestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  address?:
+    | T
+    | {
+        streetAddress?: T;
+        postcode?: T;
+        city?: T;
+        country?: T;
+      };
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  patch?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "user-media_select".
+ */
+export interface UserMediaSelect<T extends boolean = true> {
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1110,6 +1265,17 @@ export interface UiLabel {
    * Overlay hint shown when scrolling the map without ⌘ (Mac).
    */
   mapZoomHintMac?: string | null;
+  patchRequestForm?: {
+    nameLabel?: string | null;
+    emailLabel?: string | null;
+    streetAddressLabel?: string | null;
+    postcodeLabel?: string | null;
+    cityLabel?: string | null;
+    countryLabel?: string | null;
+    imageLabel?: string | null;
+    patchLabel?: string | null;
+    submitLabel?: string | null;
+  };
   trailFilters?: {
     /**
      * Section header for the difficulty filter.
@@ -1215,6 +1381,19 @@ export interface UiLabelsSelect<T extends boolean = true> {
   submitting?: T;
   mapZoomHint?: T;
   mapZoomHintMac?: T;
+  patchRequestForm?:
+    | T
+    | {
+        nameLabel?: T;
+        emailLabel?: T;
+        streetAddressLabel?: T;
+        postcodeLabel?: T;
+        cityLabel?: T;
+        countryLabel?: T;
+        imageLabel?: T;
+        patchLabel?: T;
+        submitLabel?: T;
+      };
   trailFilters?:
     | T
     | {

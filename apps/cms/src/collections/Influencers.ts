@@ -4,24 +4,25 @@ export const Influencers: CollectionConfig = {
   slug: 'influencers',
   access: { read: () => true },
   admin: {
+    group: 'Content',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'handle', 'platform', 'updatedAt'],
+    defaultColumns: ['name', 'handle', 'platform', 'updatedAt']
   },
   fields: [
     {
       name: 'name',
       type: 'text',
-      required: true,
+      required: true
     },
     {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: true
     },
     {
       name: 'bio',
-      type: 'textarea',
+      type: 'textarea'
     },
     {
       name: 'accounts',
@@ -40,12 +41,12 @@ export const Influencers: CollectionConfig = {
             { label: 'TikTok', value: 'tiktok' },
             { label: 'Twitter / X', value: 'twitter' },
             { label: 'YouTube', value: 'youtube' },
-            { label: 'Website', value: 'website' },
-          ],
+            { label: 'Website', value: 'website' }
+          ]
         },
         { name: 'handle', type: 'text' },
-        { name: 'url', type: 'text', required: true, admin: { placeholder: 'https://...' } },
-      ],
-    },
-  ],
+        { name: 'url', type: 'text', required: true, admin: { placeholder: 'https://...' } }
+      ]
+    }
+  ]
 }

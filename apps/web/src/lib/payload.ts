@@ -11,7 +11,9 @@ export type HeroBlock = Extract<LayoutBlock, { blockType: 'hero' }>
 export type CampaignStepsBlock = Extract<LayoutBlock, { blockType: 'campaign-steps' }>
 export type TopTrailsBlock = Extract<LayoutBlock, { blockType: 'top-trails' }>
 export type TrailsOverviewBlock = Extract<LayoutBlock, { blockType: 'trails-overview' }>
-export type SubmitTrailBlock = Extract<LayoutBlock, { blockType: 'submit-trail' }>
+export type UserFormBlock = Extract<LayoutBlock, { blockType: 'user-form' }>
+/** @deprecated use UserFormBlock */
+export type SubmitTrailBlock = UserFormBlock
 export type BlogBlock = Extract<LayoutBlock, { blockType: 'blog' }>
 export type SocialButtonBlock = Extract<LayoutBlock, { blockType: 'social-button' }>
 export type InfluencerCarouselBlock = Extract<LayoutBlock, { blockType: 'influencer-carousel' }>
@@ -151,6 +153,17 @@ export type UiLabelsData = {
   submitting?: string | null
   mapZoomHint?: string | null
   mapZoomHintMac?: string | null
+  patchRequestForm?: {
+    nameLabel?: string | null
+    emailLabel?: string | null
+    streetAddressLabel?: string | null
+    postcodeLabel?: string | null
+    cityLabel?: string | null
+    countryLabel?: string | null
+    imageLabel?: string | null
+    patchLabel?: string | null
+    submitLabel?: string | null
+  } | null
   trailFilters?: {
     difficulty?: string | null
     offLeash?: string | null
