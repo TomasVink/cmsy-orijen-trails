@@ -3,6 +3,7 @@ import { GlobalConfig } from 'payload'
 export const TrailLabels: GlobalConfig = {
   slug: 'trail-labels',
   label: 'Trail Labels',
+  access: { read: () => true },
   admin: {
     group: 'Settings'
   },

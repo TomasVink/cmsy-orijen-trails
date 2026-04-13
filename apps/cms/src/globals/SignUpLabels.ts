@@ -3,6 +3,7 @@ import { GlobalConfig } from 'payload'
 export const SignUpLabels: GlobalConfig = {
   slug: 'sign-up-labels',
   label: 'Sign Up Labels',
+  access: { read: () => true },
   admin: {
     group: 'Settings'
   },

@@ -3,6 +3,7 @@ import { GlobalConfig } from 'payload'
 export const UiLabels: GlobalConfig = {
   slug: 'ui-labels',
   label: 'UI Labels',
+  access: { read: () => true },
   admin: {
     group: 'Settings'
   },
