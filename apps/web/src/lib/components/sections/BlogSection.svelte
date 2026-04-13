@@ -28,7 +28,8 @@
           <p class="text-orijen-gray">{post.excerpt}</p>
         {/if}
         <span class="text-sm text-orijen-red hover:underline mt-auto self-end flex align-middle"
-          >{uiLabels?.continueReading ?? 'Continue reading'} <Icon name="arrow-right" class="size-6" /></span
+          >{uiLabels?.continueReading ?? 'Continue reading'}
+          <Icon name="arrow-right" class="size-6" /></span
         >
       </div>
     </a>

@@ -306,6 +306,15 @@ export interface Page {
             blockName?: string | null;
             blockType: 'events';
           }
+        | {
+            image: number | Media;
+            cta: string;
+            url: string;
+            description?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta-block';
+          }
       )[]
     | null;
   seo?: {
@@ -763,6 +772,16 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               sectionId?: T;
               intro?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'cta-block'?:
+          | T
+          | {
+              image?: T;
+              cta?: T;
+              url?: T;
+              description?: T;
               id?: T;
               blockName?: T;
             };

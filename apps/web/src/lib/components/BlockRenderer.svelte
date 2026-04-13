@@ -12,6 +12,7 @@
   import BlogSection from './sections/BlogSection.svelte'
   import InfluencerCarouselSection from './sections/InfluencerCarouselSection.svelte'
   import EventsSection from './sections/EventsSection.svelte'
+  import CTASection from './sections/CTASection.svelte'
 
   type Props = {
     blocks: Page['layout']
@@ -47,6 +48,8 @@
       <InfluencerCarouselSection {block} />
     {:else if block.blockType === 'events'}
       <EventsSection {block} {events} {signUpForm} />
+    {:else if block.blockType === 'cta-block'}
+      <CTASection {block} />
     {/if}
   {/each}
 {/if}

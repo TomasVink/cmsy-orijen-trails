@@ -6,9 +6,9 @@ import { TopTrails } from '../blocks/TopTrails'
 import { TrailsOverview } from '../blocks/TrailsOverview'
 import { SubmitTrail } from '../blocks/SubmitTrail'
 import { BlogBlock } from '../blocks/BlogBlock'
-import { SocialButton } from '../blocks/SocialButton'
 import { InfluencerCarousel } from '../blocks/InfluencerCarousel'
 import { EventsBlock } from '../blocks/EventsBlock'
+import { CTABlock } from '@/blocks/CTABlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -54,9 +54,9 @@ export const Pages: CollectionConfig = {
         TrailsOverview,
         SubmitTrail,
         BlogBlock,
-        // SocialButton,
         InfluencerCarousel,
-        EventsBlock
+        EventsBlock,
+        CTABlock
       ]
     },
     {
