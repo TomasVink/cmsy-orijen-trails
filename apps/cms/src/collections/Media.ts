@@ -44,6 +44,17 @@ export const Media: CollectionConfig = {
       'video/quicktime'
     ]
   },
+  hooks: {
+    beforeOperation: [
+      ({ req, operation }) => {
+        if ((operation === 'create' || operation === 'update') && req.file) {
+          if (req.file.size > 10 * 1024 * 1024) {
+            throw new Error('File size must not exceed 10 MB.')
+          }
+        }
+      }
+    ]
+  },
   fields: [
     {
       name: 'alt',
