@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { purgeAllCache, purgePageCache } from '../lib/bunny'
 
 import { Hero } from '../blocks/Hero'
 import { CampaignSteps } from '../blocks/CampaignSteps'
@@ -15,6 +16,15 @@ export const Pages: CollectionConfig = {
   slug: 'pages',
   access: {
     read: () => true
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc, req }) => {
+        const full = await req.payload.findByID({ collection: 'pages', id: doc.id, locale: 'all', depth: 0 })
+        await purgePageCache(full.slug as unknown as Record<string, string>)
+      },
+    ],
+    afterDelete: [() => purgeAllCache()],
   },
   admin: {
     group: 'Content',

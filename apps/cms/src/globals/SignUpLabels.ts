@@ -1,8 +1,12 @@
 import { GlobalConfig } from 'payload'
+import { purgeAllCache } from '../lib/bunny'
 
 export const SignUpLabels: GlobalConfig = {
   slug: 'sign-up-labels',
   label: 'Sign Up Labels',
+  hooks: {
+    afterChange: [() => purgeAllCache()],
+  },
   access: { read: () => true },
   admin: {
     group: 'Settings'

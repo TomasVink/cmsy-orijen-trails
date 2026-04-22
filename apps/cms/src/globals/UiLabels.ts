@@ -1,8 +1,12 @@
 import { GlobalConfig } from 'payload'
+import { purgeAllCache } from '../lib/bunny'
 
 export const UiLabels: GlobalConfig = {
   slug: 'ui-labels',
   label: 'UI Labels',
+  hooks: {
+    afterChange: [() => purgeAllCache()],
+  },
   access: { read: () => true },
   admin: {
     group: 'Settings'

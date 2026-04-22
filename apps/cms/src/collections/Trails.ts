@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload'
+import { purgeTrailCache } from '../lib/bunny'
 import RelatedContent from './RelatedContent'
 
 export const Trails: CollectionConfig = {
@@ -9,6 +10,10 @@ export const Trails: CollectionConfig = {
       return { published: { equals: true } }
     },
     create: () => true
+  },
+  hooks: {
+    afterChange: [({ doc }) => purgeTrailCache(String(doc.id))],
+    afterDelete: [({ doc }) => purgeTrailCache(String(doc.id))],
   },
   admin: {
     group: 'Content',

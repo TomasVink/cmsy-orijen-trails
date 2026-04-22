@@ -1,9 +1,19 @@
 import { CollectionConfig } from 'payload'
+import { purgeAllCache, purgePostCache } from '../lib/bunny'
 import RelatedContent from './RelatedContent'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
   access: { read: () => true },
+  hooks: {
+    afterChange: [
+      async ({ doc, req }) => {
+        const full = await req.payload.findByID({ collection: 'posts', id: doc.id, locale: 'all', depth: 0 })
+        await purgePostCache(full.slug as unknown as Record<string, string>)
+      },
+    ],
+    afterDelete: [() => purgeAllCache()],
+  },
   admin: {
     group: 'Content',
     useAsTitle: 'title',

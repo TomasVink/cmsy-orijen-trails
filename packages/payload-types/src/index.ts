@@ -169,7 +169,7 @@ export interface Page {
     | (
         | {
             /**
-             * Background video
+             * Background video (max 10 MB). Keep it under 10 s, use H.264/MP4, 1080p or lower, 24-30 fps, and strip audio.
              */
             video: number | Media;
             headline: string;
