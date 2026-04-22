@@ -1,4 +1,11 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    const script = document.createElement('script');
+    script.src = 'https://footer.mars.com/js/footer.js.aspx?stage-orijen-trails-cmsy';
+    document.body.appendChild(script);
+  });
 </script>
 
 <footer class="bg-black text-white py-12 px-4 mt-16">
@@ -29,6 +36,9 @@
       <div class="flex gap-4">
         <a href="/privacy" class="hover:text-white/60 transition-colors">Privacy</a>
         <a href="/terms" class="hover:text-white/60 transition-colors">Terms</a>
+        <!-- OneTrust Cookies Settings button start -->
+        <button id="ot-sdk-btn" class="ot-sdk-show-settings hover:text-white/60 transition-colors">Cookie-instellingen</button>
+        <!-- OneTrust Cookies Settings button end -->
       </div>
     </div>
   </div>
