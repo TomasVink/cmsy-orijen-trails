@@ -129,6 +129,6 @@ jobs:
             echo "COOLIFY_DEPLOY_WEBHOOK not set — skipping"
             exit 0
           fi
-          curl -s -w "\nHTTP %{http_code}" -X GET \
+          curl --fail-with-body -s -w "\nHTTP %{http_code}" -X GET \
             -H "Authorization: Bearer $TOKEN" \
             "$WEBHOOK"
