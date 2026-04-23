@@ -208,6 +208,11 @@ export interface Page {
              */
             sectionId: string;
             intro?: string | null;
+            /**
+             * Optional background image shown behind the title
+             */
+            backgroundImage?: (number | null) | Media;
+            backgroundColor?: ('black' | 'white' | 'texture') | null;
             steps?:
               | {
                   icon?:
@@ -230,6 +235,11 @@ export interface Page {
             sectionId: string;
             intro?: string | null;
             /**
+             * Optional background image shown behind the title
+             */
+            backgroundImage?: (number | null) | Media;
+            backgroundColor?: ('black' | 'white' | 'texture') | null;
+            /**
              * Select trails to be featured. Order determines display order.
              */
             trails?: (number | Trail)[] | null;
@@ -244,6 +254,11 @@ export interface Page {
              */
             sectionId: string;
             intro?: string | null;
+            /**
+             * Optional background image shown behind the title
+             */
+            backgroundImage?: (number | null) | Media;
+            backgroundColor?: ('black' | 'white' | 'texture') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'trails-overview';
@@ -256,6 +271,11 @@ export interface Page {
              */
             sectionId: string;
             intro?: string | null;
+            /**
+             * Optional background image shown behind the title
+             */
+            backgroundImage?: (number | null) | Media;
+            backgroundColor?: ('black' | 'white' | 'texture') | null;
             icon?:
               | ('map-search' | 'group' | 'route' | 'clock' | 'hike' | 'prize' | 'camera' | 'terrain' | 'pets')
               | null;
@@ -283,6 +303,11 @@ export interface Page {
             sectionId: string;
             intro?: string | null;
             /**
+             * Optional background image shown behind the title
+             */
+            backgroundImage?: (number | null) | Media;
+            backgroundColor?: ('black' | 'white' | 'texture') | null;
+            /**
              * Select blog posts to be featured. Order determines display order.
              */
             featuredPosts?: (number | Post)[] | null;
@@ -299,6 +324,11 @@ export interface Page {
             sectionId: string;
             intro?: string | null;
             /**
+             * Optional background image shown behind the title
+             */
+            backgroundImage?: (number | null) | Media;
+            backgroundColor?: ('black' | 'white' | 'texture') | null;
+            /**
              * Select influencers to display.
              */
             influencers?: (number | Influencer)[] | null;
@@ -313,6 +343,11 @@ export interface Page {
              */
             sectionId: string;
             intro?: string | null;
+            /**
+             * Optional background image shown behind the title
+             */
+            backgroundImage?: (number | null) | Media;
+            backgroundColor?: ('black' | 'white' | 'texture') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'events';
@@ -333,6 +368,11 @@ export interface Page {
              */
             sectionId: string;
             intro?: string | null;
+            /**
+             * Optional background image shown behind the title
+             */
+            backgroundImage?: (number | null) | Media;
+            backgroundColor?: ('black' | 'white' | 'texture') | null;
             faq?:
               | {
                   itemId: string;
@@ -824,6 +864,8 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               sectionId?: T;
               intro?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
               steps?:
                 | T
                 | {
@@ -841,6 +883,8 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               sectionId?: T;
               intro?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
               trails?: T;
               id?: T;
               blockName?: T;
@@ -851,6 +895,8 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               sectionId?: T;
               intro?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
               id?: T;
               blockName?: T;
             };
@@ -861,6 +907,8 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               sectionId?: T;
               intro?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
               icon?: T;
               ctaLabel?: T;
               successTitle?: T;
@@ -874,6 +922,8 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               sectionId?: T;
               intro?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
               featuredPosts?: T;
               viewAllLabel?: T;
               id?: T;
@@ -885,6 +935,8 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               sectionId?: T;
               intro?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
               influencers?: T;
               id?: T;
               blockName?: T;
@@ -895,6 +947,8 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               sectionId?: T;
               intro?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
               id?: T;
               blockName?: T;
             };
@@ -914,6 +968,8 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               sectionId?: T;
               intro?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
               faq?:
                 | T
                 | {

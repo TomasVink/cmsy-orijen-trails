@@ -36,7 +36,7 @@
 </script>
 
 <!-- Section -->
-<Section>
+<Section id={block.sectionId} backgroundColor={block.backgroundColor}>
   <div
     class="border-l-4 border-l-orijen-red p-12 flex items-center gap-8 border border-orijen-gray/30 bg-orijen-gray/20"
   >

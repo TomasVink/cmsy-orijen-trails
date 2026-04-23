@@ -7,7 +7,7 @@
   let { block }: Props = $props()
 </script>
 
-<Section id={block.sectionId} title={block.title} intro={block.intro ?? ''}>
+<Section id={block.sectionId} title={block.title} intro={block.intro ?? ''} backgroundImage={block.backgroundImage} backgroundColor={block.backgroundColor}>
   {#if block.steps?.length}
     <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {#each block.steps as step, i (step.id)}

@@ -12,7 +12,7 @@
   const uiLabels = $derived(page.data.uiLabels as UiLabelsData | null)
 </script>
 
-<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId}>
+<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId} backgroundImage={block.backgroundImage} backgroundColor={block.backgroundColor}>
   {#each posts as post}
     <a
       href="/{locale}/blog/{post.slug}"

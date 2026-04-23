@@ -66,7 +66,7 @@
   }
 </script>
 
-<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId}>
+<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId} backgroundImage={block.backgroundImage} backgroundColor={block.backgroundColor}>
   {#if events.length === 0}
     <p class="text-center font-sans text-orijen-gray">—</p>
   {:else}

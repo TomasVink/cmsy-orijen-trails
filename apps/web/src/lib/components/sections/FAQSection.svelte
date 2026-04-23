@@ -15,7 +15,7 @@
   }
 </script>
 
-<Section title={block.title} intro={block.intro ?? ''} id={block.sectionId}>
+<Section title={block.title} intro={block.intro ?? ''} id={block.sectionId} backgroundImage={block.backgroundImage} backgroundColor={block.backgroundColor}>
   {#each block.faq ?? [] as item (item.itemId)}
     <div id={item.itemId}>
       <button

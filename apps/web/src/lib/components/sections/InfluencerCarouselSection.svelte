@@ -18,7 +18,7 @@
   }
 </script>
 
-<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId}>
+<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId} backgroundImage={block.backgroundImage} backgroundColor={block.backgroundColor}>
   <!-- Horizontally scrollable carousel -->
   <div class="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory">
     {#each influencers as influencer (influencer.id)}

@@ -34,7 +34,7 @@
   let selectedTrail = $state<Trail | null>(null)
 </script>
 
-<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId}>
+<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId} backgroundImage={block.backgroundImage} backgroundColor={block.backgroundColor}>
   <TrailsFilter {trailLabels} value={filters} onchange={(f) => (filters = f)} />
 
   <!-- Full-width map with detail card overlaid on the right -->

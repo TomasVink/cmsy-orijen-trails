@@ -61,7 +61,7 @@
   }
 </script>
 
-<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId}>
+<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId} backgroundImage={block.backgroundImage} backgroundColor={block.backgroundColor}>
   <div class="relative w-full select-none" bind:clientWidth={containerWidth}>
     <!-- Carousel track -->
     <div
