@@ -7,7 +7,7 @@ export const Registrations: CollectionConfig = {
   },
   admin: {
     group: 'Events',
-    defaultColumns: ['event', 'slot', 'name']
+    defaultColumns: ['event', 'slot', 'name', 'createdAt']
   },
   fields: [
     {
@@ -33,7 +33,19 @@ export const Registrations: CollectionConfig = {
     {
       name: 'slot',
       type: 'text',
-      admin: { description: 'The chosen time slot, e.g. "10:00" or "10:00 – 11:00".' }
+      admin: { description: 'The chosen time slot, e.g. "10:00" or "10:00 - 11:00".' }
+    },
+    {
+      name: 'people',
+      type: 'number'
+    },
+    {
+      name: 'dogs',
+      type: 'number'
+    },
+    {
+      name: 'other',
+      type: 'number'
     }
   ]
 }

@@ -7,6 +7,7 @@
     label: string | null | undefined;
     value?: T;
     error?: string | string[] | undefined;
+    required?: boolean;
     children: Snippet;
   };
 
@@ -16,6 +17,7 @@
     label,
     value = $bindable(undefined as unknown as T),
     error,
+    required = false,
     children,
   }: Props = $props();
 
@@ -27,7 +29,7 @@
 </script>
 
 <div>
-  <label class={labelBase} for={id}>{label}</label>
+  <label class={labelBase} for={id}>{label}{#if required}<span class="text-orijen-red ml-0.5" aria-hidden="true">*</span>{/if}</label>
   <select {id} {name} bind:value class="{fieldBase} appearance-none">
     {@render children()}
   </select>

@@ -151,6 +151,20 @@ export const TrailLabels: GlobalConfig = {
             locale === 'nl' ? '(max 120 tekens)' : '(max 120 chars)'
         },
         {
+          name: 'linkLabel',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) =>
+            locale === 'nl' ? 'Link naar de route' : 'Link to trail'
+        },
+        {
+          name: 'linkPlaceholder',
+          type: 'text',
+          localized: true,
+          defaultValue: ({ locale }: { locale?: string }) =>
+            locale === 'nl' ? 'https://...' : 'https://...'
+        },
+        {
           name: 'addressLabel',
           type: 'text',
           localized: true,

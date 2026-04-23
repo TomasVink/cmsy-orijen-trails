@@ -89,6 +89,7 @@
     label={f?.nameLabel ?? 'Your name'}
     bind:value={$form.name}
     error={$errors.name}
+    required
   />
   <FormInput
     id="st-email"
@@ -97,6 +98,7 @@
     label={f?.emailLabel ?? 'Email address'}
     bind:value={$form.email}
     error={$errors.email}
+    required
   />
 
   <hr class="border-orijen-gray/20" />
@@ -107,6 +109,7 @@
     label={f?.trailNameLabel ?? 'Trail name'}
     bind:value={$form.title}
     error={$errors.title}
+    required
   />
   <FormInput
     id="st-description"
@@ -117,8 +120,16 @@
     bind:value={$form.description}
     error={$errors.description}
   />
+  <FormInput
+    id="st-link"
+    name="link"
+    label={f?.linkLabel ?? 'Link to trail'}
+    placeholder={f?.linkPlaceholder ?? 'https://...'}
+    bind:value={$form.link}
+    error={$errors.link}
+  />
   <div>
-    <label class={labelBase} for="st-address">{f?.addressLabel ?? 'Address / start point'}</label>
+    <label class={labelBase} for="st-address">{f?.addressLabel ?? 'Address / start point'}<span class="text-orijen-red ml-0.5" aria-hidden="true">*</span></label>
     <div class="relative">
       <input
         id="st-address"
@@ -155,6 +166,7 @@
     error={$errors.distance}
     step="0.1"
     min="0"
+    required
   />
   <FormSelect
     id="st-offleash"

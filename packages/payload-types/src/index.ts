@@ -664,9 +664,12 @@ export interface Registration {
   phone?: string | null;
   event: number | Event;
   /**
-   * The chosen time slot, e.g. "10:00" or "10:00 – 11:00".
+   * The chosen time slot, e.g. "10:00" or "10:00 - 11:00".
    */
   slot?: string | null;
+  people?: number | null;
+  dogs?: number | null;
+  other?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1131,6 +1134,9 @@ export interface RegistrationsSelect<T extends boolean = true> {
   phone?: T;
   event?: T;
   slot?: T;
+  people?: T;
+  dogs?: T;
+  other?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1367,6 +1373,8 @@ export interface TrailLabel {
      * Shown next to the description field label.
      */
     descriptionHint?: string | null;
+    linkLabel?: string | null;
+    linkPlaceholder?: string | null;
     addressLabel?: string | null;
     distanceLabel?: string | null;
     offLeashAreaLabel?: string | null;
@@ -1472,6 +1480,9 @@ export interface SignUpLabel {
    * Label shown when all slots of an event are unavailable.
    */
   fullyBooked?: string | null;
+  peopleLabel?: string | null;
+  dogsLabel?: string | null;
+  otherLabel?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1507,6 +1518,8 @@ export interface TrailLabelsSelect<T extends boolean = true> {
         trailNameLabel?: T;
         descriptionLabel?: T;
         descriptionHint?: T;
+        linkLabel?: T;
+        linkPlaceholder?: T;
         addressLabel?: T;
         distanceLabel?: T;
         offLeashAreaLabel?: T;
@@ -1571,6 +1584,9 @@ export interface SignUpLabelsSelect<T extends boolean = true> {
   successTitle?: T;
   successMessage?: T;
   fullyBooked?: T;
+  peopleLabel?: T;
+  dogsLabel?: T;
+  otherLabel?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

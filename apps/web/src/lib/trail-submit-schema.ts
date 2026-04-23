@@ -9,6 +9,7 @@ export const trailSubmitSchema = z.object({
   offLeashArea: z.enum(['fully', 'partial', 'none']).optional(),
   hospitality: z.boolean().default(false),
   water: z.boolean().default(false),
+  link: z.union([z.url({ error: 'Enter a valid URL' }), z.literal('')]).optional(),
   address: z.string().min(3, 'Address is required so we can pin the trail on the map'),
   lat: z.number().optional(),
   lng: z.number().optional(),

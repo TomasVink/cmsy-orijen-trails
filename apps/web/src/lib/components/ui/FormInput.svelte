@@ -7,6 +7,7 @@
     value?: string | number | undefined;
     error?: string | string[] | undefined;
     labelSuffix?: string;
+    required?: boolean;
     rows?: never;
     [key: string]: unknown;
   };
@@ -19,6 +20,7 @@
     value?: string | undefined;
     error?: string | string[] | undefined;
     labelSuffix?: string;
+    required?: boolean;
     rows?: number;
     [key: string]: unknown;
   };
@@ -31,6 +33,7 @@
     value = $bindable(undefined),
     error,
     labelSuffix,
+    required = false,
     rows = 3,
     ...rest
   }: Props | TextareaProps = $props();
@@ -44,7 +47,7 @@
 
 <div>
   <label class={labelBase} for={id}>
-    {label}
+    {label}{#if required}<span class="text-orijen-red ml-0.5" aria-hidden="true">*</span>{/if}
     {#if labelSuffix}<span class="normal-case font-normal">{labelSuffix}</span
       >{/if}
   </label>

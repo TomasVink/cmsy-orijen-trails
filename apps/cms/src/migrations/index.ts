@@ -12,6 +12,7 @@ import * as migration_20260413_125927_patch_requests from './20260413_125927_pat
 import * as migration_20260413_133705_faq from './20260413_133705_faq';
 import * as migration_20260423_133216_section_bg from './20260423_133216_section_bg';
 import * as migration_20260423_143259_stores from './20260423_143259_stores';
+import * as migration_20260423_151003_event_numbers from './20260423_151003_event_numbers';
 
 export const migrations = [
   {
@@ -82,6 +83,11 @@ export const migrations = [
   {
     up: migration_20260423_143259_stores.up,
     down: migration_20260423_143259_stores.down,
-    name: '20260423_143259_stores'
+    name: '20260423_143259_stores',
+  },
+  {
+    up: migration_20260423_151003_event_numbers.up,
+    down: migration_20260423_151003_event_numbers.down,
+    name: '20260423_151003_event_numbers'
   },
 ];

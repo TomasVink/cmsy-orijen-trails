@@ -27,7 +27,7 @@ export const trailSubmitAction = {
     const form = await superValidate(request, zod(trailSubmitSchema))
     if (!form.valid) return fail(400, { form })
 
-    const { address, name, email, lat, lng, ...trailData } = form.data
+    const { address, name, email, lat, lng, link, ...trailData } = form.data
 
     const coordinates = (lat !== undefined && lng !== undefined)
       ? { lat, lng }
@@ -42,6 +42,7 @@ export const trailSubmitAction = {
         `Submitted by: ${name} <${email}>`,
         `Address: ${address}`,
       ].filter(Boolean).join('\n\n'),
+      ...(link ? { links: [{ url: link, type: 'other' }] } : {}),
     }
 
     if (coordinates) {

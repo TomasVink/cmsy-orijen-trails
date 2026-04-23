@@ -5,7 +5,7 @@ export const SignUpLabels: GlobalConfig = {
   slug: 'sign-up-labels',
   label: 'Sign Up Labels',
   hooks: {
-    afterChange: [() => purgeAllCache()],
+    afterChange: [() => purgeAllCache()]
   },
   access: { read: () => true },
   admin: {
@@ -69,6 +69,27 @@ export const SignUpLabels: GlobalConfig = {
       admin: { description: 'Label shown when all slots of an event are unavailable.' },
       defaultValue: ({ locale }: { locale?: string }) =>
         locale === 'nl' ? 'Volgeboekt' : 'Fully booked'
+    },
+    {
+      name: 'peopleLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: ({ locale }: { locale?: string }) =>
+        locale === 'nl' ? 'Aantal personen' : 'Number of people'
+    },
+    {
+      name: 'dogsLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: ({ locale }: { locale?: string }) =>
+        locale === 'nl' ? 'Aantal honden' : 'Number of dogs'
+    },
+    {
+      name: 'otherLabel',
+      type: 'text',
+      localized: true,
+      defaultValue: ({ locale }: { locale?: string }) =>
+        locale === 'nl' ? 'Aantal andere dieren' : 'Number of other animals'
     }
   ]
 }

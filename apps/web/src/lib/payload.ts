@@ -138,6 +138,8 @@ export type TrailLabelsData = {
     trailNameLabel?: string | null
     descriptionLabel?: string | null
     descriptionHint?: string | null
+    linkLabel?: string | null
+    linkPlaceholder?: string | null
     addressLabel?: string | null
     distanceLabel?: string | null
     offLeashAreaLabel?: string | null
@@ -271,6 +273,9 @@ export type SignUpLabelsData = {
   successTitle?: string | null
   successMessage?: string | null
   fullyBooked?: string | null
+  peopleLabel?: string | null
+  dogsLabel?: string | null
+  otherLabel?: string | null
 }
 
 export async function getSignUpLabels(

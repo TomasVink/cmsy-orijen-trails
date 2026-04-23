@@ -27,7 +27,7 @@
 
   const { form, errors, enhance, submitting } = superForm(
     untrack(
-      () => signUpForm ?? { name: '', email: '', phone: undefined, eventId: -1, slot: undefined }
+      () => signUpForm ?? { name: '', email: '', phone: undefined, eventId: -1, slot: undefined, people: 1, dogs: 0, other: 0 }
     ),
     {
       id: 'events-signup',
@@ -42,6 +42,9 @@
   function openModal(eventId: number, slot: string) {
     $form.eventId = eventId
     $form.slot = slot
+    $form.people = 1
+    $form.dogs = 0
+    $form.other = 0
     selectedSlotLabel = slot
     modalOpen = true
     submitted = false
@@ -66,7 +69,13 @@
   }
 </script>
 
-<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId} backgroundImage={block.backgroundImage} backgroundColor={block.backgroundColor}>
+<Section
+  title={block.title}
+  intro={block.intro ?? undefined}
+  id={block.sectionId}
+  backgroundImage={block.backgroundImage}
+  backgroundColor={block.backgroundColor}
+>
   {#if events.length === 0}
     <p class="text-center font-sans text-orijen-gray">—</p>
   {:else}
@@ -176,6 +185,7 @@
               label={signUpLabels?.nameLabel ?? 'Your name'}
               bind:value={$form.name}
               error={$errors.name}
+              required
             />
             <FormInput
               id="su-email"
@@ -184,6 +194,7 @@
               label={signUpLabels?.emailLabel ?? 'Email address'}
               bind:value={$form.email}
               error={$errors.email}
+              required
             />
             <FormInput
               id="su-phone"
@@ -191,6 +202,36 @@
               label={signUpLabels?.phoneLabel ?? 'Phone number'}
               bind:value={$form.phone}
               error={$errors.phone}
+            />
+            <FormInput
+              id="su-people"
+              type="number"
+              name="people"
+              label={signUpLabels?.peopleLabel ?? 'Number of people'}
+              bind:value={$form.people}
+              error={$errors.people}
+              min={0}
+              max={6}
+            />
+            <FormInput
+              id="su-dogs"
+              type="number"
+              name="dogs"
+              label={signUpLabels?.dogsLabel ?? 'Number of dogs'}
+              bind:value={$form.dogs}
+              error={$errors.dogs}
+              min={0}
+              max={6}
+            />
+            <FormInput
+              id="su-other"
+              type="number"
+              name="other"
+              label={signUpLabels?.otherLabel ?? 'Other'}
+              bind:value={$form.other}
+              error={$errors.other}
+              min={0}
+              max={6}
             />
             <Button type="submit" icon="send" disabled={$submitting}>
               {$submitting

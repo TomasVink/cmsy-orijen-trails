@@ -42,7 +42,6 @@
     labelsKey?: keyof TrailLabelsData
   }> = [
     { name: 'distance', icon: 'route', label: '%s km' },
-    { name: 'duration', icon: 'clock', label: '%s h' },
     { name: 'difficulty', icon: 'terrain' },
     { name: 'offLeashArea', icon: 'pets', labelsKey: 'offLeash' },
     { name: 'hospitality', icon: 'restaurant' },

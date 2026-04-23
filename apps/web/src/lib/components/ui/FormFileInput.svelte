@@ -7,6 +7,7 @@
     error?: string | string[] | undefined
     accept?: string
     uploadedId?: string
+    required?: boolean
   }
 
   let {
@@ -15,6 +16,7 @@
     error,
     accept = 'image/*',
     uploadedId = $bindable(undefined),
+    required = false,
   }: Props = $props()
 
   let uploading = $state(false)
@@ -68,7 +70,7 @@
 </script>
 
 <div>
-  <label class={labelBase} for={id}>{label}</label>
+  <label class={labelBase} for={id}>{label}{#if required}<span class="text-orijen-red ml-0.5" aria-hidden="true">*</span>{/if}</label>
   <input
     {id}
     type="file"

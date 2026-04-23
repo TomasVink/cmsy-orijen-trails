@@ -17,11 +17,14 @@ export const eventSignUpAction = {
     const form = await superValidate(request, zod(eventsSignUpSchema))
     if (!form.valid) return fail(400, { form })
 
-    const { name, email, phone, eventId, slot } = form.data
+    const { name, email, phone, eventId, slot, people, dogs, other } = form.data
 
     const body: Record<string, unknown> = { name, email, event: eventId }
     if (phone) body.phone = phone
     if (slot) body.slot = slot
+    if (people != null) body.people = people
+    if (dogs != null) body.dogs = dogs
+    if (other != null) body.other = other
 
     const res = await fetch(`${payloadUrl()}/api/registrations`, {
       method: 'POST',

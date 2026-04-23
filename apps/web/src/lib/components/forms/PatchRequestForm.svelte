@@ -126,6 +126,7 @@
     label={f?.nameLabel ?? 'Name'}
     bind:value={$form.name}
     error={$errors.name}
+    required
   />
   <FormInput
     id="pr-email"
@@ -134,13 +135,14 @@
     label={f?.emailLabel ?? 'Email address'}
     bind:value={$form.email}
     error={$errors.email}
+    required
   />
 
   <hr class="border-orijen-gray/20" />
 
   <!-- Street address with autocomplete -->
   <div>
-    <label class={labelBase} for="pr-street">{f?.streetAddressLabel ?? 'Street address'}</label>
+    <label class={labelBase} for="pr-street">{f?.streetAddressLabel ?? 'Street address'}<span class="text-orijen-red ml-0.5" aria-hidden="true">*</span></label>
     <div class="relative">
       <input
         id="pr-street"
@@ -176,6 +178,7 @@
       label={f?.postcodeLabel ?? 'Postcode'}
       bind:value={$form.postcode}
       error={$errors.postcode}
+      required
     />
     <FormInput
       id="pr-city"
@@ -183,6 +186,7 @@
       label={f?.cityLabel ?? 'City'}
       bind:value={$form.city}
       error={$errors.city}
+      required
     />
   </div>
   <FormInput
@@ -191,6 +195,7 @@
     label={f?.countryLabel ?? 'Country'}
     bind:value={$form.country}
     error={$errors.country}
+    required
   />
 
   <hr class="border-orijen-gray/20" />
@@ -201,6 +206,7 @@
     label={f?.patchLabel ?? 'Patch'}
     bind:value={$form.patchId}
     error={$errors.patchId}
+    required
   >
     <option value="">— select —</option>
     {#each patches as p}
@@ -213,6 +219,7 @@
     label={f?.imageLabel ?? 'Photo'}
     bind:uploadedId
     error={$errors.imageId}
+    required
   />
   <input type="hidden" name="imageId" value={$form.imageId} />
 
