@@ -9,6 +9,7 @@
   import PageHeader from '$lib/components/ui/PageHeader.svelte'
   import RelatedContent from '$lib/components/ui/RelatedContent.svelte'
   import ImageModal from '$lib/components/ui/ImageModal.svelte'
+  import Button from '$lib/components/ui/Button.svelte'
 
   let { data }: { data: PageData } = $props()
 
@@ -132,12 +133,7 @@
                   : link.type === 'allTrails'
                     ? 'allTrails'
                     : 'website'}
-              <a
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-3 text-orijen-gray hover:text-orijen-red transition-colors"
-              >
+              <Button href={link.url} target="_blank" rel="noopener noreferrer">
                 <Icon name={icon} />
                 <span class="font-display text-xl">
                   {link.type === 'allTrails'
@@ -146,7 +142,7 @@
                       ? 'Komoot'
                       : link.url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]}
                 </span>
-              </a>
+              </Button>
             {/each}
           </div>
         </div>
