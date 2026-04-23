@@ -11,8 +11,12 @@ jobs:
       cms: ${{ steps.filter.outputs.cms }}
       web: ${{ steps.filter.outputs.web }}
       nginx: ${{ steps.filter.outputs.nginx }}
+      owner: ${{ steps.owner.outputs.owner }}
     steps:
       - uses: actions/checkout@v4
+      - name: Lowercase owner
+        id: owner
+        run: echo "owner=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
       - uses: dorny/paths-filter@v3
         id: filter
         with:
@@ -51,7 +55,7 @@ jobs:
           context: .
           file: apps/cms/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/cmsy-orijen-trails-cms:latest
+          tags: ghcr.io/${{ needs.changes.outputs.owner }}/cmsy-orijen-trails-cms:latest
           cache-from: type=gha,scope=cms
           cache-to: type=gha,mode=max,scope=cms
 
@@ -75,7 +79,7 @@ jobs:
           context: .
           file: apps/web/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/cmsy-orijen-trails-web:latest
+          tags: ghcr.io/${{ needs.changes.outputs.owner }}/cmsy-orijen-trails-web:latest
           cache-from: type=gha,scope=web
           cache-to: type=gha,mode=max,scope=web
 
@@ -99,7 +103,7 @@ jobs:
           context: .
           file: nginx/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/cmsy-orijen-trails-nginx:latest
+          tags: ghcr.io/${{ needs.changes.outputs.owner }}/cmsy-orijen-trails-nginx:latest
           cache-from: type=gha,scope=nginx
           cache-to: type=gha,mode=max,scope=nginx
 
