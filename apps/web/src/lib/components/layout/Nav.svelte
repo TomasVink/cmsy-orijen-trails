@@ -8,7 +8,7 @@
   const locale = $derived($page.params.locale ?? 'nl')
 
   const isRoot = $derived(
-    $page.url.pathname === `/${locale}` || $page.url.pathname === `/${locale}/`,
+    $page.url.pathname === `/${locale}` || $page.url.pathname === `/${locale}/`
   )
 
   const backHref = $derived(`/${locale}`)
@@ -22,13 +22,25 @@
     }
     return segments.join('/')
   }
+
+  let scrolled = $state(false)
+
+  $effect(() => {
+    function onScroll() {
+      scrolled = window.scrollY > 0
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  })
 </script>
 
-<nav
-  class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 pointer-events-none"
->
-  {#if !isRoot}
-    <div class="pointer-events-auto bg-orijen-black/60 px-4 py-2">
+<nav class="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+  <!-- Desktop: square left-aligned within max-w-6xl, controls on the right -->
+
+  <div class="hidden xl:flex items-start">
+    <div
+      class="pointer-events-auto bg-orijen-black/60 m-4 px-4 py-2 {isRoot ? 'invisible' : ''}"
+    >
       <a
         href={backHref}
         class="flex items-center gap-1 text-white uppercase tracking-widest text-sm font-bold"
@@ -37,21 +49,69 @@
         <span>{uiLabels?.back ?? 'Back'}</span>
       </a>
     </div>
-  {:else}
-    <span></span>
-  {/if}
+    <div class="hidden md:flex max-w-6xl w-full mx-auto items-start">
+      <a
+        href="/{locale}"
+        class="pointer-events-auto bg-orijen-red w-30 h-30 flex items-center justify-center p-4"
+      >
+        <img src="/logo.svg" alt="Orijen" class="invert w-full h-full object-contain" />
+      </a>
+    </div>
+    <div class="pointer-events-auto bg-orijen-black/60 m-4 px-4 py-2">
+      <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
+        {#each LOCALES as loc}
+          {#if loc === locale}
+            <span class="opacity-100 font-bold">{loc}</span>
+          {:else}
+            <a href={localeSwitchHref(loc)} class="opacity-50 hover:opacity-100 transition-opacity"
+              >{loc}</a
+            >
+          {/if}
+        {/each}
+      </div>
+    </div>
+  </div>
 
-  <div class="pointer-events-auto bg-orijen-black/60 px-4 py-2">
-    <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
-      {#each LOCALES as loc}
-        {#if loc === locale}
-          <span class="opacity-100 font-bold">{loc}</span>
-        {:else}
-          <a href={localeSwitchHref(loc)} class="opacity-50 hover:opacity-100 transition-opacity"
-            >{loc}</a
+  <!-- Mobile: 3-col grid [centered square] [back button] [lang switch] -->
+  <div class="xl:hidden flex justify-between">
+    <div class="flex justify-end items-start p-2 pointer-events-auto">
+      {#if !isRoot}
+        <div class="bg-orijen-black/60 px-4 py-2">
+          <a
+            href={backHref}
+            class="flex items-center gap-1 text-white uppercase tracking-widest text-sm font-bold"
           >
-        {/if}
-      {/each}
+            <Icon name="arrow-left" class="size-6" />
+            <span>{uiLabels?.back ?? 'Back'}</span>
+          </a>
+        </div>
+      {/if}
+    </div>
+
+    <a
+      href="/{locale}"
+      class="pointer-events-auto bg-orijen-red flex items-center justify-center transition-all duration-300 ease-in-out {scrolled
+        ? 'w-15 h-15 p-2'
+        : 'w-30 h-30 p-4'}"
+    >
+      <img src="/logo.svg" alt="Orijen" class="invert w-full h-full object-contain" />
+    </a>
+
+    <div class="flex justify-start items-start p-2 pointer-events-auto">
+      <div class="bg-orijen-black/60 px-4 py-2">
+        <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
+          {#each LOCALES as loc}
+            {#if loc === locale}
+              <span class="opacity-100 font-bold">{loc}</span>
+            {:else}
+              <a
+                href={localeSwitchHref(loc)}
+                class="opacity-50 hover:opacity-100 transition-opacity">{loc}</a
+              >
+            {/if}
+          {/each}
+        </div>
+      </div>
     </div>
   </div>
 </nav>
