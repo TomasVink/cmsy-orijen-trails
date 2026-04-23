@@ -26,14 +26,17 @@ jobs:
               - 'packages/**'
               - 'package.json'
               - 'bun.lock'
+              - '.github/workflows/**'
             web:
               - 'apps/web/**'
               - 'packages/**'
               - 'package.json'
               - 'bun.lock'
+              - '.github/workflows/**'
             nginx:
               - 'nginx/**'
               - 'nginx.conf'
+              - '.github/workflows/**'
 
   build-cms:
     needs: changes
@@ -118,4 +121,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Coolify deploy
-        run: curl -f -s "${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}"
+        env:
+          WEBHOOK: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}
+        run: |
+          if [ -z "$WEBHOOK" ]; then
+            echo "COOLIFY_DEPLOY_WEBHOOK not set — skipping"
+            exit 0
+          fi
+          curl -f -s "$WEBHOOK"
