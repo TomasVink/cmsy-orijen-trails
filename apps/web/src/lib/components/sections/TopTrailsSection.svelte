@@ -15,6 +15,7 @@
   let currentIndex = $state(0)
   let containerWidth = $state(0)
   let isDragging = $state(false)
+  let hasDragged = $state(false)
   let dragStartX = 0
   let dragDelta = $state(0)
 
@@ -38,14 +39,18 @@
 
   function onPointerDown(e: PointerEvent) {
     isDragging = true
+    hasDragged = false
     dragStartX = e.clientX
     dragDelta = 0
-    ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
   }
 
   function onPointerMove(e: PointerEvent) {
     if (!isDragging) return
     dragDelta = e.clientX - dragStartX
+    if (!hasDragged && Math.abs(dragDelta) > 5) {
+      hasDragged = true
+      ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+    }
   }
 
   function onPointerUp() {
@@ -58,6 +63,13 @@
       currentIndex = Math.max(currentIndex - 1, 0)
     }
     dragDelta = 0
+  }
+
+  function onClickCapture(e: MouseEvent) {
+    if (hasDragged) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
   }
 </script>
 
@@ -72,6 +84,7 @@
       onpointermove={onPointerMove}
       onpointerup={onPointerUp}
       onpointercancel={onPointerUp}
+      onclickcapture={onClickCapture}
     >
       <div
         class="flex"
