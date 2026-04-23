@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/public'
-import type { Page, Media, Trail, Influencer, Post, Event } from '@repo/payload-types'
+import type { Page, Media, Trail, Influencer, Post, Event, Store } from '@repo/payload-types'
 
-export type { Page, Media, Trail, Influencer, Post, Event }
+export type { Page, Media, Trail, Influencer, Post, Event, Store }
 
 export type Locale = 'nl' | 'en'
 

@@ -5,7 +5,7 @@ export const UiLabels: GlobalConfig = {
   slug: 'ui-labels',
   label: 'UI Labels',
   hooks: {
-    afterChange: [() => purgeAllCache()],
+    afterChange: [() => purgeAllCache()]
   },
   access: { read: () => true },
   admin: {

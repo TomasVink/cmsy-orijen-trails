@@ -78,6 +78,7 @@ export interface Config {
     'user-media': UserMedia;
     influencers: Influencer;
     media: Media;
+    stores: Store;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     'user-media': UserMediaSelect<false> | UserMediaSelect<true>;
     influencers: InfluencersSelect<false> | InfluencersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    stores: StoresSelect<false> | StoresSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -531,6 +533,7 @@ export interface Trail {
     influencers?: (number | Influencer)[] | null;
     trails?: (number | Trail)[] | null;
     posts?: (number | Post)[] | null;
+    stores?: (number | Store)[] | null;
   };
   seo?: {
     title?: string | null;
@@ -592,11 +595,31 @@ export interface Post {
     influencers?: (number | Influencer)[] | null;
     trails?: (number | Trail)[] | null;
     posts?: (number | Post)[] | null;
+    stores?: (number | Store)[] | null;
   };
   seo?: {
     title?: string | null;
     description?: string | null;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stores".
+ */
+export interface Store {
+  id: number;
+  name: string;
+  address: string;
+  postcode: string;
+  city: string;
+  logo: number | Media;
+  url: string;
+  /**
+   * Text shown at on the store location cards.
+   */
+  storeMessage?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -778,6 +801,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'stores';
+        value: number | Store;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1007,6 +1034,7 @@ export interface PostsSelect<T extends boolean = true> {
         influencers?: T;
         trails?: T;
         posts?: T;
+        stores?: T;
       };
   seo?:
     | T
@@ -1059,6 +1087,7 @@ export interface TrailsSelect<T extends boolean = true> {
         influencers?: T;
         trails?: T;
         posts?: T;
+        stores?: T;
       };
   seo?:
     | T
@@ -1243,6 +1272,21 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stores_select".
+ */
+export interface StoresSelect<T extends boolean = true> {
+  name?: T;
+  address?: T;
+  postcode?: T;
+  city?: T;
+  logo?: T;
+  url?: T;
+  storeMessage?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

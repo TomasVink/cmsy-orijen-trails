@@ -20,6 +20,7 @@ import { Registrations } from './collections/Registrations'
 import { Patches } from './collections/Patches'
 import { PatchRequests } from './collections/PatchRequests'
 import { UserMedia } from './collections/UserMedia'
+import { Stores } from './collections/Stores'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -70,7 +71,8 @@ export default buildConfig({
     PatchRequests,
     UserMedia,
     Influencers,
-    Media
+    Media,
+    Stores
   ],
   globals: [TrailLabels, UiLabels, SignUpLabels],
 

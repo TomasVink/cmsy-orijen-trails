@@ -2,7 +2,7 @@ import { Field } from 'payload'
 
 const RelatedContent: Field = {
   name: 'related',
-  label: 'Related content',
+  label: 'Related items',
   type: 'group',
   fields: [
     {
@@ -21,6 +21,12 @@ const RelatedContent: Field = {
       name: 'posts',
       type: 'relationship',
       relationTo: 'posts',
+      hasMany: true
+    },
+    {
+      name: 'stores',
+      type: 'relationship',
+      relationTo: 'stores',
       hasMany: true
     }
   ]
