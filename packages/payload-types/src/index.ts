@@ -634,6 +634,7 @@ export interface Event {
    * Only published events are visible to the public.
    */
   published?: boolean | null;
+  header?: (number | null) | Media;
   description?: string | null;
   trail: number | Trail;
   date: string;
@@ -1108,6 +1109,7 @@ export interface TrailsSelect<T extends boolean = true> {
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
   published?: T;
+  header?: T;
   description?: T;
   trail?: T;
   date?: T;

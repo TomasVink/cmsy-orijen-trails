@@ -1,6 +1,15 @@
 <script lang="ts">
   import { untrack } from 'svelte'
-  import type { EventsBlock, SignUpLabelsData, UiLabelsData, Event, Influencer } from '$lib/payload'
+  import type {
+    EventsBlock,
+    SignUpLabelsData,
+    UiLabelsData,
+    Event,
+    Influencer,
+    Media
+  } from '$lib/payload'
+  import { mediaUrl } from '$lib/payload'
+  import { env } from '$env/dynamic/public'
   import type { SuperValidated, Infer } from 'sveltekit-superforms'
   import { page } from '$app/state'
   import type { EventsSignUpSchema } from '$lib/events-signup-schema'
@@ -27,7 +36,17 @@
 
   const { form, errors, enhance, submitting } = superForm(
     untrack(
-      () => signUpForm ?? { name: '', email: '', phone: undefined, eventId: -1, slot: undefined, people: 1, dogs: 0, other: 0 }
+      () =>
+        signUpForm ?? {
+          name: '',
+          email: '',
+          phone: undefined,
+          eventId: -1,
+          slot: undefined,
+          people: 1,
+          dogs: 0,
+          other: 0
+        }
     ),
     {
       id: 'events-signup',
@@ -90,52 +109,81 @@
           (event.slots ?? []).length > 0 &&
           event.slots?.filter((s) => s.available).length === 0}
 
-        <div
-          class="border border-orijen-gray/30 bg-white text-orijen-black p-6 flex flex-col gap-3"
-        >
-          {#if trail}
-            <p class="font-display text-xl uppercase text-orijen-red leading-none">{trail.title}</p>
-          {/if}
+        {@const eventImage =
+          typeof event.header === 'object' && event.header !== null
+            ? (event.header as Media)
+            : null}
+        {@const trailImage =
+          trail && typeof trail.header === 'object' && trail.header !== null
+            ? (trail.header as Media)
+            : null}
+        {@const cardImage = eventImage ?? trailImage}
+        {@const cardImageSrc = mediaUrl(cardImage, env.PUBLIC_PAYLOAD_URL)}
 
-          <p class="font-sans text-sm font-bold">
-            {formatEventDate(event.date)}
-            {#if event.start}
-              <span class="bg-orijen-red text-white p-1">
-                {event.start}
-              </span>
-            {/if}
-          </p>
-
-          <p>
-            {event.description}
-          </p>
-
-          {#if influencerList.length > 0}
-            <p class="font-sans text-sm text-orijen-black/60">
-              {influencerList.map((i) => i.name).join(', ')}
-            </p>
-          {/if}
-
-          <div class="mt-auto pt-2">
-            {#if !event.start}
-              <h4 class="mb-4">{signUpLabels?.signupCta}</h4>
-              <div class="flex flex-wrap gap-2">
-                {#each event.slots as slot (slot.id)}
-                  <Button
-                    onclick={() => openModal(event.id, `${slot.start} – ${slot.end}`)}
-                    disabled={!slot.available}
-                  >
-                    {slot.start} – {slot.end}
-                  </Button>
-                {/each}
+        <div class="border border-orijen-gray/30 bg-white text-orijen-black flex flex-col gap-3">
+          <!-- Image -->
+          <div class="relative aspect-video bg-orijen-gray/10 overflow-hidden shrink-0">
+            {#if cardImageSrc}
+              <img
+                src={cardImageSrc}
+                alt={cardImage?.alt ?? event.title ?? trail?.title}
+                class="w-full h-full object-cover"
+              />
+            {:else}
+              <div class="w-full h-full flex items-center justify-center">
+                <span class="text-orijen-gray text-xs uppercase tracking-widest">No image</span>
               </div>
-            {:else if fullyBooked}
-              <span
-                class="inline-block border-2 border-orijen-gray/40 text-orijen-gray/60 font-sans text-sm px-3 py-1"
-              >
-                {signUpLabels?.fullyBooked ?? 'Fully booked'}
-              </span>
             {/if}
+            <span
+              class="absolute top-3 left-3 bg-orijen-red text-white text-sm font-bold uppercase tracking-widest px-2 py-1"
+            >
+              {formatEventDate(event.date)}
+              {#if event.start}
+                <span class="bg-orijen-red text-white p-1">
+                  {event.start}
+                </span>
+              {/if}
+            </span>
+          </div>
+
+          <div class="p-6 pt-3 flex flex-col gap-3 flex-1">
+            {#if trail}
+              <p class="font-display text-xl uppercase text-orijen-red leading-none">
+                {trail.title}
+              </p>
+            {/if}
+
+            <p>
+              {event.description}
+            </p>
+
+            {#if influencerList.length > 0}
+              <p class="font-sans text-sm text-orijen-black/60">
+                {influencerList.map((i) => i.name).join(', ')}
+              </p>
+            {/if}
+
+            <div class="mt-auto pt-2">
+              {#if !event.start}
+                <h4 class="mb-4">{signUpLabels?.signupCta}</h4>
+                <div class="flex flex-wrap gap-2">
+                  {#each event.slots as slot (slot.id)}
+                    <Button
+                      onclick={() => openModal(event.id, `${slot.start} – ${slot.end}`)}
+                      disabled={!slot.available}
+                    >
+                      {slot.start} – {slot.end}
+                    </Button>
+                  {/each}
+                </div>
+              {:else if fullyBooked}
+                <span
+                  class="inline-block border-2 border-orijen-gray/40 text-orijen-gray/60 font-sans text-sm px-3 py-1"
+                >
+                  {signUpLabels?.fullyBooked ?? 'Fully booked'}
+                </span>
+              {/if}
+            </div>
           </div>
         </div>
       {/each}

@@ -57,6 +57,11 @@ export const Events: CollectionConfig = {
       }
     },
     {
+      name: 'header',
+      type: 'upload',
+      relationTo: 'media'
+    },
+    {
       name: 'description',
       type: 'textarea',
       localized: true
