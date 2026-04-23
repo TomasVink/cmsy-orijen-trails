@@ -39,6 +39,7 @@ services:
   cms:
     container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-cms
     image: ghcr.io/tomasvink/cmsy-orijen-trails-cms:latest
+    pull_policy: always
     environment:
       DATABASE_URI: ${DATABASE_URI}
       PAYLOAD_SECRET: ${PAYLOAD_SECRET}
@@ -71,6 +72,7 @@ services:
   web:
     container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-web
     image: ghcr.io/tomasvink/cmsy-orijen-trails-web:latest
+    pull_policy: always
     environment:
       # Browser-facing URL — used for live preview origin validation
       PUBLIC_PAYLOAD_URL: ${PUBLIC_DOMAIN}
@@ -83,6 +85,7 @@ services:
   nginx:
     container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-nginx
     image: ghcr.io/tomasvink/cmsy-orijen-trails-nginx:latest
+    pull_policy: always
     depends_on:
       - cms
       - web
