@@ -38,9 +38,7 @@
 services:
   cms:
     container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-cms
-    build:
-      context: .
-      dockerfile: apps/cms/Dockerfile
+    image: ghcr.io/tomasvink/cmsy-orijen-trails-cms:latest
     environment:
       DATABASE_URI: ${DATABASE_URI}
       PAYLOAD_SECRET: ${PAYLOAD_SECRET}
@@ -72,9 +70,7 @@ services:
 
   web:
     container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-web
-    build:
-      context: .
-      dockerfile: apps/web/Dockerfile
+    image: ghcr.io/tomasvink/cmsy-orijen-trails-web:latest
     environment:
       # Browser-facing URL — used for live preview origin validation
       PUBLIC_PAYLOAD_URL: ${PUBLIC_DOMAIN}
@@ -86,9 +82,7 @@ services:
 
   nginx:
     container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-nginx
-    build:
-      context: .
-      dockerfile: nginx/Dockerfile
+    image: ghcr.io/tomasvink/cmsy-orijen-trails-nginx:latest
     depends_on:
       - cms
       - web
