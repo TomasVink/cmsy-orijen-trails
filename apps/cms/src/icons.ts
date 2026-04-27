@@ -13,7 +13,8 @@ export const ICON_OPTIONS = [
   { label: 'Prize', value: 'prize' },
   { label: 'Camera', value: 'camera' },
   { label: 'Terrain', value: 'terrain' },
-  { label: 'Pets', value: 'pets' }
+  { label: 'Pets', value: 'pets' },
+  { label: 'Share', value: 'share' }
 ] as const
 
 export type IconName = (typeof ICON_OPTIONS)[number]['value']

@@ -14,6 +14,7 @@ import * as migration_20260423_133216_section_bg from './20260423_133216_section
 import * as migration_20260423_143259_stores from './20260423_143259_stores';
 import * as migration_20260423_151003_event_numbers from './20260423_151003_event_numbers';
 import * as migration_20260423_152305_event_image from './20260423_152305_event_image';
+import * as migration_20260427_152241_campaign_steps from './20260427_152241_campaign_steps';
 
 export const migrations = [
   {
@@ -94,6 +95,11 @@ export const migrations = [
   {
     up: migration_20260423_152305_event_image.up,
     down: migration_20260423_152305_event_image.down,
-    name: '20260423_152305_event_image'
+    name: '20260423_152305_event_image',
+  },
+  {
+    up: migration_20260427_152241_campaign_steps.up,
+    down: migration_20260427_152241_campaign_steps.down,
+    name: '20260427_152241_campaign_steps'
   },
 ];

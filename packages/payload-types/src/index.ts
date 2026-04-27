@@ -194,7 +194,18 @@ export interface Page {
                    * Optional icon shown left of the button label.
                    */
                   icon?:
-                    | ('map-search' | 'group' | 'route' | 'clock' | 'hike' | 'prize' | 'camera' | 'terrain' | 'pets')
+                    | (
+                        | 'map-search'
+                        | 'group'
+                        | 'route'
+                        | 'clock'
+                        | 'hike'
+                        | 'prize'
+                        | 'camera'
+                        | 'terrain'
+                        | 'pets'
+                        | 'share'
+                      )
                     | null;
                   id?: string | null;
                 }[]
@@ -218,7 +229,18 @@ export interface Page {
             steps?:
               | {
                   icon?:
-                    | ('map-search' | 'group' | 'route' | 'clock' | 'hike' | 'prize' | 'camera' | 'terrain' | 'pets')
+                    | (
+                        | 'map-search'
+                        | 'group'
+                        | 'route'
+                        | 'clock'
+                        | 'hike'
+                        | 'prize'
+                        | 'camera'
+                        | 'terrain'
+                        | 'pets'
+                        | 'share'
+                      )
                     | null;
                   title: string;
                   description?: string | null;
@@ -279,7 +301,18 @@ export interface Page {
             backgroundImage?: (number | null) | Media;
             backgroundColor?: ('black' | 'white' | 'texture') | null;
             icon?:
-              | ('map-search' | 'group' | 'route' | 'clock' | 'hike' | 'prize' | 'camera' | 'terrain' | 'pets')
+              | (
+                  | 'map-search'
+                  | 'group'
+                  | 'route'
+                  | 'clock'
+                  | 'hike'
+                  | 'prize'
+                  | 'camera'
+                  | 'terrain'
+                  | 'pets'
+                  | 'share'
+                )
               | null;
             /**
              * Submit button label.

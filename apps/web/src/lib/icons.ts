@@ -36,5 +36,6 @@ export const ICONS = {
   allTrails: 'icon-[simple-icons--alltrails]',
   hike: 'icon-[ph--person-simple-hike]',
   prize: 'icon-[mdi--prize]',
-  camera: 'icon-[mdi--camera]'
+  camera: 'icon-[mdi--camera]',
+  share: 'icon-[material-symbols-light--share]'
 } as const
