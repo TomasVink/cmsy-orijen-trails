@@ -11,18 +11,18 @@
   const influencers = $derived(
     (block.influencers ?? []).filter((i): i is Influencer => typeof i === 'object')
   )
-
-  function getImageSrc(influencer: Influencer): string | null {
-    const img = typeof influencer.image === 'object' ? (influencer.image as Media) : null
-    return mediaUrl(img, env.PUBLIC_PAYLOAD_URL)
-  }
 </script>
 
-<Section title={block.title} intro={block.intro ?? undefined} id={block.sectionId} backgroundImage={block.backgroundImage} backgroundColor={block.backgroundColor}>
-  <!-- Horizontally scrollable carousel -->
-  <div class="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory">
+<Section
+  title={block.title}
+  intro={block.intro ?? undefined}
+  id={block.sectionId}
+  backgroundImage={block.backgroundImage}
+  backgroundColor={block.backgroundColor}
+>
+  <div class="flex flex-wrap justify-center gap-4">
     {#each influencers as influencer (influencer.id)}
-      <div class="w-56">
+      <div class="w-[calc(50%-0.5rem)] sm:w-56">
         <InfluencerCard {influencer} />
       </div>
     {/each}

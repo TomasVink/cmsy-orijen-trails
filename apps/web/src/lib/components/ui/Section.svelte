@@ -44,7 +44,7 @@
 
 <section {id} class="{bgClass} {className}" style={bgStyle}>
   {#if imgSrc}
-    <div class="relative w-full aspect-4/1 overflow-hidden">
+    <div class="relative w-full lg:aspect-4/1 sm:aspect-3/1 aspect-2/1 overflow-hidden">
       <img src={imgSrc} alt="" class="absolute inset-0 w-full h-full object-cover" />
       <div
         class="absolute inset-0 {isLight
@@ -62,7 +62,7 @@
   {/if}
   <div class={imgSrc ? 'pb-16 px-4' : 'py-16 px-4'}>
     <div class="max-w-6xl mx-auto">
-      {#if !imgSrc}
+      {#if !imgSrc && title}
         <div class="text-center mb-12 max-w-2xl mx-auto">
           {#if title}
             <Title>{title}</Title>

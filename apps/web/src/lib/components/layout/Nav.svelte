@@ -72,22 +72,8 @@
     </div>
   </div>
 
-  <!-- Mobile: 3-col grid [centered square] [back button] [lang switch] -->
-  <div class="xl:hidden flex justify-between">
-    <div class="flex justify-end items-start p-2 pointer-events-auto">
-      {#if !isRoot}
-        <div class="bg-orijen-black/60 px-4 py-2">
-          <a
-            href={backHref}
-            class="flex items-center gap-1 text-white uppercase tracking-widest text-sm font-bold"
-          >
-            <Icon name="arrow-left" class="size-6" />
-            <span>{uiLabels?.back ?? 'Back'}</span>
-          </a>
-        </div>
-      {/if}
-    </div>
-
+  <!-- Mobile: logo centered via flex, back/lang absolutely pinned to edges -->
+  <div class="xl:hidden relative flex justify-center">
     <a
       href="/{locale}"
       class="pointer-events-auto bg-orijen-red flex items-center justify-center transition-all duration-300 ease-in-out {scrolled
@@ -97,7 +83,19 @@
       <img src="/logo.svg" alt="Orijen" class="invert w-full h-full object-contain" />
     </a>
 
-    <div class="flex justify-start items-start p-2 pointer-events-auto">
+    <div class="absolute left-0 top-0 p-2 pointer-events-auto">
+      <div class="bg-orijen-black/60 px-4 py-2 {isRoot ? 'invisible' : ''}">
+        <a
+          href={backHref}
+          class="flex items-center gap-1 text-white uppercase tracking-widest text-sm font-bold"
+        >
+          <Icon name="arrow-left" class="size-6" />
+          <span>{uiLabels?.back ?? 'Back'}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="absolute right-0 top-0 p-2 pointer-events-auto">
       <div class="bg-orijen-black/60 px-4 py-2">
         <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
           {#each LOCALES as loc}

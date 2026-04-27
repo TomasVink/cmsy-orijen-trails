@@ -9,6 +9,7 @@
   import Section from '../ui/Section.svelte'
   import SubmitTrailForm from '$lib/components/forms/SubmitTrailForm.svelte'
   import PatchRequestForm from '$lib/components/forms/PatchRequestForm.svelte'
+  import { ICONS } from '$lib/icons'
 
   type Props = {
     block: UserFormBlock
@@ -38,24 +39,24 @@
 <!-- Section -->
 <Section id={block.sectionId} backgroundColor={block.backgroundColor}>
   <div
-    class="border-l-4 border-l-orijen-red p-12 flex items-center gap-8 border border-orijen-gray/30 bg-orijen-gray/20"
+    class="border-l-4 border-l-orijen-red md:p-12 p-4 flex flex-wrap sm:flex-nowrap items-center gap-x-8 gap-y-4 border border-orijen-gray/30 bg-orijen-gray/20"
   >
     <div
       class="shrink-0 flex items-center justify-center size-20 rounded-full bg-orijen-red text-white"
     >
-      <Icon name={block.icon} class="size-10" />
+      <Icon name={block.icon as keyof typeof ICONS} class="size-10" />
     </div>
-    <div class="flex-1">
+    <div class="flex-1 min-w-0">
       <h2 class="font-display text-4xl md:text-5xl uppercase leading-none text-white mb-3">
         {block.title}
       </h2>
       {#if block.intro}
-        <p class="text-orijen-gray font-sans text-base mb-6">{block.intro}</p>
+        <p class="text-orijen-gray font-sans text-base">{block.intro}</p>
       {/if}
-      <Button onclick={openModal} icon="send">
-        {block.ctaLabel ?? (isPatchRequest ? 'Submit request' : 'Submit trail')}
-      </Button>
     </div>
+    <Button onclick={openModal} icon="send" class="w-full sm:w-auto">
+      {block.ctaLabel}
+    </Button>
   </div>
 </Section>
 
