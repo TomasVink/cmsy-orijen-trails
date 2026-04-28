@@ -16,6 +16,65 @@
   ] as const
 </script>
 
+{#snippet connectorDot()}
+  <svg class="size-10 shrink-0 mb-0.5" viewBox="0 0 20 20" aria-hidden="true">
+    <circle cx="10" cy="10" r="7" fill="rgba(220,39,38,0.12)" />
+    <circle cx="10" cy="10" r="4" fill="#dc2726" />
+  </svg>
+{/snippet}
+
+{#snippet stepCard(
+  step: NonNullable<CampaignStepsBlock['steps']>[number],
+  i: number,
+  pos: (typeof STEP_CONFIG)[number]
+)}
+  <div
+    class="absolute flex flex-col items-center"
+    style="left: {pos.left}%; top: {pos.top}%; width: 21.7%;"
+  >
+    {#if pos.dotAbove}
+      {@render connectorDot()}
+      <div class="h-0.5 rounded-full w-[90%] mx-auto bg-orijen-red"></div>
+    {/if}
+
+    <div
+      class="w-full bg-[#212122] border border-[#48494b] rounded-lg overflow-hidden flex flex-col h-48"
+    >
+      <div class="px-3 pt-3 pb-3 flex flex-col gap-2">
+        <div>
+          <p
+            class="font-sans font-bold text-orijen-red uppercase tracking-wider leading-none"
+            style="font-size: 0.65rem; letter-spacing: 0.08em;"
+          >
+            STAP {i + 1}&nbsp;/&nbsp;{step.title}
+          </p>
+          <div
+            class="mt-1.5 h-px w-full"
+            style="background: rgba(220,39,38,0.3); transform: rotate(-0.3deg);"
+          ></div>
+        </div>
+
+        {#if step.icon}
+          <div class="flex justify-center py-1">
+            <Icon name={step.icon} class="size-16 text-orijen-red" />
+          </div>
+        {/if}
+
+        {#if step.description}
+          <p class="font-display text-white text-center uppercase text-2xl pb-1">
+            {step.description}
+          </p>
+        {/if}
+      </div>
+    </div>
+
+    {#if !pos.dotAbove}
+      <div class="h-0.5 rounded-full w-[90%] mx-auto bg-orijen-red"></div>
+      {@render connectorDot()}
+    {/if}
+  </div>
+{/snippet}
+
 <Section
   id={block.sectionId}
   title={block.title}
@@ -83,15 +142,15 @@
     </p>
 
     <!-- START label -->
-    <div class="absolute flex items-center gap-1.5" style="left: 4.7%; top: 91%;">
-      <span class="size-2.5 rounded-full bg-orijen-red shrink-0 inline-block"></span>
+    <div class="absolute flex items-center gap-1.5" style="left: 3.5%; top: 91%;">
+      {@render connectorDot()}
       <span class="text-white/30 tracking-widest text-sm">START</span>
     </div>
 
     <!-- FINISH label -->
-    <div class="absolute flex items-center gap-1.5" style="left: 87.5%; top: 66%;">
+    <div class="absolute flex items-center gap-1.5" style="left: 86.35%; top: 66%;">
       <span class="text-white/30 tracking-widest text-sm">FINISH</span>
-      <span class="size-2.5 rounded-full bg-orijen-red shrink-0 inline-block"></span>
+      {@render connectorDot()}
     </div>
 
     <!-- Scale bar (bottom-right) -->
@@ -106,80 +165,17 @@
     </div>
 
     <!-- Step cards (up to 4, absolutely positioned on the map) -->
-    {#each block.steps as step, i}
+    {#each block.steps ?? [] as step, i}
       {@const pos = STEP_CONFIG[i]}
       {#if pos}
-        <div
-          class="absolute flex flex-col items-center"
-          style="left: {pos.left}%; top: {pos.top}%; width: 21.7%;"
-        >
-          {#if pos.dotAbove}
-            <!-- Connector dot above card -->
-            <svg class="size-10 shrink-0 mb-0.5" viewBox="0 0 20 20" aria-hidden="true">
-              <circle cx="10" cy="10" r="7" fill="rgba(220,39,38,0.12)" />
-              <circle cx="10" cy="10" r="4" fill="#dc2726" />
-            </svg>
-          {/if}
-
-          <div
-            class="w-full bg-[#212122] border border-[#48494b] rounded-lg overflow-hidden flex flex-col h-48"
-          >
-            {#if pos.dotAbove}
-              <!-- Horizontal connector line at top (path arrives here) -->
-              <div class="h-px w-[90%] mx-auto bg-[#48494b]"></div>
-            {/if}
-
-            <div class="px-3 pt-3 pb-3 flex flex-col gap-2">
-              <!-- Step label -->
-              <div>
-                <p
-                  class="font-sans font-bold text-orijen-red uppercase tracking-wider leading-none"
-                  style="font-size: 0.65rem; letter-spacing: 0.08em;"
-                >
-                  STAP {i + 1}&nbsp;/&nbsp;{step.title}
-                </p>
-                <div
-                  class="mt-1.5 h-px w-full"
-                  style="background: rgba(220,39,38,0.3); transform: rotate(-0.3deg);"
-                ></div>
-              </div>
-
-              <!-- Step icon -->
-              {#if step.icon}
-                <div class="flex justify-center py-1">
-                  <Icon name={step.icon} class="size-16 text-orijen-red" />
-                </div>
-              {/if}
-
-              <!-- Step description -->
-              {#if step.description}
-                <p class="font-display text-white text-center uppercase text-2xl pb-1">
-                  {step.description}
-                </p>
-              {/if}
-            </div>
-
-            {#if !pos.dotAbove}
-              <!-- Horizontal connector line at bottom (path arrives here) -->
-              <!-- <div class="h-px w-[90%] mx-auto bg-orijen-red"></div> -->
-            {/if}
-          </div>
-
-          {#if !pos.dotAbove}
-            <!-- Connector dot below card -->
-            <svg class="size-10 shrink-0 mb-0.5" viewBox="0 0 20 20" aria-hidden="true">
-              <circle cx="10" cy="10" r="7" fill="rgba(220,39,38,0.12)" />
-              <circle cx="10" cy="10" r="4" fill="#dc2726" />
-            </svg>
-          {/if}
-        </div>
+        {@render stepCard(step, i, pos)}
       {/if}
     {/each}
 
     <!-- Vertical dotted line from behind photos down to X cross (center = 38.4%) -->
     <div
       class="absolute pointer-events-none"
-      style="left: 41.5%; top: 60%; height: 32%; width: 2px; background: repeating-linear-gradient(to bottom, #dc2726 0px, #dc2726 5px, transparent 5px, transparent 10px);"
+      style="left: 41.3%; top: 60%; height: 32%; width: 2px; background: repeating-linear-gradient(to bottom, #dc2726 0px, #dc2726 5px, transparent 5px, transparent 10px);"
     ></div>
 
     <!-- Trail photo 1 (Rottemeren, left/back) -->
@@ -245,56 +241,29 @@
       draggable="false"
     />
 
+    <!-- Winding trail line spanning the full card height, wider than the content so the path visually extends edge-to-edge -->
+    <img
+      src="/trail-line-mobile.svg"
+      alt=""
+      class="absolute top-0 h-full pointer-events-none select-none"
+      style="width: 150%; left: -25%;"
+      draggable="false"
+    />
+
     <div class="relative flex flex-col items-center px-4 py-8 gap-0">
       <!-- START -->
-      <div class="flex items-center gap-2 mb-3">
+      <div class="flex items-center gap-2 mb-1">
         <span class="size-2.5 rounded-full bg-orijen-red shrink-0 inline-block"></span>
         <span class="font-sans text-white/30 text-xs tracking-widest">START</span>
       </div>
 
       {#each block.steps as step, i}
-        <!-- Vertical dashed connector -->
-        <svg class="shrink-0" width="2" height="32" aria-hidden="true">
-          <line
-            x1="1"
-            y1="0"
-            x2="1"
-            y2="32"
-            stroke="#dc2726"
-            stroke-width="2"
-            stroke-dasharray="6 4"
-            opacity="0.7"
-          />
-        </svg>
-
-        <!-- Connector dot -->
-        <svg class="size-5 shrink-0" viewBox="0 0 20 20" aria-hidden="true">
-          <circle cx="10" cy="10" r="4" fill="#dc2726" />
-        </svg>
-
-        <!-- Step card -->
-        <div
-          class="mt-1 mb-1 w-full max-w-72.5 bg-[#212122] border border-[#48494b] rounded-lg overflow-hidden"
-        >
-          <div class="px-4 pt-3 pb-4 flex flex-col gap-2">
-            <p
-              class="font-sans font-bold text-orijen-red text-sm uppercase tracking-wider leading-none"
-            >
-              STAP {i + 1}&nbsp;/&nbsp;{step.title}
-            </p>
-            <div class="h-px w-full" style="background: rgba(220,39,38,0.3);"></div>
-            {#if step.icon}
-              <div class="flex justify-center py-2">
-                <Icon name={step.icon} class="size-14 text-orijen-red" />
-              </div>
-            {/if}
-            {#if step.description}
-              <p class="font-display text-2xl text-white text-center uppercase leading-tight">
-                {step.description}
-              </p>
-            {/if}
-          </div>
-        </div>
+        {#each block.steps ?? [] as step, i}
+          {@const pos = STEP_CONFIG[i]}
+          {#if pos}
+            {@render stepCard(step, i, pos)}
+          {/if}
+        {/each}
 
         <!-- Trail photos cluster after step 2 (index 1) -->
         {#if i === 1}
@@ -343,19 +312,7 @@
       {/each}
 
       <!-- FINISH -->
-      <svg class="shrink-0" width="2" height="32" aria-hidden="true">
-        <line
-          x1="1"
-          y1="0"
-          x2="1"
-          y2="32"
-          stroke="#dc2726"
-          stroke-width="2"
-          stroke-dasharray="6 4"
-          opacity="0.7"
-        />
-      </svg>
-      <div class="flex items-center gap-2 mt-1">
+      <div class="flex items-center gap-2 mt-3">
         <span class="font-sans text-white/30 text-xs tracking-widest">FINISH</span>
         <span class="size-2.5 rounded-full bg-orijen-red shrink-0 inline-block"></span>
       </div>

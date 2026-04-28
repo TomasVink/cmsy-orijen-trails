@@ -7,7 +7,7 @@
 </script>
 
 <Nav />
-<div class="md:pt-32 pt-24 min-h-dvh">
+<div class="min-h-dvh">
   {@render children()}
 </div>
 <Footer />
