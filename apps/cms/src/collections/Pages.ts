@@ -11,6 +11,7 @@ import { InfluencerCarousel } from '../blocks/InfluencerCarousel'
 import { EventsBlock } from '../blocks/EventsBlock'
 import { CTABlock } from '../blocks/CTABlock'
 import { FAQ } from '../blocks/FAQ'
+import { TextBlock } from '../blocks/TextBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -20,11 +21,17 @@ export const Pages: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ doc, req }) => {
-        const full = await req.payload.findByID({ collection: 'pages', id: doc.id, locale: 'all', depth: 0 })
+        const full = await req.payload.findByID({
+          collection: 'pages',
+          id: doc.id,
+          locale: 'all',
+          depth: 0,
+          req
+        })
         await purgePageCache(full.slug as unknown as Record<string, string>)
-      },
+      }
     ],
-    afterDelete: [() => purgeAllCache()],
+    afterDelete: [() => purgeAllCache()]
   },
   admin: {
     group: 'Content',
@@ -69,7 +76,8 @@ export const Pages: CollectionConfig = {
         InfluencerCarousel,
         EventsBlock,
         CTABlock,
-        FAQ
+        FAQ,
+        TextBlock
       ]
     },
     {

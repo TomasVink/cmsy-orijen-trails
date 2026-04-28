@@ -8,7 +8,7 @@ export const Posts: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ doc, req }) => {
-        const full = await req.payload.findByID({ collection: 'posts', id: doc.id, locale: 'all', depth: 0 })
+        const full = await req.payload.findByID({ collection: 'posts', id: doc.id, locale: 'all', depth: 0, req })
         await purgePostCache(full.slug as unknown as Record<string, string>)
       },
     ],

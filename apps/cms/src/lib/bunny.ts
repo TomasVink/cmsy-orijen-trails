@@ -32,10 +32,14 @@ export async function purgePostCache(slugsByLocale: Record<string, string>): Pro
 
 export async function purgeTrailCache(id: string): Promise<void> {
   if (!BUNNY_API_KEY || !WEB_URL) return
-  const urls = LOCALES.flatMap(locale => [
-    `${WEB_URL}/${locale}/trails`,
-    `${WEB_URL}/${locale}/trails/${id}`,
-  ])
+  const urls = [
+    // API list endpoint (fetched client-side by the map)
+    `${WEB_URL}/api/trails*`,
+    ...LOCALES.flatMap(locale => [
+      `${WEB_URL}/${locale}/trails`,
+      `${WEB_URL}/${locale}/trails/${id}`,
+    ]),
+  ]
   await Promise.all(urls.map(purgeUrl))
 }
 

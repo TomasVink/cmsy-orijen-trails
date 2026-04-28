@@ -16,6 +16,7 @@ import * as migration_20260423_151003_event_numbers from './20260423_151003_even
 import * as migration_20260423_152305_event_image from './20260423_152305_event_image';
 import * as migration_20260427_152241_campaign_steps from './20260427_152241_campaign_steps';
 import * as migration_20260428_075624_trail_labels from './20260428_075624_trail_labels';
+import * as migration_20260428_104302_text_block from './20260428_104302_text_block';
 
 export const migrations = [
   {
@@ -106,6 +107,11 @@ export const migrations = [
   {
     up: migration_20260428_075624_trail_labels.up,
     down: migration_20260428_075624_trail_labels.down,
-    name: '20260428_075624_trail_labels'
+    name: '20260428_075624_trail_labels',
+  },
+  {
+    up: migration_20260428_104302_text_block.up,
+    down: migration_20260428_104302_text_block.down,
+    name: '20260428_104302_text_block'
   },
 ];

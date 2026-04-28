@@ -434,6 +434,37 @@ export interface Page {
             blockName?: string | null;
             blockType: 'faq';
           }
+        | {
+            title: string;
+            /**
+             * Used for internal linking using CTA buttons
+             */
+            sectionId: string;
+            intro?: string | null;
+            /**
+             * Optional background image shown behind the title
+             */
+            backgroundImage?: (number | null) | Media;
+            backgroundColor?: ('black' | 'white' | 'texture') | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'text';
+          }
       )[]
     | null;
   seo?: {
@@ -1042,6 +1073,18 @@ export interface PagesSelect<T extends boolean = true> {
                     answer?: T;
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        text?:
+          | T
+          | {
+              title?: T;
+              sectionId?: T;
+              intro?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
+              content?: T;
               id?: T;
               blockName?: T;
             };
