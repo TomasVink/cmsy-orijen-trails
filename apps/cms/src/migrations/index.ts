@@ -18,6 +18,7 @@ import * as migration_20260427_152241_campaign_steps from './20260427_152241_cam
 import * as migration_20260428_075624_trail_labels from './20260428_075624_trail_labels';
 import * as migration_20260428_104302_text_block from './20260428_104302_text_block';
 import * as migration_20260428_130449_nav_bar from './20260428_130449_nav_bar';
+import * as migration_20260428_144723_patches_update from './20260428_144723_patches_update';
 
 export const migrations = [
   {
@@ -118,6 +119,11 @@ export const migrations = [
   {
     up: migration_20260428_130449_nav_bar.up,
     down: migration_20260428_130449_nav_bar.down,
-    name: '20260428_130449_nav_bar'
+    name: '20260428_130449_nav_bar',
+  },
+  {
+    up: migration_20260428_144723_patches_update.up,
+    down: migration_20260428_144723_patches_update.down,
+    name: '20260428_144723_patches_update'
   },
 ];

@@ -106,6 +106,13 @@ export const TrailLabels: GlobalConfig = {
         locale === 'nl' ? 'Zwemwater' : 'Swimming water'
     },
     {
+      name: 'routeLinksCTA',
+      type: 'text',
+      localized: true,
+      defaultValue: ({ locale }: { locale?: string }) =>
+        locale === 'nl' ? 'Start hier' : 'Start here'
+    },
+    {
       name: 'viewTrail',
       type: 'text',
       localized: true,

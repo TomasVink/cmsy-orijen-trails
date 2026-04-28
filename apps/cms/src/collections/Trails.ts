@@ -13,7 +13,7 @@ export const Trails: CollectionConfig = {
   },
   hooks: {
     afterChange: [({ doc }) => purgeTrailCache(String(doc.id))],
-    afterDelete: [({ doc }) => purgeTrailCache(String(doc.id))],
+    afterDelete: [({ doc }) => purgeTrailCache(String(doc.id))]
   },
   admin: {
     group: 'Content',
@@ -36,6 +36,11 @@ export const Trails: CollectionConfig = {
       name: 'community',
       type: 'checkbox',
       defaultValue: false
+    },
+    {
+      name: 'patch',
+      type: 'relationship',
+      relationTo: 'patches'
     },
     {
       name: 'header',

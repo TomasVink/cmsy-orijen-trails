@@ -20,11 +20,10 @@
 
 <PageHeader title={uiLabels.trailsTitle} />
 
-<TrailsFilter trailLabels={data.trailLabels} />
-
 <section class="py-8 px-4">
   <div class="max-w-6xl mx-auto">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <TrailsFilter trailLabels={data.trailLabels} />
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
       {#each data.trails as trail (trail.id)}
         <TrailCard {trail} />
       {/each}

@@ -43,7 +43,7 @@
     {/if}
 
     <span
-      class="absolute rounded-full top-3 left-3 text-sm font-bold uppercase tracking-widest px-4 py-2 {trail.community
+      class="absolute rounded-full top-2 left-2 w-fit max-w-[calc(100%-1rem)] text-sm font-bold uppercase tracking-widest px-4 py-2 {trail.community
         ? 'bg-orijen-gold'
         : 'bg-orijen-red text-white'}"
     >

@@ -132,6 +132,7 @@ export type TrailLabelsData = {
   hospitality?: string | null
   water?: string | null
   allDifficulties?: string | null
+  routeLinksCTA: string
   viewTrail?: string | null
   viewAllTrails?: string | null
   form?: {

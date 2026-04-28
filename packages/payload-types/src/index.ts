@@ -531,6 +531,7 @@ export interface Trail {
   title: string;
   published?: boolean | null;
   community?: boolean | null;
+  patch?: (number | null) | Patch;
   header?: (number | null) | Media;
   photos?:
     | {
@@ -605,6 +606,17 @@ export interface Trail {
     title?: string | null;
     description?: string | null;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "patches".
+ */
+export interface Patch {
+  id: number;
+  patch: string;
+  image?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -737,16 +749,6 @@ export interface Registration {
   people?: number | null;
   dogs?: number | null;
   other?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "patches".
- */
-export interface Patch {
-  id: number;
-  patch: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -1135,6 +1137,7 @@ export interface TrailsSelect<T extends boolean = true> {
   title?: T;
   published?: T;
   community?: T;
+  patch?: T;
   header?: T;
   photos?:
     | T
@@ -1226,6 +1229,7 @@ export interface RegistrationsSelect<T extends boolean = true> {
  */
 export interface PatchesSelect<T extends boolean = true> {
   patch?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1438,6 +1442,7 @@ export interface TrailLabel {
   };
   hospitality?: string | null;
   water?: string | null;
+  routeLinksCTA?: string | null;
   /**
    * CTA button on trail cards.
    */
@@ -1625,6 +1630,7 @@ export interface TrailLabelsSelect<T extends boolean = true> {
       };
   hospitality?: T;
   water?: T;
+  routeLinksCTA?: T;
   viewTrail?: T;
   viewAllTrails?: T;
   form?:

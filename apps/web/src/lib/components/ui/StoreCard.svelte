@@ -25,7 +25,7 @@
     {/if}
 
     <div class="flex flex-col gap-0.5 min-w-0">
-      <span class="font-bold leading-tight truncate">{store.name}</span>
+      <span class="font-bold leading-tight">{store.name}</span>
       <span class="text-sm text-orijen-gray"
         >{store.address}<br />{store.postcode} {store.city}</span
       >

@@ -14,6 +14,11 @@ export const Patches: CollectionConfig = {
       name: 'patch',
       type: 'text',
       required: true
+    },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media'
     }
   ]
 }

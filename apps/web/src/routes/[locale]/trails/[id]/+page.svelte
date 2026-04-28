@@ -15,6 +15,14 @@
 
   const trail = $derived(data.trail)
   const labels = $derived(data.trailLabels)
+  const patchImage = $derived(
+    typeof trail.patch === 'object' &&
+      trail.patch &&
+      typeof trail.patch.image === 'object' &&
+      trail.patch.image
+      ? (trail.patch.image as Media)
+      : undefined
+  )
 
   const galleryImages = $derived(
     (trail.photos ?? [])
@@ -45,15 +53,18 @@
   {/if}
 </svelte:head>
 
-<PageHeader image={trail.header as Media} title={trail.title} />
+<PageHeader image={trail.header as Media} title={trail.title} {patchImage} />
 
-<div class="container mx-auto max-w-6xl py-8">
+<div class="container mx-auto max-w-6xl py-4">
   <!-- Properties bar -->
-  <hr class="divider" />
-  <div class="flex flex-wrap gap-6 text-orijen-red p-4 justify-center">
-    <TrailProperties {trail} />
+
+  <div class="md:max-w-2xl lg:max-w-3xl mb-8 w-full">
+    <hr class="divider" />
+    <div class="flex flex-wrap gap-6 text-orijen-red p-4 justify-center">
+      <TrailProperties {trail} />
+    </div>
+    <hr class="divider" />
   </div>
-  <hr class="divider mb-8" />
 
   <div class="flex flex-col lg:flex-row gap-12">
     <!-- Main content -->
@@ -94,7 +105,8 @@
     <!-- Sidebar -->
     <div class="lg:w-1/4 px-4">
       {#if trail.links && trail.links.length > 0}
-        <div class="mb-8">
+        <div class="mb-8 flex flex-col gap-4">
+          <span class="font-display text-4xl uppercase">{labels?.routeLinksCTA}</span>
           <div class="flex flex-col gap-3">
             {#each trail.links as link}
               {@const icon =
