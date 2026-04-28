@@ -1,19 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 import type { RequestEvent } from '@sveltejs/kit'
-
-const LOCALES = ['nl', 'en']
-const DEFAULT_LOCALE = 'nl'
-
-function getPreferredLocale(acceptLanguage: string | null): string {
-  if (!acceptLanguage) return DEFAULT_LOCALE
-
-  for (const part of acceptLanguage.split(',')) {
-    const lang = part.trim().split(';')[0].split('-')[0].toLowerCase()
-    if (LOCALES.includes(lang)) return lang
-  }
-
-  return DEFAULT_LOCALE
-}
+import { getPreferredLocale } from '$lib/locales'
 
 export const load = ({ request }: RequestEvent) => {
   const locale = getPreferredLocale(request.headers.get('accept-language'))

@@ -2,8 +2,7 @@
   import { page } from '$app/stores'
   import Icon from '$lib/components/ui/Icon.svelte'
   import type { UiLabelsData } from '$lib/payload'
-
-  const LOCALES = ['nl', 'en']
+  import { LOCALES } from '$lib/locales'
 
   const locale = $derived($page.params.locale ?? 'nl')
 
@@ -57,19 +56,22 @@
         <img src="/logo.svg" alt="Orijen" class="invert w-full h-full object-contain" />
       </a>
     </div>
-    <div class="pointer-events-auto bg-orijen-black/60 m-4 px-4 py-2">
-      <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
-        {#each LOCALES as loc}
-          {#if loc === locale}
-            <span class="opacity-100 font-bold">{loc}</span>
-          {:else}
-            <a href={localeSwitchHref(loc)} class="opacity-50 hover:opacity-100 transition-opacity"
-              >{loc}</a
-            >
-          {/if}
-        {/each}
+    {#if LOCALES.length > 1}
+      <div class="pointer-events-auto bg-orijen-black/60 m-4 px-4 py-2">
+        <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
+          {#each LOCALES as loc}
+            {#if loc === locale}
+              <span class="opacity-100 font-bold">{loc}</span>
+            {:else}
+              <a
+                href={localeSwitchHref(loc)}
+                class="opacity-50 hover:opacity-100 transition-opacity">{loc}</a
+              >
+            {/if}
+          {/each}
+        </div>
       </div>
-    </div>
+    {/if}
   </div>
 
   <!-- Mobile: logo centered via flex, back/lang absolutely pinned to edges -->
@@ -95,21 +97,23 @@
       </div>
     </div>
 
-    <div class="absolute right-0 top-0 p-2 pointer-events-auto">
-      <div class="bg-orijen-black/60 px-4 py-2">
-        <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
-          {#each LOCALES as loc}
-            {#if loc === locale}
-              <span class="opacity-100 font-bold">{loc}</span>
-            {:else}
-              <a
-                href={localeSwitchHref(loc)}
-                class="opacity-50 hover:opacity-100 transition-opacity">{loc}</a
-              >
-            {/if}
-          {/each}
+    {#if LOCALES.length > 1}
+      <div class="absolute right-0 top-0 p-2 pointer-events-auto">
+        <div class="bg-orijen-black/60 px-4 py-2">
+          <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
+            {#each LOCALES as loc}
+              {#if loc === locale}
+                <span class="opacity-100 font-bold">{loc}</span>
+              {:else}
+                <a
+                  href={localeSwitchHref(loc)}
+                  class="opacity-50 hover:opacity-100 transition-opacity">{loc}</a
+                >
+              {/if}
+            {/each}
+          </div>
         </div>
       </div>
-    </div>
+    {/if}
   </div>
 </nav>

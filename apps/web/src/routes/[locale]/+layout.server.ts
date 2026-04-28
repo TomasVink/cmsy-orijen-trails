@@ -1,8 +1,7 @@
 import { error } from '@sveltejs/kit'
 import type { Locale } from '$lib/payload'
 import { getTrailLabels, getUiLabels, getSignUpLabels } from '$lib/payload.server'
-
-const LOCALES: Locale[] = ['nl', 'en']
+import { LOCALES } from '$lib/locales'
 
 export const load = async ({
   params,
@@ -11,7 +10,7 @@ export const load = async ({
   params: { locale: string }
   fetch: typeof globalThis.fetch
 }) => {
-  if (!LOCALES.includes(params.locale as Locale)) {
+  if (!LOCALES.includes(params.locale)) {
     error(404, 'Not found')
   }
   const locale = params.locale as Locale
