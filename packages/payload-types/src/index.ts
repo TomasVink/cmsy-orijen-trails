@@ -388,7 +388,7 @@ export interface Page {
             blockType: 'events';
           }
         | {
-            image: number | Media;
+            image?: (number | null) | Media;
             cta: string;
             url: string;
             description?: string | null;

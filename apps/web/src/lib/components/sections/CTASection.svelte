@@ -4,6 +4,7 @@
   import { mediaUrl } from '$lib/payload'
   import { env } from '$env/dynamic/public'
   import Button from '$lib/components/ui/Button.svelte'
+  import Section from '../ui/Section.svelte'
 
   type Props = { block: CTABlock }
   let { block }: Props = $props()
@@ -16,17 +17,17 @@
   const href = $derived(isExternal ? block.url : `/${locale}${block.url}`)
 </script>
 
-<section class="py-16 px-4">
-  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-    <div class="overflow-hidden">
-      {#if imageSrc}
+<Section>
+  <div class={imageSrc ? 'grid grid-cols-1 md:grid-cols-2 gap-8 items-center' : 'flex flex-col items-center gap-6'}>
+    {#if imageSrc}
+      <div class="overflow-hidden w-full">
         <img src={imageSrc} alt={image?.alt ?? ''} class="w-full h-full object-cover" />
-      {/if}
-    </div>
+      </div>
+    {/if}
     <div class="flex flex-col items-center justify-center gap-6">
       <p>{block.description}</p>
       <Button {href} target={isExternal ? '_blank' : undefined}>{block.cta}</Button>
     </div>
   </div>
-</section>
+</Section>
 <hr class="divider" />

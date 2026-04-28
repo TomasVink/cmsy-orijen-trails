@@ -10,8 +10,7 @@ export const CTABlock: Block = {
     {
       name: 'image',
       type: 'upload',
-      relationTo: 'media',
-      required: true
+      relationTo: 'media'
     },
     {
       name: 'cta',
