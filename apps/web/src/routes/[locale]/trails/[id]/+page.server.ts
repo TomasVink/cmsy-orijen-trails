@@ -4,14 +4,14 @@ import type { Locale } from '$lib/payload'
 
 export const load = async ({
   params,
-  fetch,
+  fetch
 }: {
   params: { locale: Locale; id: string }
   fetch: typeof globalThis.fetch
 }) => {
   const [trail, trailLabels] = await Promise.all([
     getTrailById(params.id, fetch, params.locale),
-    getTrailLabels(fetch, params.locale),
+    getTrailLabels(fetch, params.locale)
   ])
 
   if (!trail) {

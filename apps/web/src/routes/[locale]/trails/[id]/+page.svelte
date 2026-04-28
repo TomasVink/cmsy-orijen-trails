@@ -1,15 +1,15 @@
 <script lang="ts">
   import type { PageData } from './$types'
-  import type { Media, Trail, TrailLabelsData } from '$lib/payload'
+  import type { Media } from '$lib/payload'
   import { mediaUrl } from '$lib/payload'
   import { env } from '$env/dynamic/public'
   import Icon from '$lib/components/ui/Icon.svelte'
-  import type { ICONS } from '$lib/icons'
   import RichText from '$lib/components/ui/RichText.svelte'
   import PageHeader from '$lib/components/ui/PageHeader.svelte'
   import RelatedContent from '$lib/components/ui/RelatedContent.svelte'
   import ImageModal from '$lib/components/ui/ImageModal.svelte'
   import Button from '$lib/components/ui/Button.svelte'
+  import TrailProperties from '$lib/components/ui/TrailProperties.svelte'
 
   let { data }: { data: PageData } = $props()
 
@@ -34,19 +34,6 @@
     modalIndex = i
     modalOpen = true
   }
-
-  const properties: Array<{
-    name: keyof Trail
-    icon: keyof typeof ICONS
-    label?: string
-    labelsKey?: keyof TrailLabelsData
-  }> = [
-    { name: 'distance', icon: 'route', label: '%s km' },
-    { name: 'difficulty', icon: 'terrain' },
-    { name: 'offLeashArea', icon: 'pets', labelsKey: 'offLeash' },
-    { name: 'hospitality', icon: 'restaurant' },
-    { name: 'water', icon: 'water' }
-  ]
 </script>
 
 <svelte:head>
@@ -64,23 +51,7 @@
   <!-- Properties bar -->
   <hr class="divider" />
   <div class="flex flex-wrap gap-6 text-orijen-red p-4 justify-center">
-    {#each properties as property}
-      {#if trail[property.name]}
-        {@const value = trail[property.name]}
-        {@const labelEntry = (labels as Record<string, unknown> | null)?.[
-          property.labelsKey ?? property.name
-        ]}
-        {@const labelText = property.label
-          ? property.label.replace('%s', String(value))
-          : typeof labelEntry === 'object' && labelEntry !== null
-            ? ((labelEntry as Record<string, string>)[String(value)] ?? String(value))
-            : String(labelEntry ?? value)}
-        <span class="flex items-center gap-2">
-          <Icon name={property.icon} />
-          <span class="font-display text-xl text-white">{labelText}</span>
-        </span>
-      {/if}
-    {/each}
+    <TrailProperties {trail} />
   </div>
   <hr class="divider mb-8" />
 

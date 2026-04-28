@@ -1375,6 +1375,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface TrailLabel {
   id: number;
+  approvedTrail?: string | null;
+  communityTrail?: string | null;
   difficulty?: {
     easy?: string | null;
     moderate?: string | null;
@@ -1526,6 +1528,8 @@ export interface SignUpLabel {
  * via the `definition` "trail-labels_select".
  */
 export interface TrailLabelsSelect<T extends boolean = true> {
+  approvedTrail?: T;
+  communityTrail?: T;
   difficulty?:
     | T
     | {

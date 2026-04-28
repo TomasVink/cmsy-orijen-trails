@@ -121,6 +121,8 @@ export async function getPosts(
 
 // ── Trail Labels global ───────────────────────────────────────────
 export type TrailLabelsData = {
+  approvedTrail: string
+  communityTrail: string
   difficulty?: {
     easy?: string | null
     moderate?: string | null

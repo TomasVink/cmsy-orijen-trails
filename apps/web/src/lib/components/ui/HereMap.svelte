@@ -75,7 +75,7 @@
       const selected = trail.id === selectedId
 
       const el = document.createElement('div')
-      const instance = mount(TrailMarker, { target: el, props: { selected } })
+      const instance = mount(TrailMarker, { target: el, props: { selected, trail } })
       mountedMarkers.push(instance)
 
       const domIcon = new H.map.DomIcon(el, {
