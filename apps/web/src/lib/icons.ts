@@ -37,5 +37,6 @@ export const ICONS = {
   hike: 'icon-[ph--person-simple-hike]',
   prize: 'icon-[mdi--prize]',
   camera: 'icon-[mdi--camera]',
-  share: 'icon-[material-symbols-light--share]'
+  share: 'icon-[material-symbols-light--share]',
+  menu: 'icon-[material-symbols-light--menu]'
 } as const

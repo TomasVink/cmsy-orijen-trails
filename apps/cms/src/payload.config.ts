@@ -15,6 +15,7 @@ import { Influencers } from './collections/Influencers'
 import { TrailLabels } from './globals/TrailLabels'
 import { UiLabels } from './globals/UiLabels'
 import { SignUpLabels } from './globals/SignUpLabels'
+import { NavItems } from './globals/NavItems'
 import { Events } from './collections/Events'
 import { Registrations } from './collections/Registrations'
 import { Patches } from './collections/Patches'
@@ -77,7 +78,7 @@ export default buildConfig({
     Media,
     Stores
   ],
-  globals: [TrailLabels, UiLabels, SignUpLabels],
+  globals: [TrailLabels, UiLabels, SignUpLabels, NavItems],
 
   editor: lexicalEditor({}),
 

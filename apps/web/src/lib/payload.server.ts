@@ -22,9 +22,10 @@ import {
   getUiLabels as _getUiLabels,
   getSignUpLabels as _getSignUpLabels,
   getEvents as _getEvents,
+  getNavItems as _getNavItems,
 } from './payload'
 
-export type { Page, Media, PaginatedDocs, Locale, TrailFilters, Post, TrailLabelsData, UiLabelsData, SignUpLabelsData, EventsBlock, Event } from './payload'
+export type { Page, Media, PaginatedDocs, Locale, TrailFilters, Post, TrailLabelsData, UiLabelsData, SignUpLabelsData, NavItemsData, EventsBlock, Event } from './payload'
 
 function internalUrl(): string {
   return env.PAYLOAD_INTERNAL_URL || publicEnv.PUBLIC_PAYLOAD_URL
@@ -114,4 +115,11 @@ export function getEvents(
   locale: import('./payload').Locale = 'nl',
 ) {
   return _getEvents(fetchFn, internalUrl(), locale)
+}
+
+export function getNavItems(
+  fetchFn: typeof fetch = fetch,
+  locale: import('./payload').Locale = 'nl',
+) {
+  return _getNavItems(fetchFn, internalUrl(), locale)
 }

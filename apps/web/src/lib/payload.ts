@@ -280,6 +280,32 @@ export type SignUpLabelsData = {
   otherLabel?: string | null
 }
 
+// ── Nav Items global ──────────────────────────────────────────────
+export type NavItemsData = {
+  logoLink?: string | null
+  highlightedLink?: {
+    label?: string | null
+    url?: string | null
+    openInNewTab?: boolean | null
+  } | null
+  items?: Array<{
+    label?: string | null
+    url?: string | null
+    openInNewTab?: boolean | null
+    id?: string | null
+  }> | null
+}
+
+export async function getNavItems(
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl'
+): Promise<NavItemsData | null> {
+  const response = await fetchFn(`${baseUrl}/api/globals/nav-items?locale=${locale}`)
+  if (!response.ok) return null
+  return (await response.json()) as NavItemsData
+}
+
 export async function getSignUpLabels(
   fetchFn: typeof fetch = fetch,
   baseUrl = env.PUBLIC_PAYLOAD_URL,

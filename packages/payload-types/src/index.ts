@@ -111,11 +111,13 @@ export interface Config {
     'trail-labels': TrailLabel;
     'ui-labels': UiLabel;
     'sign-up-labels': SignUpLabel;
+    'nav-items': NavItem;
   };
   globalsSelect: {
     'trail-labels': TrailLabelsSelect<false> | TrailLabelsSelect<true>;
     'ui-labels': UiLabelsSelect<false> | UiLabelsSelect<true>;
     'sign-up-labels': SignUpLabelsSelect<false> | SignUpLabelsSelect<true>;
+    'nav-items': NavItemsSelect<false> | NavItemsSelect<true>;
   };
   locale: 'nl' | 'en';
   widgets: {
@@ -1568,6 +1570,39 @@ export interface SignUpLabel {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "nav-items".
+ */
+export interface NavItem {
+  id: number;
+  /**
+   * Use /page-slug to navigate to an intrnal page, add #section-id to scroll directly to a specific section. Use https://... to navigate to an external web page.
+   */
+  logoLink: string;
+  highlightedLink: {
+    label: string;
+    /**
+     * Use /page-slug to navigate to an intrnal page, add #section-id to scroll directly to a specific section. Use https://... to navigate to an external web page.
+     */
+    url: string;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  items?:
+    | {
+        label: string;
+        /**
+         * Use /page-slug to navigate to an intrnal page, add #section-id to scroll directly to a specific section. Use https://... to navigate to an external web page.
+         */
+        url: string;
+        openInNewTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "trail-labels_select".
  */
 export interface TrailLabelsSelect<T extends boolean = true> {
@@ -1669,6 +1704,32 @@ export interface SignUpLabelsSelect<T extends boolean = true> {
   peopleLabel?: T;
   dogsLabel?: T;
   otherLabel?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "nav-items_select".
+ */
+export interface NavItemsSelect<T extends boolean = true> {
+  logoLink?: T;
+  highlightedLink?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  items?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
