@@ -21,6 +21,7 @@ export type EventsBlock = Extract<LayoutBlock, { blockType: 'events' }>
 export type CTABlock = Extract<LayoutBlock, { blockType: 'cta-block' }>
 export type FAQBlock = Extract<LayoutBlock, { blockType: 'faq' }>
 export type TextBlock = Extract<LayoutBlock, { blockType: 'text' }>
+export type PickupPointsBlock = Extract<LayoutBlock, { blockType: 'pickup-points' }>
 
 // ── Pagination wrapper ────────────────────────────────────────────
 export type PaginatedDocs<T> = {
@@ -341,6 +342,22 @@ export async function getEvents(
   const response = await fetchFn(`${baseUrl}/api/events?${params}`)
   if (!response.ok) return []
   const data = (await response.json()) as PaginatedDocs<Event>
+  return data.docs
+}
+
+export async function getTrailsWithStores(
+  fetchFn: typeof fetch = fetch,
+  baseUrl = env.PUBLIC_PAYLOAD_URL,
+  locale: Locale = 'nl'
+): Promise<Trail[]> {
+  const params = new URLSearchParams()
+  params.set('where[published][equals]', 'true')
+  params.set('depth', '2')
+  params.set('limit', '100')
+  params.set('locale', locale)
+  const response = await fetchFn(`${baseUrl}/api/trails?${params}`)
+  if (!response.ok) return []
+  const data = (await response.json()) as PaginatedDocs<Trail>
   return data.docs
 }
 

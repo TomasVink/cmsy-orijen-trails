@@ -23,6 +23,7 @@ import {
   getSignUpLabels as _getSignUpLabels,
   getEvents as _getEvents,
   getNavItems as _getNavItems,
+  getTrailsWithStores as _getTrailsWithStores,
 } from './payload'
 
 export type { Page, Media, PaginatedDocs, Locale, TrailFilters, Post, TrailLabelsData, UiLabelsData, SignUpLabelsData, NavItemsData, EventsBlock, Event } from './payload'
@@ -122,4 +123,11 @@ export function getNavItems(
   locale: import('./payload').Locale = 'nl',
 ) {
   return _getNavItems(fetchFn, internalUrl(), locale)
+}
+
+export function getTrailsWithStores(
+  fetchFn: typeof fetch = fetch,
+  locale: import('./payload').Locale = 'nl',
+) {
+  return _getTrailsWithStores(fetchFn, internalUrl(), locale)
 }

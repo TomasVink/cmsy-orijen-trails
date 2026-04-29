@@ -12,6 +12,7 @@ import { EventsBlock } from '../blocks/EventsBlock'
 import { CTABlock } from '../blocks/CTABlock'
 import { FAQ } from '../blocks/FAQ'
 import { TextBlock } from '../blocks/TextBlock'
+import { PickupPoints } from '../blocks/PickupPoints'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -77,7 +78,8 @@ export const Pages: CollectionConfig = {
         EventsBlock,
         CTABlock,
         FAQ,
-        TextBlock
+        TextBlock,
+        PickupPoints
       ]
     },
     {

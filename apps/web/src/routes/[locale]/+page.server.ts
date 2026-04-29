@@ -1,4 +1,4 @@
-import { getPageBySlug, getEvents } from '$lib/payload.server'
+import { getPageBySlug, getEvents, getTrailsWithStores } from '$lib/payload.server'
 import type { Locale } from '$lib/payload'
 import { emptyTrailForm, trailSubmitAction } from '$lib/trail-submit.server'
 import { emptySignUpForm, eventSignUpAction } from '$lib/events-signup.server'
@@ -13,9 +13,14 @@ export const load = async ({ fetch, params }: { fetch: typeof globalThis.fetch; 
   ])
 
   const hasEventsBlock = page?.layout?.some((b) => (b.blockType as string) === 'events') ?? false
-  const events = hasEventsBlock ? await getEvents(fetch, params.locale) : []
+  const hasPickupPointsBlock = page?.layout?.some((b) => (b.blockType as string) === 'pickup-points') ?? false
 
-  return { page, form, signUpForm, patchRequestForm, events }
+  const [events, trailsWithStores] = await Promise.all([
+    hasEventsBlock ? getEvents(fetch, params.locale) : Promise.resolve([]),
+    hasPickupPointsBlock ? getTrailsWithStores(fetch, params.locale) : Promise.resolve([])
+  ])
+
+  return { page, form, signUpForm, patchRequestForm, events, trailsWithStores }
 }
 
 export const actions = { ...trailSubmitAction, ...eventSignUpAction, ...patchRequestSubmitAction }

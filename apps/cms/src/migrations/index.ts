@@ -20,6 +20,7 @@ import * as migration_20260428_104302_text_block from './20260428_104302_text_bl
 import * as migration_20260428_130449_nav_bar from './20260428_130449_nav_bar';
 import * as migration_20260428_144723_patches_update from './20260428_144723_patches_update';
 import * as migration_20260429_083139_socials from './20260429_083139_socials';
+import * as migration_20260429_090127_pickup_section from './20260429_090127_pickup_section';
 
 export const migrations = [
   {
@@ -130,6 +131,11 @@ export const migrations = [
   {
     up: migration_20260429_083139_socials.up,
     down: migration_20260429_083139_socials.down,
-    name: '20260429_083139_socials'
+    name: '20260429_083139_socials',
+  },
+  {
+    up: migration_20260429_090127_pickup_section.up,
+    down: migration_20260429_090127_pickup_section.down,
+    name: '20260429_090127_pickup_section'
   },
 ];

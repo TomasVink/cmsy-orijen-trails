@@ -1,4 +1,4 @@
-import { getPageBySlug, getEvents } from '$lib/payload.server'
+import { getPageBySlug, getEvents, getTrailsWithStores } from '$lib/payload.server'
 import { error } from '@sveltejs/kit'
 import type { Locale } from '$lib/payload'
 import { emptyTrailForm, trailSubmitAction } from '$lib/trail-submit.server'
@@ -22,9 +22,15 @@ export const load = async ({
   }
 
   const hasEventsBlock = page.layout?.some((b) => b.blockType === 'events') ?? false
-  const events = hasEventsBlock ? await getEvents(fetch, params.locale) : []
+  const hasPickupPointsBlock =
+    page.layout?.some((b) => (b.blockType as string) === 'pickup-points') ?? false
 
-  return { page, form, signUpForm, events }
+  const [events, trailsWithStores] = await Promise.all([
+    hasEventsBlock ? getEvents(fetch, params.locale) : Promise.resolve([]),
+    hasPickupPointsBlock ? getTrailsWithStores(fetch, params.locale) : Promise.resolve([])
+  ])
+
+  return { page, form, signUpForm, events, trailsWithStores }
 }
 
 export const actions = { ...trailSubmitAction, ...eventSignUpAction }

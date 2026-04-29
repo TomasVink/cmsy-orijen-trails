@@ -4,8 +4,8 @@
   import { env } from '$env/dynamic/public'
   import Icon from './Icon.svelte'
 
-  type Props = { store: Store }
-  let { store }: Props = $props()
+  type Props = { store: Store; showCTA?: boolean }
+  let { store, showCTA = true }: Props = $props()
 
   const logo = $derived(typeof store.logo === 'object' ? (store.logo as Media) : null)
   const logoSrc = $derived(mediaUrl(logo, env.PUBLIC_PAYLOAD_URL))
@@ -33,5 +33,7 @@
 
     <Icon name="arrow-right" class="size-5 shrink-0 ml-auto text-orijen-red" />
   </div>
-  <p class="font-bold mt-2">{store.storeMessage}</p>
+  {#if showCTA}
+    <p class="font-bold mt-2">{store.storeMessage}</p>
+  {/if}
 </a>

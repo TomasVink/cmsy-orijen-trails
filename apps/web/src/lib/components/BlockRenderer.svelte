@@ -16,6 +16,7 @@
   import CTASection from './sections/CTASection.svelte'
   import FAQSection from './sections/FAQSection.svelte'
   import TextSection from './sections/TextSection.svelte'
+  import PickupPointsSection from './sections/PickupPointsSection.svelte'
 
   type Props = {
     blocks: Page['layout']
@@ -23,9 +24,10 @@
     signUpForm?: SuperValidated<Infer<EventsSignUpSchema>>
     patchRequestForm?: SuperValidated<Infer<PatchRequestSchema>>
     events?: Event[]
+    trailsWithStores?: Trail[]
   }
 
-  let { blocks, form, signUpForm, patchRequestForm, events = [] }: Props = $props()
+  let { blocks, form, signUpForm, patchRequestForm, events = [], trailsWithStores = [] }: Props = $props()
 </script>
 
 {#if blocks?.length}
@@ -58,6 +60,8 @@
       <FAQSection {block} />
     {:else if block.blockType === 'text'}
       <TextSection {block} />
+    {:else if block.blockType === 'pickup-points'}
+      <PickupPointsSection {block} trails={trailsWithStores} />
     {/if}
   {/each}
 {/if}
