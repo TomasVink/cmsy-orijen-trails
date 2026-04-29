@@ -1,21 +1,17 @@
 <script lang="ts">
-  import type { HeroBlock, Media } from "$lib/payload";
-  import { mediaUrl } from "$lib/payload";
-  import Button from "$lib/components/ui/Button.svelte";
-  import { env } from "$env/dynamic/public";
+  import type { HeroBlock, Media } from '$lib/payload'
+  import { mediaUrl } from '$lib/payload'
+  import Button from '$lib/components/ui/Button.svelte'
+  import { env } from '$env/dynamic/public'
 
-  type Props = { block: HeroBlock };
-  let { block }: Props = $props();
+  type Props = { block: HeroBlock }
+  let { block }: Props = $props()
 
-  const video = $derived(
-    typeof block.video === "object" ? (block.video as Media) : null,
-  );
-  const videoSrc = $derived(mediaUrl(video, env.PUBLIC_PAYLOAD_URL));
+  const video = $derived(typeof block.video === 'object' ? (block.video as Media) : null)
+  const videoSrc = $derived(mediaUrl(video, env.PUBLIC_PAYLOAD_URL))
 </script>
 
-<div
-  class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
->
+<div class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
   <!-- Background video -->
   {#if videoSrc}
     <video
@@ -29,9 +25,7 @@
   {/if}
 
   <!-- Overlay gradient -->
-  <div
-    class="absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/60"
-  ></div>
+  <div class="absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/60"></div>
 
   <!-- Content -->
   <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white">
@@ -42,9 +36,7 @@
     </h1>
 
     {#if block.subheadline}
-      <p
-        class="font-display text-5xl text-orijen-gold max-w-xl mx-auto mb-10 uppercase tracking-widest"
-      >
+      <p class="font-display text-5xl max-w-xl mx-auto mb-10 uppercase tracking-widest">
         {block.subheadline}
       </p>
     {/if}
@@ -55,7 +47,7 @@
           {#if cta.ctaUrl && cta.ctaLabel}
             <Button
               href={cta.ctaUrl}
-              variant={cta.outline ? "outline" : "primary"}
+              variant={cta.outline ? 'outline' : 'primary'}
               icon={cta.icon ?? undefined}
             >
               {cta.ctaLabel}
@@ -68,18 +60,8 @@
 
   <!-- Scroll indicator -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-    <svg
-      class="w-12 h-12 text-white/90"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M19 9l-7 7-7-7"
-      />
+    <svg class="w-12 h-12 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
   </div>
 </div>

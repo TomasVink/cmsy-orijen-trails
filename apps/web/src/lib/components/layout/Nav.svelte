@@ -69,13 +69,13 @@
         <img src="/logo.svg" alt="Orijen" class="invert w-full h-full object-contain" />
       </a>
 
-      <div class="h-15 flex items-center gap-6 px-8">
+      <div class="h-15 flex items-center gap-4 px-6">
         {#each items as item}
           <a
             href={resolveHref(item.url)}
             target={item.openInNewTab ? '_blank' : undefined}
             rel={item.openInNewTab ? 'noopener noreferrer' : undefined}
-            class="text-white uppercase font-bold text-2xl font-display hover:text-white/70 transition-colors whitespace-nowrap"
+            class="text-white tracking-widest uppercase font-bold text-2xl font-display hover:text-white/70 transition-colors whitespace-nowrap"
           >
             {item.label}
           </a>
