@@ -31,6 +31,9 @@
 </script>
 
 {#if blocks?.length}
+  {#if blocks[0]?.blockType !== 'hero'}
+    <div class="pt-24 md:pt-32"></div>
+  {/if}
   {#each blocks as block (block.id ?? block.blockType)}
     {#if block.blockType === 'hero'}
       <HeroSection {block} />
