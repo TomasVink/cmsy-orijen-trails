@@ -10,7 +10,6 @@
   let { block, posts }: Props = $props()
 
   const locale = $derived(page.params.locale ?? 'nl')
-  const uiLabels = $derived(page.data.uiLabels as UiLabelsData | null)
 </script>
 
 <Section

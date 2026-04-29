@@ -20,6 +20,7 @@ export type InfluencerCarouselBlock = Extract<LayoutBlock, { blockType: 'influen
 export type EventsBlock = Extract<LayoutBlock, { blockType: 'events' }>
 export type CTABlock = Extract<LayoutBlock, { blockType: 'cta-block' }>
 export type FAQBlock = Extract<LayoutBlock, { blockType: 'faq' }>
+export type TextBlock = Extract<LayoutBlock, { blockType: 'text' }>
 
 // ── Pagination wrapper ────────────────────────────────────────────
 export type PaginatedDocs<T> = {

@@ -15,6 +15,7 @@
   import EventsSection from './sections/EventsSection.svelte'
   import CTASection from './sections/CTASection.svelte'
   import FAQSection from './sections/FAQSection.svelte'
+  import TextSection from './sections/TextSection.svelte'
 
   type Props = {
     blocks: Page['layout']
@@ -55,6 +56,8 @@
       <CTASection {block} />
     {:else if block.blockType === 'faq'}
       <FAQSection {block} />
+    {:else if block.blockType === 'text'}
+      <TextSection {block} />
     {/if}
   {/each}
 {/if}
