@@ -1603,6 +1603,13 @@ export interface NavItem {
         id?: string | null;
       }[]
     | null;
+  socials?:
+    | {
+        platform: 'instagram' | 'facebook' | 'youtube' | 'tiktok';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1734,6 +1741,13 @@ export interface NavItemsSelect<T extends boolean = true> {
         label?: T;
         url?: T;
         openInNewTab?: T;
+        id?: T;
+      };
+  socials?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
         id?: T;
       };
   updatedAt?: T;

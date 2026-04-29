@@ -29,7 +29,7 @@ const fields: Field[] = [
 
 export const NavItems: GlobalConfig = {
   slug: 'nav-items',
-  label: 'Nav Items',
+  label: 'Nav and footer',
   hooks: {
     afterChange: [() => purgeAllCache()]
   },
@@ -56,6 +56,43 @@ export const NavItems: GlobalConfig = {
       type: 'array',
       label: 'Navigation Items',
       fields
+    },
+    {
+      name: 'socials',
+      type: 'array',
+      fields: [
+        {
+          name: 'platform',
+          type: 'select',
+          options: [
+            {
+              label: 'Instagram',
+              value: 'instagram'
+            },
+            {
+              label: 'Facebook',
+              value: 'facebook'
+            },
+            {
+              label: 'Youtube',
+              value: 'youtube'
+            },
+            {
+              label: 'TikTok',
+              value: 'tiktok'
+            }
+          ],
+          required: true
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+          admin: {
+            placeholder: 'https://...'
+          }
+        }
+      ]
     }
   ]
 }

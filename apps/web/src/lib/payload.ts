@@ -295,6 +295,11 @@ export type NavItemsData = {
     openInNewTab?: boolean | null
     id?: string | null
   }> | null
+  socials?: Array<{
+    platform: 'instagram' | 'facebook' | 'youtube' | 'tiktok'
+    url: string
+    id?: string | null
+  }> | null
 }
 
 export async function getNavItems(
@@ -316,6 +321,7 @@ export async function getSignUpLabels(
   if (!response.ok) return null
   return (await response.json()) as SignUpLabelsData
 }
+
 
 // ── Events ────────────────────────────────────────────────────────
 export async function getEvents(
