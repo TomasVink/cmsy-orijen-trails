@@ -21,6 +21,7 @@ import * as migration_20260428_130449_nav_bar from './20260428_130449_nav_bar';
 import * as migration_20260428_144723_patches_update from './20260428_144723_patches_update';
 import * as migration_20260429_083139_socials from './20260429_083139_socials';
 import * as migration_20260429_090127_pickup_section from './20260429_090127_pickup_section';
+import * as migration_20260429_103903_campaign_steps_versions from './20260429_103903_campaign_steps_versions';
 
 export const migrations = [
   {
@@ -136,6 +137,11 @@ export const migrations = [
   {
     up: migration_20260429_090127_pickup_section.up,
     down: migration_20260429_090127_pickup_section.down,
-    name: '20260429_090127_pickup_section'
+    name: '20260429_090127_pickup_section',
+  },
+  {
+    up: migration_20260429_103903_campaign_steps_versions.up,
+    down: migration_20260429_103903_campaign_steps_versions.down,
+    name: '20260429_103903_campaign_steps_versions'
   },
 ];

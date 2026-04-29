@@ -7,10 +7,25 @@ export const CampaignSteps: Block = {
   slug: 'campaign-steps',
   labels: {
     singular: 'Campaign Steps',
-    plural: 'Campaign Steps',
+    plural: 'Campaign Steps'
   },
   fields: [
     ...SectionBase,
+    {
+      name: 'version',
+      type: 'select',
+      defaultValue: 'map',
+      options: [
+        {
+          value: 'map',
+          label: 'map'
+        },
+        {
+          value: 'rectangles',
+          label: 'rectangles'
+        }
+      ]
+    },
     {
       name: 'steps',
       type: 'array',
@@ -20,20 +35,25 @@ export const CampaignSteps: Block = {
         {
           name: 'icon',
           type: 'select',
-          options: [...ICON_OPTIONS],
+          options: [...ICON_OPTIONS]
         },
         {
           name: 'title',
           type: 'text',
           required: true,
-          localized: true,
+          localized: true
         },
         {
           name: 'description',
           type: 'textarea',
-          localized: true,
+          localized: true
         },
-      ],
-    },
-  ],
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media'
+        }
+      ]
+    }
+  ]
 }

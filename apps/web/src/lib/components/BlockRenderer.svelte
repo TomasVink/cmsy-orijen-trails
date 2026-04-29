@@ -7,6 +7,7 @@
 
   import HeroSection from './sections/HeroSection.svelte'
   import CampaignStepsSection from './sections/CampaignStepsSection.svelte'
+  import CampaignStepsRectanglesSection from './sections/CampaignStepsRectanglesSection.svelte'
   import TopTrailsSection from './sections/TopTrailsSection.svelte'
   import TrailsOverviewSection from './sections/TrailsOverviewSection.svelte'
   import UserFormSection from './sections/UserFormSection.svelte'
@@ -38,7 +39,11 @@
     {#if block.blockType === 'hero'}
       <HeroSection {block} />
     {:else if block.blockType === 'campaign-steps'}
-      <CampaignStepsSection {block} />
+      {#if block.version === 'rectangles'}
+        <CampaignStepsRectanglesSection {block} />
+      {:else}
+        <CampaignStepsSection {block} />
+      {/if}
     {:else if block.blockType === 'top-trails'}
       <TopTrailsSection
         {block}

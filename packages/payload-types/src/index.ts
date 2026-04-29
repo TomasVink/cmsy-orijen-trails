@@ -230,6 +230,7 @@ export interface Page {
              */
             backgroundImage?: (number | null) | Media
             backgroundColor?: ('black' | 'white' | 'texture') | null
+            version?: ('map' | 'rectangles') | null
             steps?:
               | {
                   icon?:
@@ -248,6 +249,7 @@ export interface Page {
                     | null
                   title: string
                   description?: string | null
+                  image?: (number | null) | Media
                   id?: string | null
                 }[]
               | null
@@ -983,12 +985,14 @@ export interface PagesSelect<T extends boolean = true> {
               intro?: T
               backgroundImage?: T
               backgroundColor?: T
+              version?: T
               steps?:
                 | T
                 | {
                     icon?: T
                     title?: T
                     description?: T
+                    image?: T
                     id?: T
                   }
               id?: T
