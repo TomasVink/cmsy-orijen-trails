@@ -3,8 +3,8 @@
   import { page } from '$app/state'
   import TrailCard from '$lib/components/ui/TrailCard.svelte'
   import Pagination from '$lib/components/ui/Pagination.svelte'
-  import PageHeader from '$lib/components/ui/PageHeader.svelte'
   import TrailsFilter from '$lib/components/ui/TrailsFilter.svelte'
+  import Section from '$lib/components/ui/Section.svelte'
 
   let { data }: { data: PageData } = $props()
 
@@ -18,17 +18,15 @@
   }
 </script>
 
-<PageHeader title={uiLabels.trailsTitle} />
+<div class="pt-24 md:pt-32"></div>
 
-<section class="py-8 px-4">
-  <div class="max-w-6xl mx-auto">
-    <TrailsFilter trailLabels={data.trailLabels} />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-      {#each data.trails as trail (trail.id)}
-        <TrailCard {trail} />
-      {/each}
-    </div>
-
-    <Pagination currentPage={data.page} totalPages={data.totalPages} {buildUrl} />
+<Section title={uiLabels.trailsTitle}>
+  <TrailsFilter trailLabels={data.trailLabels} />
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+    {#each data.trails as trail (trail.id)}
+      <TrailCard {trail} />
+    {/each}
   </div>
-</section>
+
+  <Pagination currentPage={data.page} totalPages={data.totalPages} {buildUrl} />
+</Section>

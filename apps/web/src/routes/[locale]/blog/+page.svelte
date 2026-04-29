@@ -2,8 +2,8 @@
   import type { PageData } from './$types'
   import { page } from '$app/state'
   import Pagination from '$lib/components/ui/Pagination.svelte'
-  import PageHeader from '$lib/components/ui/PageHeader.svelte'
   import PostCard from '$lib/components/ui/PostCard.svelte'
+  import Section from '$lib/components/ui/Section.svelte'
 
   let { data }: { data: PageData } = $props()
 
@@ -15,14 +15,12 @@
   }
 </script>
 
-<PageHeader title={uiLabels.blogTitle} />
+<div class="pt-24 md:pt-32"></div>
 
-<section class="py-8 px-4">
-  <div class="max-w-6xl mx-auto">
-    {#each data.posts as post (post.id)}
-      <PostCard {post} />
-    {/each}
+<Section title={uiLabels.blogTitle}>
+  {#each data.posts as post (post.id)}
+    <PostCard {post} />
+  {/each}
 
-    <Pagination currentPage={data.page} totalPages={data.totalPages} {buildUrl} />
-  </div>
-</section>
+  <Pagination currentPage={data.page} totalPages={data.totalPages} {buildUrl} />
+</Section>
