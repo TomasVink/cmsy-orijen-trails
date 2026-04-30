@@ -11,7 +11,6 @@
     $page.url.pathname === `/${locale}` || $page.url.pathname === `/${locale}/`
   )
 
-  const backHref = $derived(`/${locale}`)
   const uiLabels = $derived($page.data.uiLabels as UiLabelsData | null)
   const navItems = $derived($page.data.navItems as NavItemsData | null)
 
@@ -47,16 +46,16 @@
 
 <nav class="fixed top-0 left-0 right-0 z-50 pointer-events-none">
   <!-- Desktop: bar is h-15 (half the logo), logo overflows below -->
-  <div class="hidden xl:flex items-start h-15 overflow-visible bg-orijen-black pointer-events-auto">
+  <div class="hidden xl:flex items-start h-20 overflow-visible bg-orijen-black pointer-events-auto">
     <!-- Back button — left, outside container -->
     <div class="h-full flex items-center px-4 {isRoot ? 'invisible' : ''}">
-      <a
-        href={backHref}
-        class="flex items-center gap-1 text-white uppercase tracking-widest text-sm font-bold whitespace-nowrap"
+      <button
+        onclick={() => history.back()}
+        class="flex items-center gap-1 text-white uppercase tracking-widest cursor-pointer text-sm font-bold whitespace-nowrap"
       >
         <Icon name="arrow-left" class="size-6" />
         <span>{uiLabels?.back ?? 'Back'}</span>
-      </a>
+      </button>
     </div>
 
     <!-- Container: logo | links | highlighted -->
@@ -69,13 +68,13 @@
         <img src="/logo.svg" alt="Orijen" class="invert w-full h-full object-contain" />
       </a>
 
-      <div class="h-15 flex items-center gap-4 px-6">
+      <div class="h-20 flex items-center gap-6 px-6">
         {#each items as item}
           <a
             href={resolveHref(item.url)}
             target={item.openInNewTab ? '_blank' : undefined}
             rel={item.openInNewTab ? 'noopener noreferrer' : undefined}
-            class="text-white tracking-widest uppercase font-bold text-2xl font-display hover:text-white/70 transition-colors whitespace-nowrap"
+            class="text-white uppercase font-bold text-2xl font-display hover:text-white/70 transition-colors whitespace-nowrap"
           >
             {item.label}
           </a>
@@ -83,7 +82,7 @@
       </div>
 
       {#if highlightedLink}
-        <div class="ml-auto h-15 flex items-stretch">
+        <div class="ml-auto h-20 flex items-stretch">
           <a
             href={resolveHref(highlightedLink.url)}
             target={highlightedLink.openInNewTab ? '_blank' : undefined}
@@ -135,13 +134,13 @@
           ? 'invisible'
           : ''}"
       >
-        <a
-          href={backHref}
+        <button
+          onclick={() => history.back()}
           class="flex items-center gap-1 text-white uppercase tracking-widest text-sm font-bold"
         >
           <Icon name="arrow-left" class="size-6" />
           <span>{uiLabels?.back ?? 'Back'}</span>
-        </a>
+        </button>
       </div>
 
       <!-- Hamburger — absolute right -->
