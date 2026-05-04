@@ -11,7 +11,9 @@
   type Props = {
     trails: Trail[]
     selectedTrailId: number | null
+    hoveredTrailId: number | null
     onSelectTrail: (trail: Trail) => void
+    onHoverTrail?: (trail: Trail | null) => void
     onDeselect?: () => void
   }
 
@@ -36,7 +38,7 @@
   // adjust or set to '' to disable.
   const MAP_FILTER = 'brightness(0.8) contrast(1.5) hue-rotate(-15deg)'
 
-  let { trails, selectedTrailId, onSelectTrail, onDeselect }: Props = $props()
+  let { trails, selectedTrailId, hoveredTrailId, onSelectTrail, onHoverTrail, onDeselect }: Props = $props()
 
   let container: HTMLDivElement
   let map: any = null
@@ -62,7 +64,7 @@
     map.getViewModel().setLookAtData({ bounds: padded }, true)
   }
 
-  function refreshMarkers(trailList: Trail[], selectedId: number | null) {
+  function refreshMarkers(trailList: Trail[], selectedId: number | null, hoveredId: number | null) {
     if (!map || !markersGroup) return
 
     for (const instance of mountedMarkers) unmount(instance)
@@ -73,9 +75,10 @@
 
     for (const trail of valid) {
       const selected = trail.id === selectedId
+      const hovered = trail.id === hoveredId
 
       const el = document.createElement('div')
-      const instance = mount(TrailMarker, { target: el, props: { selected, trail } })
+      const instance = mount(TrailMarker, { target: el, props: { selected, hovered, trail } })
       mountedMarkers.push(instance)
 
       const domIcon = new H.map.DomIcon(el, {
@@ -137,11 +140,21 @@
       }
     })
 
+    markersGroup.addEventListener('pointerenter', (e: any) => {
+      if (e.target && typeof e.target.getData === 'function') {
+        onHoverTrail?.(e.target.getData() as Trail)
+      }
+    })
+
+    markersGroup.addEventListener('pointerleave', () => {
+      onHoverTrail?.(null)
+    })
+
     map.addEventListener('tap', () => {
       onDeselect?.()
     })
 
-    refreshMarkers(trails, selectedTrailId)
+    refreshMarkers(trails, selectedTrailId, hoveredTrailId)
     fitBounds(trails)
 
     return () => {
@@ -158,7 +171,8 @@
     if (map) {
       refreshMarkers(
         t,
-        untrack(() => selectedTrailId)
+        untrack(() => selectedTrailId),
+        untrack(() => hoveredTrailId)
       )
       fitBounds(t)
     }
@@ -170,7 +184,19 @@
     if (map)
       refreshMarkers(
         untrack(() => trails),
-        s
+        s,
+        untrack(() => hoveredTrailId)
+      )
+  })
+
+  // Hover changed — rebuild markers only, no refit.
+  $effect(() => {
+    const h = hoveredTrailId
+    if (map)
+      refreshMarkers(
+        untrack(() => trails),
+        untrack(() => selectedTrailId),
+        h
       )
   })
 </script>

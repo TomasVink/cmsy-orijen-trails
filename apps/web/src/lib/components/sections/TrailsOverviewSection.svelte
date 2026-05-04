@@ -38,6 +38,7 @@
 
   // ── Selection ─────────────────────────────────────────────────────
   let selectedTrail = $state<Trail | null>(null)
+  let hoveredTrailId = $state<number | null>(null)
 </script>
 
 <Section
@@ -54,6 +55,7 @@
     <HereMap
       {trails}
       selectedTrailId={selectedTrail?.id ?? null}
+      {hoveredTrailId}
       onSelectTrail={(t) => (selectedTrail = t)}
       onDeselect={() => (selectedTrail = null)}
     />

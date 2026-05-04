@@ -9,10 +9,11 @@
 
   type Props = {
     trail: Trail
+    highlighted?: boolean
     onClose?: () => void
   }
 
-  let { trail, onClose }: Props = $props()
+  let { trail, highlighted = false, onClose }: Props = $props()
 
   const image = $derived(typeof trail.header === 'object' ? (trail.header as Media) : null)
   const imageSrc = $derived(mediaUrl(image, env.PUBLIC_PAYLOAD_URL))
@@ -20,7 +21,10 @@
 </script>
 
 <div
-  class="flex flex-col h-full bg-orijen-gray/20 border border-orijen-gray/30 px-4 pt-2 pb-4 hover:border-orijen-red hover:bg-orijen-gray/30"
+  class="flex flex-col h-full border border-orijen-gray/30 px-4 pt-2 pb-4 hover:border-orijen-red transition-colors duration-300 {highlighted
+    ? 'bg-orijen-gray/50 hover:bg-orijen-gray/60'
+    : 'bg-orijen-gray/20 hover:bg-orijen-gray/30'}"
+  class:border-orijen-red={highlighted}
 >
   {#if onClose}
     <button

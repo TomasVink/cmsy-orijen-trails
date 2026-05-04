@@ -138,7 +138,7 @@
   let open = $state(false)
 </script>
 
-<div class="border border-orijen-red bg-orijen-gray/20 px-4 py-2">
+<div class="border border-orijen-red bg-[#222] px-4 py-2">
   <!-- Toggle bar -->
   <button
     onclick={() => (open = !open)}
