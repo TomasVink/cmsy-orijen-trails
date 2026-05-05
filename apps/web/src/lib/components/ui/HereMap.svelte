@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { onMount, mount, unmount, untrack } from 'svelte'
+  import { onMount, untrack } from 'svelte'
   import type { Trail, UiLabelsData } from '$lib/payload'
   import { env } from '$env/dynamic/public'
   import { page } from '$app/state'
-  import TrailMarker from './TrailMarker.svelte'
 
   /* HERE Maps JS is loaded synchronously via CDN in app.html */
   declare const H: any
@@ -21,7 +20,7 @@
   const DEFAULT_CENTER = { lat: 52.37, lng: 4.89 }
   const DEFAULT_ZOOM = 10
   const BOUNDS_PADDING = 0.2 // degrees added around the outermost markers when fitting
-  const MARKER_SIZE = 32 // px — must match size-8 in TrailMarker.svelte
+  const MARKER_SIZE = 32 // px
 
   // Map tile style.
   // layers.vector.normal.map  — vector (sharp, day palette)     ← current
@@ -43,7 +42,6 @@
   let container: HTMLDivElement
   let map: any = null
   let markersGroup: any = null
-  let mountedMarkers: ReturnType<typeof mount>[] = []
   let showScrollHint = $state(false)
   let scrollHintTimer: ReturnType<typeof setTimeout> | null = null
   let isMac = $state(false)
@@ -64,11 +62,20 @@
     map.getViewModel().setLookAtData({ bounds: padded }, true)
   }
 
+  function markerSvg(trail: Trail, selected: boolean, hovered: boolean): string {
+    const fill = hovered ? '#f5f5f0' : trail.community ? '#f5a700' : '#dc2726'
+    const stroke = selected && !hovered ? '#a3a7aa' : '#ffffff'
+    const r = MARKER_SIZE / 2 - 1.5 // keep stroke within bounds
+    return (
+      `<svg xmlns="http://www.w3.org/2000/svg" width="${MARKER_SIZE}" height="${MARKER_SIZE}">` +
+      `<circle cx="${MARKER_SIZE / 2}" cy="${MARKER_SIZE / 2}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="3"/>` +
+      `</svg>`
+    )
+  }
+
   function refreshMarkers(trailList: Trail[], selectedId: number | null, hoveredId: number | null) {
     if (!map || !markersGroup) return
 
-    for (const instance of mountedMarkers) unmount(instance)
-    mountedMarkers = []
     markersGroup.removeAll()
 
     const valid = trailList.filter((t) => t.coordinates?.lat != null && t.coordinates?.lng != null)
@@ -77,16 +84,12 @@
       const selected = trail.id === selectedId
       const hovered = trail.id === hoveredId
 
-      const el = document.createElement('div')
-      const instance = mount(TrailMarker, { target: el, props: { selected, hovered, trail } })
-      mountedMarkers.push(instance)
-
-      const domIcon = new H.map.DomIcon(el, {
+      const icon = new H.map.Icon(markerSvg(trail, selected, hovered), {
         anchor: { x: MARKER_SIZE / 2, y: MARKER_SIZE / 2 }
       })
-      const marker = new H.map.DomMarker(
+      const marker = new H.map.Marker(
         { lat: trail.coordinates!.lat!, lng: trail.coordinates!.lng! },
-        { icon: domIcon, data: trail, zIndex: selected ? 1 : 0 }
+        { icon, data: trail, zIndex: selected ? 1 : 0 }
       )
       markersGroup.addObject(marker)
     }
@@ -158,7 +161,6 @@
     fitBounds(trails)
 
     return () => {
-      for (const instance of mountedMarkers) unmount(instance)
       container.removeEventListener('wheel', onWheel, true)
       window.removeEventListener('resize', onResize)
       map.dispose()
