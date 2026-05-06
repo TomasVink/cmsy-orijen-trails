@@ -15,8 +15,7 @@ export const load = async ({
   setHeaders: (h: Record<string, string>) => void
 }) => {
   setHeaders({
-    'Cache-Control': 'no-cache',
-    'CDN-Cache-Control': 'public, s-maxage=30, stale-while-revalidate=300',
+    'Cache-Control': 'public, max-age=0, must-revalidate, s-maxage=30, stale-while-revalidate=300',
   })
   const page = Math.max(1, Number(url.searchParams.get('page') ?? 1))
 

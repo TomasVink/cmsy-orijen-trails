@@ -15,8 +15,7 @@ export const load = async ({
   setHeaders: (h: Record<string, string>) => void
 }) => {
   setHeaders({
-    'Cache-Control': 'no-cache',
-    'CDN-Cache-Control': 'public, s-maxage=120, stale-while-revalidate=1800',
+    'Cache-Control': 'public, max-age=0, must-revalidate, s-maxage=120, stale-while-revalidate=1800',
   })
   const page = Math.max(1, Number(url.searchParams.get('page') ?? 1))
   const result = await getPosts(page, LIMIT, fetch, params.locale)

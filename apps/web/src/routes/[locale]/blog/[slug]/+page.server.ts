@@ -12,8 +12,7 @@ export const load = async ({
   setHeaders: (h: Record<string, string>) => void
 }) => {
   setHeaders({
-    'Cache-Control': 'no-cache',
-    'CDN-Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
+    'Cache-Control': 'public, max-age=0, must-revalidate, s-maxage=300, stale-while-revalidate=3600',
   })
   const post = await getPostBySlug(params.slug, fetch, params.locale)
 
