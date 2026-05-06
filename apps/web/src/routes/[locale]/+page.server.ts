@@ -6,7 +6,7 @@ import { emptyPatchRequestForm, patchRequestSubmitAction } from '$lib/patch-requ
 
 export const load = async ({ fetch, params, setHeaders }: { fetch: typeof globalThis.fetch; params: { locale: Locale }; setHeaders: (h: Record<string, string>) => void }) => {
   setHeaders({
-    'Cache-Control': 'no-store',
+    'Cache-Control': 'no-cache',
     'CDN-Cache-Control': 'public, s-maxage=30, stale-while-revalidate=120',
   })
   const [page, form, signUpForm, patchRequestForm] = await Promise.all([

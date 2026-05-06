@@ -12,7 +12,7 @@ export const load = async ({
   setHeaders: (h: Record<string, string>) => void
 }) => {
   setHeaders({
-    'Cache-Control': 'no-store',
+    'Cache-Control': 'no-cache',
     'CDN-Cache-Control': 'public, s-maxage=60, stale-while-revalidate=600',
   })
   const [trail, trailLabels] = await Promise.all([
