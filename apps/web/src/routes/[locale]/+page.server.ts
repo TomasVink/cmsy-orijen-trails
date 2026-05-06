@@ -4,7 +4,11 @@ import { emptyTrailForm, trailSubmitAction } from '$lib/trail-submit.server'
 import { emptySignUpForm, eventSignUpAction } from '$lib/events-signup.server'
 import { emptyPatchRequestForm, patchRequestSubmitAction } from '$lib/patch-request-submit.server'
 
-export const load = async ({ fetch, params }: { fetch: typeof globalThis.fetch; params: { locale: Locale } }) => {
+export const load = async ({ fetch, params, setHeaders }: { fetch: typeof globalThis.fetch; params: { locale: Locale }; setHeaders: (h: Record<string, string>) => void }) => {
+  setHeaders({
+    'Cache-Control': 'no-store',
+    'CDN-Cache-Control': 'public, s-maxage=30, stale-while-revalidate=120',
+  })
   const [page, form, signUpForm, patchRequestForm] = await Promise.all([
     getPageBySlug('home', fetch, params.locale),
     emptyTrailForm(),

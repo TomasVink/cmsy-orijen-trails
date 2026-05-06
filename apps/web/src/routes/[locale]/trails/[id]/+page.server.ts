@@ -4,11 +4,17 @@ import type { Locale } from '$lib/payload'
 
 export const load = async ({
   params,
-  fetch
+  fetch,
+  setHeaders,
 }: {
   params: { locale: Locale; id: string }
   fetch: typeof globalThis.fetch
+  setHeaders: (h: Record<string, string>) => void
 }) => {
+  setHeaders({
+    'Cache-Control': 'no-store',
+    'CDN-Cache-Control': 'public, s-maxage=60, stale-while-revalidate=600',
+  })
   const [trail, trailLabels] = await Promise.all([
     getTrailById(params.id, fetch, params.locale),
     getTrailLabels(fetch, params.locale)

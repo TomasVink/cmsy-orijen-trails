@@ -6,11 +6,17 @@ import { emptySignUpForm, eventSignUpAction } from '$lib/events-signup.server'
 
 export const load = async ({
   params,
-  fetch
+  fetch,
+  setHeaders,
 }: {
   params: { locale: Locale; slug: string }
   fetch: typeof globalThis.fetch
+  setHeaders: (h: Record<string, string>) => void
 }) => {
+  setHeaders({
+    'Cache-Control': 'no-store',
+    'CDN-Cache-Control': 'public, s-maxage=120, stale-while-revalidate=3600',
+  })
   const [page, form, signUpForm] = await Promise.all([
     getPageBySlug(params.slug, fetch, params.locale),
     emptyTrailForm(),

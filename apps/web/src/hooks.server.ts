@@ -1,4 +1,3 @@
-import { redirect } from '@sveltejs/kit'
 import type { Handle } from '@sveltejs/kit'
 import { LOCALES, getPreferredLocale } from '$lib/locales'
 
@@ -8,8 +7,20 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   if (!LOCALES.includes(firstSegment)) {
     const locale = getPreferredLocale(event.request.headers.get('accept-language'))
-    redirect(307, `/${locale}${pathname}`)
+    return new Response(null, {
+      status: 307,
+      headers: {
+        Location: `/${locale}${pathname}`,
+        'Cache-Control': 'no-store',
+      },
+    })
   }
 
-  return resolve(event)
+  const response = await resolve(event)
+
+  if (response.status >= 400) {
+    response.headers.set('Cache-Control', 'no-store')
+  }
+
+  return response
 }

@@ -7,11 +7,17 @@ export const load = async ({
   params,
   url,
   fetch,
+  setHeaders,
 }: {
   params: { locale: Locale }
   url: URL
   fetch: typeof globalThis.fetch
+  setHeaders: (h: Record<string, string>) => void
 }) => {
+  setHeaders({
+    'Cache-Control': 'no-store',
+    'CDN-Cache-Control': 'public, s-maxage=30, stale-while-revalidate=300',
+  })
   const page = Math.max(1, Number(url.searchParams.get('page') ?? 1))
 
   const filters: TrailFilters = {}
