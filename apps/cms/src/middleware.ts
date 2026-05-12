@@ -25,11 +25,9 @@ export function middleware(request: NextRequest) {
     if (!token) {
       const oauthStartUrl = new URL(
         '/api/users/oauth/logto',
-        process.env.NEXT_PUBLIC_SERVER_URL,
+        process.env.NEXT_PUBLIC_SERVER_URL
       ).toString()
       const cmsyUrl = process.env.NEXT_PUBLIC_CMS_PLATFORM_URL
-
-      console.log(cmsyUrl, oauthStartUrl, encodeURIComponent(oauthStartUrl))
 
       const redirectTarget = `${cmsyUrl}/auth/sign-in?return_to=${encodeURIComponent(oauthStartUrl)}`
 
@@ -40,7 +38,7 @@ export function middleware(request: NextRequest) {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        maxAge: 600,
+        maxAge: 600
       })
 
       return response
@@ -51,5 +49,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*']
 }

@@ -17,8 +17,6 @@
   let cardHoveredId = $state<number | null>(null)
   let mapHoveredId = $state<number | null>(null)
 
-  $effect(() => console.log(mapHoveredId))
-
   function buildUrl(p: number) {
     const params = new URLSearchParams(page.url.searchParams)
     params.set('page', String(p))
