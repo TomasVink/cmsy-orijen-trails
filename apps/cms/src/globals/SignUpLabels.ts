@@ -5,7 +5,7 @@ export const SignUpLabels: GlobalConfig = {
   slug: 'sign-up-labels',
   label: 'Sign Up Labels',
   hooks: {
-    afterChange: [() => purgeAllCache()]
+    afterChange: [async () => { await purgeAllCache() }]
   },
   access: { read: () => true },
   admin: {

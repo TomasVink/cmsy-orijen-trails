@@ -15,7 +15,12 @@ interface LogtoOrg {
   customData: OrgCustomData
 }
 
+let cachedToken: string | null = null
+let tokenExpiresAt = 0
+
 async function getManagementToken(): Promise<string> {
+  if (cachedToken && Date.now() < tokenExpiresAt) return cachedToken
+
   const res = await fetch(`${process.env.LOGTO_ENDPOINT}/oidc/token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -28,7 +33,10 @@ async function getManagementToken(): Promise<string> {
     }),
   })
   const data = await res.json()
-  return data.access_token as string
+  cachedToken = data.access_token as string
+  // Logto M2M tokens are valid for 1 hour; refresh 5 minutes early
+  tokenExpiresAt = Date.now() + (data.expires_in ?? 3600) * 1000 - 5 * 60 * 1000
+  return cachedToken
 }
 
 export async function GET() {

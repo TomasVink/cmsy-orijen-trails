@@ -53,4 +53,4 @@ COPY --from=builder /app/apps/cms/src/migrations-compiled ./apps/cms/src/migrati
 EXPOSE 3000
 ENV PORT=3000
 
-CMD ["sh", "-c", "HOSTNAME=0.0.0.0 bun apps/cms/server.js"]
+CMD ["sh", "-c", "HOSTNAME=0.0.0.0 bun --smol apps/cms/server.js"]

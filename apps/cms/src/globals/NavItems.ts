@@ -31,7 +31,7 @@ export const NavItems: GlobalConfig = {
   slug: 'nav-items',
   label: 'Nav and footer',
   hooks: {
-    afterChange: [() => purgeAllCache()]
+    afterChange: [async () => { await purgeAllCache() }]
   },
   access: { read: () => true },
   admin: {

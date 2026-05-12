@@ -5,7 +5,7 @@ export const TrailLabels: GlobalConfig = {
   slug: 'trail-labels',
   label: 'Trail Labels',
   hooks: {
-    afterChange: [() => purgeAllCache()]
+    afterChange: [async () => { await purgeAllCache() }]
   },
   access: { read: () => true },
   admin: {

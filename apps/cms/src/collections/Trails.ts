@@ -12,8 +12,8 @@ export const Trails: CollectionConfig = {
     create: () => true
   },
   hooks: {
-    afterChange: [({ doc }) => purgeTrailCache(String(doc.id))],
-    afterDelete: [({ doc }) => purgeTrailCache(String(doc.id))]
+    afterChange: [async ({ doc }) => { await purgeTrailCache(String(doc.id)) }],
+    afterDelete: [async ({ doc }) => { await purgeTrailCache(String(doc.id)) }]
   },
   admin: {
     group: 'Content',

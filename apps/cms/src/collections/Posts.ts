@@ -12,7 +12,7 @@ export const Posts: CollectionConfig = {
         await purgePostCache(full.slug as unknown as Record<string, string>)
       },
     ],
-    afterDelete: [() => purgeAllCache()],
+    afterDelete: [async () => { await purgeAllCache() }],
   },
   admin: {
     group: 'Content',

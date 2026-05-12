@@ -32,7 +32,7 @@ export const Pages: CollectionConfig = {
         await purgePageCache(full.slug as unknown as Record<string, string>)
       }
     ],
-    afterDelete: [() => purgeAllCache()]
+    afterDelete: [async () => { await purgeAllCache() }]
   },
   admin: {
     group: 'Content',
