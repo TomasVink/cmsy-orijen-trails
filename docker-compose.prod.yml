@@ -44,8 +44,8 @@ services:
     container_name: ${NEXT_PUBLIC_PROJECT_SLUG:-}-cms
     image: ghcr.io/tomasvink/cmsy-orijen-trails-cms:latest
     pull_policy: always
-    mem_limit: 4g
-    memswap_limit: 4g
+    mem_limit: 8g
+    memswap_limit: 8g
     environment:
       DATABASE_URI: ${DATABASE_URI}
       PAYLOAD_SECRET: ${PAYLOAD_SECRET}
