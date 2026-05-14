@@ -94,10 +94,21 @@ export default buildConfig({
         s3Storage({
           collections: {
             media: {
-              prefix: process.env.NEXT_PUBLIC_PROJECT_SLUG
+              prefix: process.env.NEXT_PUBLIC_PROJECT_SLUG,
+              // Return Bunny CDN URLs so browsers fetch directly from CDN edge
+              // instead of routing through the CMS container on every request.
+              // Bunny pulls from the CMS origin only on a cache miss.
+              generateFileURL: ({ filename, prefix }) => {
+                const qs = prefix ? `?prefix=${encodeURIComponent(prefix)}` : ''
+                return `https://${process.env.BUNNY_CDN_HOSTNAME}/media/${filename}${qs}`
+              }
             },
             'user-media': {
-              prefix: `${process.env.NEXT_PUBLIC_PROJECT_SLUG}/user`
+              prefix: `${process.env.NEXT_PUBLIC_PROJECT_SLUG}/user`,
+              generateFileURL: ({ filename, prefix }) => {
+                const qs = prefix ? `?prefix=${encodeURIComponent(prefix)}` : ''
+                return `https://${process.env.BUNNY_CDN_HOSTNAME}/media/${filename}${qs}`
+              }
             }
           },
           bucket: process.env.S3_BUCKET!,

@@ -34,6 +34,9 @@
 #
 # Optional (cms-platform top bar):
 #   NEXT_PUBLIC_CMS_PLATFORM_URL, NEXT_PUBLIC_PROJECT_SLUG
+#
+# Optional (CDN — required when S3 is enabled):
+#   BUNNY_CDN_HOSTNAME   e.g. orijen-trails.b-cdn.net
 
 services:
   cms:
@@ -61,6 +64,7 @@ services:
       S3_SECRET_KEY: ${S3_SECRET_KEY:-}
       S3_REGION: ${S3_REGION:-auto}
       S3_ENDPOINT: ${S3_ENDPOINT:-}
+      BUNNY_CDN_HOSTNAME: ${BUNNY_CDN_HOSTNAME:-}
     healthcheck:
       test: ['CMD-SHELL', 'wget -qO /dev/null http://localhost:3000/api/health || exit 1']
       interval: 10s
@@ -147,6 +151,8 @@ configs:
           location /media {
               set $$cms http://cms:3000;
               proxy_pass $$cms;
+              proxy_hide_header Cache-Control;
+              add_header Cache-Control "public, max-age=31536000, immutable" always;
           }
 
           location ^~ /_app/immutable/ {
