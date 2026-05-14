@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Event, Influencer, Media, SignUpLabelsData } from '$lib/payload'
   import { mediaUrl } from '$lib/payload'
-  import { env } from '$env/dynamic/public'
   import Button from '$lib/components/ui/Button.svelte'
 
   type Props = {
@@ -32,7 +31,7 @@
       : null
   )
   const cardImage = $derived(eventImage ?? trailImage)
-  const cardImageSrc = $derived(mediaUrl(cardImage, env.PUBLIC_PAYLOAD_URL))
+  const cardImageSrc = $derived(mediaUrl(cardImage, 'card'))
 
   function formatEventDate(dateStr: string) {
     return new Intl.DateTimeFormat(locale, {

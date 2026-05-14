@@ -2,7 +2,6 @@
   import { page } from '$app/state'
   import type { CTABlock, Media } from '$lib/payload'
   import { mediaUrl } from '$lib/payload'
-  import { env } from '$env/dynamic/public'
   import Button from '$lib/components/ui/Button.svelte'
   import Section from '../ui/Section.svelte'
 
@@ -10,7 +9,7 @@
   let { block }: Props = $props()
 
   const image = $derived(typeof block.image === 'object' ? (block.image as Media) : null)
-  const imageSrc = $derived(mediaUrl(image, env.PUBLIC_PAYLOAD_URL))
+  const imageSrc = $derived(mediaUrl(image, 'card'))
 
   const isExternal = $derived(block.url?.startsWith('http'))
   const locale = $derived(page.params.locale ?? 'nl')

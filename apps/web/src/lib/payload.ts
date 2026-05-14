@@ -38,19 +38,20 @@ export type PaginatedDocs<T> = {
 }
 
 // ── Media URL helper ──────────────────────────────────────────────
-// Uses PUBLIC_MEDIA_URL (CDN) as the base for relative media paths when set,
-// falling back to PUBLIC_PAYLOAD_URL. Absolute URLs (already CDN/S3) pass through.
 export function mediaUrl(
   media: Media | number | null | undefined,
-  baseUrl = env.PUBLIC_MEDIA_URL || env.PUBLIC_PAYLOAD_URL
+  size?: 'thumbnail' | 'card' | 'tablet'
 ): string | null {
   if (!media || typeof media === 'number') return null
-  if (media.url) {
-    return media.url.startsWith('http') ? media.url : `${baseUrl}${media.url}`
+  const base = env.PUBLIC_MEDIA_URL || env.PUBLIC_PAYLOAD_URL
+
+  if (size) {
+    const sized = media.sizes?.[size]
+    if (sized?.url) return sized.url.startsWith('http') ? sized.url : `${base}${sized.url}`
   }
-  if (media.filename) {
-    return `${baseUrl}/api/media/file/${media.filename}`
-  }
+
+  if (media.url) return media.url.startsWith('http') ? media.url : `${base}${media.url}`
+  if (media.filename) return `${base}/api/media/file/${media.filename}`
   return null
 }
 

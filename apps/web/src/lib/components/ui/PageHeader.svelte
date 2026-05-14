@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { env } from '$env/dynamic/public'
   import { mediaUrl } from '$lib/payload'
   import type { Media } from '@repo/payload-types'
 
@@ -10,8 +9,8 @@
   }
 
   let { image, title, patchImage }: Props = $props()
-  const src = $derived(mediaUrl(image, env.PUBLIC_PAYLOAD_URL))
-  const patchSrc = $derived(mediaUrl(patchImage, env.PUBLIC_PAYLOAD_URL))
+  const src = $derived(mediaUrl(image, 'tablet'))
+  const patchSrc = $derived(mediaUrl(patchImage, 'thumbnail'))
 </script>
 
 <div class="relative">

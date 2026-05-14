@@ -1,14 +1,13 @@
 <script lang="ts">
   import type { Influencer, Media } from '$lib/payload'
   import { mediaUrl } from '$lib/payload'
-  import { env } from '$env/dynamic/public'
   import Icon from './Icon.svelte'
 
   type Props = { influencer: Influencer }
   let { influencer }: Props = $props()
 
   const image = $derived(typeof influencer.image === 'object' ? (influencer.image as Media) : null)
-  const imageSrc = $derived(mediaUrl(image, env.PUBLIC_PAYLOAD_URL))
+  const imageSrc = $derived(mediaUrl(image, 'card'))
   const primaryAccount = $derived(influencer.accounts[0])
 </script>
 
@@ -19,7 +18,7 @@
   class="group relative w-full snap-start aspect-square overflow-hidden bg-orijen-gray/10 block border border-orijen-gray/30 hover:border-orijen-red transition-shadow"
 >
   <img
-    src={(influencer.image as Media).url}
+    src={imageSrc ?? ''}
     alt={influencer.name}
     class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
   />

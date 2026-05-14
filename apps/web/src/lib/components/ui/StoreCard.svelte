@@ -1,14 +1,13 @@
 <script lang="ts">
   import type { Store, Media } from '$lib/payload'
   import { mediaUrl } from '$lib/payload'
-  import { env } from '$env/dynamic/public'
   import Icon from './Icon.svelte'
 
   type Props = { store: Store; showCTA?: boolean }
   let { store, showCTA = true }: Props = $props()
 
   const logo = $derived(typeof store.logo === 'object' ? (store.logo as Media) : null)
-  const logoSrc = $derived(mediaUrl(logo, env.PUBLIC_PAYLOAD_URL))
+  const logoSrc = $derived(mediaUrl(logo, 'thumbnail'))
 </script>
 
 <a

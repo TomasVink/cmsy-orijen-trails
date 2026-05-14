@@ -24,7 +24,7 @@
     backgroundColor
   }: Props = $props()
 
-  const imgSrc = $derived(mediaUrl(backgroundImage))
+  const imgSrc = $derived(mediaUrl(backgroundImage, 'tablet'))
   const isLight = $derived(backgroundColor === 'white')
 
   const bgClass = $derived(

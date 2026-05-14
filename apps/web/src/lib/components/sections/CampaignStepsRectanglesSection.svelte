@@ -16,7 +16,7 @@
 >
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 overflow-hidden">
     {#each block.steps ?? [] as step, i}
-      {@const imgSrc = mediaUrl(step.image)}
+      {@const imgSrc = mediaUrl(step.image, 'card')}
       <div class="flex flex-col">
         <!-- Text block -->
         <div class="flex items-start p-4 pb-0 gap-3 bg-orijen-black">

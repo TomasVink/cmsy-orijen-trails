@@ -2,7 +2,6 @@
   import type { PageData } from './$types'
   import type { Media } from '$lib/payload'
   import { mediaUrl } from '$lib/payload'
-  import { env } from '$env/dynamic/public'
   import Icon from '$lib/components/ui/Icon.svelte'
   import RichText from '$lib/components/ui/RichText.svelte'
   import PageHeader from '$lib/components/ui/PageHeader.svelte'
@@ -29,7 +28,7 @@
       .filter((p) => typeof p.image === 'object' && p.image)
       .map((p) => {
         const media = p.image as Media
-        const src = mediaUrl(media, env.PUBLIC_PAYLOAD_URL)
+        const src = mediaUrl(media, 'tablet')
         return src ? { src, alt: media.alt ?? trail.title ?? '' } : null
       })
       .filter((x): x is { src: string; alt: string } => x !== null)

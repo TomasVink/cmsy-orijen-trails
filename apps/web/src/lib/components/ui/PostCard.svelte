@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Post, Media, UiLabelsData } from '$lib/payload'
+  import { mediaUrl } from '$lib/payload'
   import { page } from '$app/state'
   import Icon from './Icon.svelte'
 
@@ -11,6 +12,7 @@
   const header = $derived(
     typeof post.header === 'object' && post.header ? (post.header as Media) : null
   )
+  const headerSrc = $derived(mediaUrl(header, 'card'))
 </script>
 
 <div class="@container">
@@ -18,9 +20,9 @@
     href="/{locale}/blog/{post.slug}"
     class="flex flex-col @xl:grid @xl:grid-cols-3 @xl:p-8 @xl:gap-8 bg-orijen-gray/20 border border-orijen-gray/30 hover:border-orijen-red hover:bg-orijen-gray/30 transition-colors"
   >
-    {#if header?.url}
+    {#if headerSrc}
       <div class="aspect-video @xl:aspect-auto overflow-hidden">
-        <img src={header.url} alt={header.alt ?? post.title} class="w-full h-full object-cover" />
+        <img src={headerSrc} alt={header?.alt ?? post.title} class="w-full h-full object-cover" />
       </div>
     {:else}
       <div class="aspect-video @xl:aspect-auto bg-orijen-gray/10 @xl:bg-orijen-gray/40"></div>

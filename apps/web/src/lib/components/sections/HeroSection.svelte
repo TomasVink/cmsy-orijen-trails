@@ -2,13 +2,12 @@
   import type { HeroBlock, Media } from '$lib/payload'
   import { mediaUrl } from '$lib/payload'
   import Button from '$lib/components/ui/Button.svelte'
-  import { env } from '$env/dynamic/public'
 
   type Props = { block: HeroBlock }
   let { block }: Props = $props()
 
   const video = $derived(typeof block.video === 'object' ? (block.video as Media) : null)
-  const videoSrc = $derived(mediaUrl(video, env.PUBLIC_PAYLOAD_URL))
+  const videoSrc = $derived(mediaUrl(video))
 </script>
 
 <div class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">

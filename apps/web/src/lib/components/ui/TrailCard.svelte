@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Trail, Media, TrailLabelsData } from '$lib/payload'
   import { mediaUrl } from '$lib/payload'
-  import { env } from '$env/dynamic/public'
   import { page } from '$app/state'
   import Icon from './Icon.svelte'
   import Button from './Button.svelte'
@@ -16,7 +15,7 @@
   let { trail, highlighted = false, onClose }: Props = $props()
 
   const image = $derived(typeof trail.header === 'object' ? (trail.header as Media) : null)
-  const imageSrc = $derived(mediaUrl(image, env.PUBLIC_PAYLOAD_URL))
+  const imageSrc = $derived(mediaUrl(image, 'card'))
   const trailLabels = $derived(page.data.trailLabels as TrailLabelsData | null)
 </script>
 
