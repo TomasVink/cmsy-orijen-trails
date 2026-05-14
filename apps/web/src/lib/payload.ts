@@ -38,10 +38,6 @@ export type PaginatedDocs<T> = {
 }
 
 // ── Media URL helper ──────────────────────────────────────────────
-function toPath(url: string): string {
-  try { return new URL(url).pathname } catch { return url }
-}
-
 export function mediaUrl(
   media: Media | number | null | undefined,
   size?: 'thumbnail' | 'card' | 'tablet'
@@ -51,10 +47,10 @@ export function mediaUrl(
 
   if (size) {
     const sized = media.sizes?.[size]
-    if (sized?.url) return `${base}${toPath(sized.url)}`
+    if (sized?.url) return sized.url.startsWith('http') ? sized.url : `${base}${sized.url}`
   }
 
-  if (media.url) return `${base}${toPath(media.url)}`
+  if (media.url) return media.url.startsWith('http') ? media.url : `${base}${media.url}`
   if (media.filename) return `${base}/api/media/file/${media.filename}`
   return null
 }
