@@ -11,6 +11,7 @@ jobs:
       cms: ${{ steps.filter.outputs.cms }}
       web: ${{ steps.filter.outputs.web }}
       nginx: ${{ steps.filter.outputs.nginx }}
+      config: ${{ steps.filter.outputs.config }}
       owner: ${{ steps.owner.outputs.owner }}
     steps:
       - uses: actions/checkout@v4
@@ -37,6 +38,8 @@ jobs:
               - 'nginx/**'
               - 'nginx.conf'
               - '.github/workflows/**'
+            config:
+              - 'docker-compose.prod.yml'
 
   build-cms:
     needs: changes
@@ -111,13 +114,13 @@ jobs:
           cache-to: type=gha,mode=max,scope=nginx
 
   deploy:
-    needs: [build-cms, build-web, build-nginx]
-    # Run if at least one build succeeded and none failed
+    needs: [changes, build-cms, build-web, build-nginx]
+    # Run if at least one build succeeded and none failed, or if only the compose file changed
     if: |
       always() &&
       !contains(needs.*.result, 'failure') &&
       !contains(needs.*.result, 'cancelled') &&
-      contains(needs.*.result, 'success')
+      (contains(needs.*.result, 'success') || needs.changes.outputs.config == 'true')
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Coolify deploy
