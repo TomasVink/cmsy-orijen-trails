@@ -38,9 +38,11 @@ export type PaginatedDocs<T> = {
 }
 
 // ── Media URL helper ──────────────────────────────────────────────
+// Uses PUBLIC_MEDIA_URL (CDN) as the base for relative media paths when set,
+// falling back to PUBLIC_PAYLOAD_URL. Absolute URLs (already CDN/S3) pass through.
 export function mediaUrl(
   media: Media | number | null | undefined,
-  baseUrl = env.PUBLIC_PAYLOAD_URL
+  baseUrl = env.PUBLIC_MEDIA_URL || env.PUBLIC_PAYLOAD_URL
 ): string | null {
   if (!media || typeof media === 'number') return null
   if (media.url) {
