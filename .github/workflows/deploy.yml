@@ -3,6 +3,8 @@ name: Build & Deploy
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   changes:
@@ -11,6 +13,7 @@ jobs:
       cms: ${{ steps.filter.outputs.cms }}
       web: ${{ steps.filter.outputs.web }}
       nginx: ${{ steps.filter.outputs.nginx }}
+      config: ${{ steps.filter.outputs.config }}
       owner: ${{ steps.owner.outputs.owner }}
     steps:
       - uses: actions/checkout@v4
@@ -37,6 +40,8 @@ jobs:
               - 'nginx/**'
               - 'nginx.conf'
               - '.github/workflows/**'
+            config:
+              - 'docker-compose.prod.yml'
 
   build-cms:
     needs: changes
@@ -110,17 +115,18 @@ jobs:
           cache-from: type=gha,scope=nginx
           cache-to: type=gha,mode=max,scope=nginx
 
-  deploy:
-    needs: [build-cms, build-web, build-nginx]
-    # Run if at least one build succeeded and none failed
+  deploy-production:
+    needs: [changes, build-cms, build-web, build-nginx]
+    # Only on push to main (not PRs). Run if at least one build succeeded or compose file changed.
     if: |
+      github.event_name == 'push' &&
       always() &&
       !contains(needs.*.result, 'failure') &&
       !contains(needs.*.result, 'cancelled') &&
-      contains(needs.*.result, 'success')
+      (contains(needs.*.result, 'success') || needs.changes.outputs.config == 'true')
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Coolify deploy
+      - name: Trigger Coolify production deploy
         env:
           WEBHOOK: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}
           TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
@@ -132,3 +138,4 @@ jobs:
           curl --fail-with-body -s -w "\nHTTP %{http_code}" -X GET \
             -H "Authorization: Bearer $TOKEN" \
             "$WEBHOOK"
+
