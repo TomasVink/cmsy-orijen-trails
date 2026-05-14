@@ -36,7 +36,6 @@
 #   NEXT_PUBLIC_CMS_PLATFORM_URL, NEXT_PUBLIC_PROJECT_SLUG
 #
 # Optional (CDN — set alongside S3 to serve media via edge cache):
-#   BUNNY_CDN_HOSTNAME   Bunny pull zone hostname, e.g. orijen-trails.b-cdn.net
 #   PUBLIC_MEDIA_URL     Public base URL for media, e.g. https://orijen-trails.b-cdn.net
 
 services:
@@ -65,7 +64,6 @@ services:
       S3_SECRET_KEY: ${S3_SECRET_KEY:-}
       S3_REGION: ${S3_REGION:-auto}
       S3_ENDPOINT: ${S3_ENDPOINT:-}
-      BUNNY_CDN_HOSTNAME: ${BUNNY_CDN_HOSTNAME:-}
     healthcheck:
       test: ['CMD-SHELL', 'wget -qO /dev/null http://localhost:3000/api/health || exit 1']
       interval: 10s
