@@ -22,6 +22,7 @@ import * as migration_20260428_144723_patches_update from './20260428_144723_pat
 import * as migration_20260429_083139_socials from './20260429_083139_socials';
 import * as migration_20260429_090127_pickup_section from './20260429_090127_pickup_section';
 import * as migration_20260429_103903_campaign_steps_versions from './20260429_103903_campaign_steps_versions';
+import * as migration_20260514_192626 from './20260514_192626';
 
 export const migrations = [
   {
@@ -142,6 +143,11 @@ export const migrations = [
   {
     up: migration_20260429_103903_campaign_steps_versions.up,
     down: migration_20260429_103903_campaign_steps_versions.down,
-    name: '20260429_103903_campaign_steps_versions'
+    name: '20260429_103903_campaign_steps_versions',
+  },
+  {
+    up: migration_20260514_192626.up,
+    down: migration_20260514_192626.down,
+    name: '20260514_192626'
   },
 ];

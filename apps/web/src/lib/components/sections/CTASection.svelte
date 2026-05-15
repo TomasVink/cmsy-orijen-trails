@@ -9,7 +9,7 @@
   let { block }: Props = $props()
 
   const image = $derived(typeof block.image === 'object' ? (block.image as Media) : null)
-  const imageSrc = $derived(mediaUrl(image, 'card'))
+  const imageSrc = $derived(mediaUrl(image, 'hero'))
 
   const isExternal = $derived(block.url?.startsWith('http'))
   const locale = $derived(page.params.locale ?? 'nl')

@@ -42,16 +42,22 @@ function toPath(url: string): string {
   try { return new URL(url).pathname } catch { return url }
 }
 
+// Largest → smallest. When a size isn't available, fall back to the next smaller one.
+const SIZE_ORDER = ['hero', 'tablet', 'card', 'thumbnail'] as const
+
 export function mediaUrl(
   media: Media | number | null | undefined,
-  size?: 'thumbnail' | 'card' | 'tablet'
+  size?: 'thumbnail' | 'card' | 'tablet' | 'hero'
 ): string | null {
   if (!media || typeof media === 'number') return null
   const base = env.PUBLIC_MEDIA_URL || env.PUBLIC_PAYLOAD_URL
 
   if (size) {
-    const sized = media.sizes?.[size]
-    if (sized?.url) return `${base}${toPath(sized.url)}`
+    const candidates = SIZE_ORDER.slice(SIZE_ORDER.indexOf(size))
+    for (const s of candidates) {
+      const sized = media.sizes?.[s]
+      if (sized?.url) return `${base}${toPath(sized.url)}`
+    }
   }
 
   if (media.url) return `${base}${toPath(media.url)}`

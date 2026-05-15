@@ -17,19 +17,29 @@ export const Media: CollectionConfig = {
         name: 'thumbnail',
         width: 400,
         height: 300,
-        position: 'centre'
+        position: 'centre',
+        formatOptions: { format: 'webp', options: { quality: 80 } }
       },
       {
         name: 'card',
         width: 768,
         height: 512,
-        position: 'centre'
+        position: 'centre',
+        formatOptions: { format: 'webp', options: { quality: 80 } }
       },
       {
         name: 'tablet',
         width: 1024,
         height: undefined,
-        position: 'centre'
+        position: 'centre',
+        formatOptions: { format: 'webp', options: { quality: 80 } }
+      },
+      {
+        name: 'hero',
+        width: 1920,
+        height: undefined,
+        position: 'centre',
+        formatOptions: { format: 'webp', options: { quality: 80 } }
       }
     ],
     adminThumbnail: 'thumbnail',
