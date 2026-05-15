@@ -10,7 +10,7 @@
 
   let { image, title, patchImage }: Props = $props()
   const src = $derived(mediaUrl(image, 'hero'))
-  const patchSrc = $derived(mediaUrl(patchImage, 'thumbnail'))
+  const patchSrc = $derived(mediaUrl(patchImage, 'tablet'))
 </script>
 
 <div class="relative">
