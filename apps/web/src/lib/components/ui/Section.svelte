@@ -37,7 +37,7 @@
 
   const bgStyle = $derived(
     backgroundColor === 'texture'
-      ? "background-image: url('/gray-leather-texture-backg.jpg'); background-repeat: repeat; background-size: auto; background-color: var(--color-orijen-black);"
+      ? "background-image: url('/gray-leather-texture-backg-optim.jpg'); background-repeat: repeat; background-size: auto; background-color: var(--color-orijen-black);"
       : undefined
   )
 </script>
