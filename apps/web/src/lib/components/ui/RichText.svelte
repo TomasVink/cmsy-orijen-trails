@@ -17,6 +17,7 @@
     format?: number | string
     tag?: string
     url?: string
+    fields?: { url?: string; newTab?: boolean; linkType?: string }
     listType?: string
     children?: LexicalNode[]
     value?: MediaValue | string | number
@@ -72,8 +73,11 @@
         if (fmt & 16) t = `<code>${t}</code>`
         return t
       }
-      case 'link':
-        return `<a href="${node.url}">${children()}</a>`
+      case 'link': {
+        const url = node.fields?.url ?? node.url ?? '#'
+        const target = node.fields?.newTab ? ' target="_blank" rel="noopener noreferrer"' : ''
+        return `<a href="${url}"${target}>${children()}</a>`
+      }
       case 'list': {
         const tag = node.listType === 'number' ? 'ol' : 'ul'
         return `<${tag}>${children()}</${tag}>`
