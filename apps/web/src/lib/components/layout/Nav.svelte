@@ -46,9 +46,9 @@
 
 <nav class="fixed top-0 left-0 right-0 z-50 pointer-events-none">
   <!-- Desktop: bar is h-15 (half the logo), logo overflows below -->
-  <div class="hidden xl:flex items-start h-20 overflow-visible bg-orijen-black pointer-events-auto">
-    <!-- Back button — left, outside container -->
-    <div class="h-full flex items-center px-4 {isRoot ? 'invisible' : ''}">
+  <div class="hidden xl:flex relative items-start h-20 overflow-visible bg-orijen-black pointer-events-auto">
+    <!-- Back button — absolute left -->
+    <div class="absolute left-0 top-0 h-full flex items-center px-4 {isRoot ? 'invisible' : ''}">
       <button
         onclick={() => history.back()}
         class="flex items-center gap-1 text-white uppercase tracking-widest cursor-pointer text-sm font-bold whitespace-nowrap"
@@ -95,23 +95,21 @@
       {/if}
     </div>
 
-    <!-- Language switch — right, outside container -->
-    {#if LOCALES.length > 1}
-      <div class="h-full flex items-center px-4">
-        <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
-          {#each LOCALES as loc}
-            {#if loc === locale}
-              <span class="font-bold">{loc}</span>
-            {:else}
-              <a
-                href={localeSwitchHref(loc)}
-                class="opacity-50 hover:opacity-100 transition-opacity">{loc}</a
-              >
-            {/if}
-          {/each}
-        </div>
+    <!-- Language switch — absolute right -->
+    <div class="absolute right-0 top-0 h-full flex items-center px-4 {LOCALES.length > 1 ? '' : 'invisible'}">
+      <div class="flex items-center gap-3 text-white uppercase tracking-widest text-sm">
+        {#each LOCALES as loc}
+          {#if loc === locale}
+            <span class="font-bold">{loc}</span>
+          {:else}
+            <a
+              href={localeSwitchHref(loc)}
+              class="opacity-50 hover:opacity-100 transition-opacity">{loc}</a
+            >
+          {/if}
+        {/each}
       </div>
-    {/if}
+    </div>
   </div>
 
   <!-- Mobile -->
