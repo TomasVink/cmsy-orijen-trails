@@ -87,6 +87,10 @@ services:
       PUBLIC_MEDIA_URL: ${PUBLIC_MEDIA_URL:-}
       # Internal Docker network URL — used for SSR fetches, never hits nginx
       PAYLOAD_INTERNAL_URL: http://cms:3000
+      # Tells SvelteKit its public HTTPS origin so CSRF checks pass behind nginx/Cloudflare.
+      # Without this the server reconstructs origin as http:// (no TLS) and rejects
+      # form POSTs whose Origin header is https://.
+      ORIGIN: ${PUBLIC_DOMAIN}
     depends_on:
       - cms
     restart: unless-stopped
