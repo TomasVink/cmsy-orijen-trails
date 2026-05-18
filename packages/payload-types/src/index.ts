@@ -392,6 +392,7 @@ export interface Page {
             blockType: 'events';
           }
         | {
+            title?: string | null;
             image?: (number | null) | Media;
             cta: string;
             url: string;
@@ -484,6 +485,37 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'pickup-points';
+          }
+        | {
+            /**
+             * Full-width background image (e.g. dog + product shot).
+             */
+            backgroundImage: number | Media;
+            logos?:
+              | {
+                  logo: number | Media;
+                  alt?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            title: string;
+            subtitle?: string | null;
+            /**
+             * Small badge with icon — e.g. "t.w.v. €69,- / zolang de voorraad strekt".
+             */
+            badge?: {
+              /**
+               * Bold top line, e.g. "t.w.v. €69,-"
+               */
+              primaryText?: string | null;
+              /**
+               * Smaller bottom line, e.g. "zolang de voorraad strekt"
+               */
+              secondaryText?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'promo-banner';
           }
       )[]
     | null;
@@ -1082,6 +1114,7 @@ export interface PagesSelect<T extends boolean = true> {
         'cta-block'?:
           | T
           | {
+              title?: T;
               image?: T;
               cta?: T;
               url?: T;
@@ -1128,6 +1161,28 @@ export interface PagesSelect<T extends boolean = true> {
               intro?: T;
               backgroundImage?: T;
               backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'promo-banner'?:
+          | T
+          | {
+              backgroundImage?: T;
+              logos?:
+                | T
+                | {
+                    logo?: T;
+                    alt?: T;
+                    id?: T;
+                  };
+              title?: T;
+              subtitle?: T;
+              badge?:
+                | T
+                | {
+                    primaryText?: T;
+                    secondaryText?: T;
+                  };
               id?: T;
               blockName?: T;
             };

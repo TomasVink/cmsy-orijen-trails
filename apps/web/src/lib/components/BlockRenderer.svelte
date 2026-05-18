@@ -18,6 +18,7 @@
   import FAQSection from './sections/FAQSection.svelte'
   import TextSection from './sections/TextSection.svelte'
   import PickupPointsSection from './sections/PickupPointsSection.svelte'
+  import PromoBannerSection from './sections/PromoBannerSection.svelte'
 
   type Props = {
     blocks: Page['layout']
@@ -28,11 +29,18 @@
     trailsWithStores?: Trail[]
   }
 
-  let { blocks, form, signUpForm, patchRequestForm, events = [], trailsWithStores = [] }: Props = $props()
+  let {
+    blocks,
+    form,
+    signUpForm,
+    patchRequestForm,
+    events = [],
+    trailsWithStores = []
+  }: Props = $props()
 </script>
 
 {#if blocks?.length}
-  {#if blocks[0]?.blockType !== 'hero'}
+  {#if blocks[0]?.blockType !== 'hero' && blocks[0]?.blockType !== 'promo-banner'}
     <div class="pt-24 md:pt-32"></div>
   {/if}
   {#each blocks as block (block.id ?? block.blockType)}
@@ -70,6 +78,8 @@
       <TextSection {block} />
     {:else if block.blockType === 'pickup-points'}
       <PickupPointsSection {block} trails={trailsWithStores} />
+    {:else if block.blockType === 'promo-banner'}
+      <PromoBannerSection {block} />
     {/if}
   {/each}
 {/if}

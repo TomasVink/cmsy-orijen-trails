@@ -16,8 +16,12 @@
   const href = $derived(isExternal ? block.url : `/${locale}${block.url}`)
 </script>
 
-<Section>
-  <div class={imageSrc ? 'grid grid-cols-1 md:grid-cols-2 gap-8 items-center' : 'flex flex-col items-center gap-6'}>
+<Section title={block.title || ''}>
+  <div
+    class={imageSrc
+      ? 'grid grid-cols-1 md:grid-cols-2 gap-8 items-center'
+      : 'flex flex-col items-center gap-6'}
+  >
     {#if imageSrc}
       <div class="overflow-hidden w-full">
         <img src={imageSrc} alt={image?.alt ?? ''} class="w-full h-full object-cover" />

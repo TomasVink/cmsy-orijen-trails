@@ -22,6 +22,7 @@ export type CTABlock = Extract<LayoutBlock, { blockType: 'cta-block' }>
 export type FAQBlock = Extract<LayoutBlock, { blockType: 'faq' }>
 export type TextBlock = Extract<LayoutBlock, { blockType: 'text' }>
 export type PickupPointsBlock = Extract<LayoutBlock, { blockType: 'pickup-points' }>
+export type PromoBannerBlock = Extract<LayoutBlock, { blockType: 'promo-banner' }>
 
 // ── Pagination wrapper ────────────────────────────────────────────
 export type PaginatedDocs<T> = {

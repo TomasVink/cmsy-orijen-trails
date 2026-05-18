@@ -9,6 +9,11 @@ export const CTABlock: Block = {
   },
   fields: [
     {
+      name: 'title',
+      type: 'text',
+      localized: true
+    },
+    {
       name: 'image',
       type: 'upload',
       relationTo: 'media'
