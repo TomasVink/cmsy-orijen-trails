@@ -5,6 +5,7 @@ import SectionBase from './SectionBase'
 // "De vier stappen" / how the campaign works
 export const CampaignSteps: Block = {
   slug: 'campaign-steps',
+  imageURL: '/blocks/CampaignSteps.webp',
   labels: {
     singular: 'Campaign Steps',
     plural: 'Campaign Steps'

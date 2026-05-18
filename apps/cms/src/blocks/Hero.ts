@@ -3,6 +3,7 @@ import { ICON_OPTIONS } from '../icons'
 
 export const Hero: Block = {
   slug: 'hero',
+  imageURL: '/blocks/Hero.webp',
   labels: {
     singular: 'Hero',
     plural: 'Heroes'

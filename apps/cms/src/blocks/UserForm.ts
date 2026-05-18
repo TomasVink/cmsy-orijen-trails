@@ -4,6 +4,7 @@ import { ICON_OPTIONS } from '@/icons'
 
 export const UserForm: Block = {
   slug: 'user-form',
+  imageURL: '/blocks/UserForm.webp',
   labels: {
     singular: 'User Form',
     plural: 'User Form'

@@ -3,6 +3,7 @@ import SectionBase from './SectionBase'
 
 export const TrailsOverview: Block = {
   slug: 'trails-overview',
+  imageURL: '/blocks/TrailsOverview.webp',
   labels: {
     singular: 'Trails Overview',
     plural: 'Trails Overviews',

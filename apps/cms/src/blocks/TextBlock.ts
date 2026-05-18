@@ -3,6 +3,7 @@ import SectionBase from './SectionBase'
 
 export const TextBlock: Block = {
   slug: 'text',
+  imageURL: '/blocks/Text.webp',
   fields: [
     ...SectionBase,
     {

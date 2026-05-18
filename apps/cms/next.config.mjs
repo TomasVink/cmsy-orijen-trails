@@ -6,6 +6,19 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/blocks/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ]
+  },
   eslint: { ignoreDuringBuilds: true },
   reactStrictMode: false,
   // Standalone output has no disk cache, so the data cache is in-memory only.
