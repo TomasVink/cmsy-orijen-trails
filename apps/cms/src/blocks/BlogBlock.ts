@@ -3,7 +3,7 @@ import SectionBase from './SectionBase'
 
 export const BlogBlock: Block = {
   slug: 'blog',
-  imageURL: '/blocks/BlogBlock.webp',
+  imageURL: '/admin/blocks/BlogBlock.webp',
   labels: {
     singular: 'Blog',
     plural: 'Blog Blocks'

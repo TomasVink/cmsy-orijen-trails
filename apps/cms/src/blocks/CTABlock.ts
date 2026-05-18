@@ -2,7 +2,7 @@ import { Block } from 'payload'
 
 export const CTABlock: Block = {
   slug: 'cta-block',
-  imageURL: '/blocks/CTABlock.webp',
+  imageURL: '/admin/blocks/CTABlock.webp',
   labels: {
     singular: 'CTA Block',
     plural: 'CTA Blocks'

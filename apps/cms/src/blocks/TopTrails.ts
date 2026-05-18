@@ -3,7 +3,7 @@ import SectionBase from './SectionBase'
 
 export const TopTrails: Block = {
   slug: 'top-trails',
-  imageURL: '/blocks/TopTrails.webp',
+  imageURL: '/admin/blocks/TopTrails.webp',
   labels: {
     singular: 'Top Trails',
     plural: 'Top Trails'

@@ -3,7 +3,7 @@ import SectionBase from './SectionBase'
 
 export const InfluencerCarousel: Block = {
   slug: 'influencer-carousel',
-  imageURL: '/blocks/InfluencerCarousel.webp',
+  imageURL: '/admin/blocks/InfluencerCarousel.webp',
   labels: {
     singular: 'Influencer Carousel',
     plural: 'Influencer Carousels',
