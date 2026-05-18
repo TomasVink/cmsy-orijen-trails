@@ -65,6 +65,36 @@
     <hr class="divider" />
   </div>
 
+  {#snippet trailLinks(containerClass: string)}
+    {#if trail.links && trail.links.length > 0}
+      <div class="{containerClass} flex-col gap-4">
+        <span class="font-display text-4xl uppercase">{labels?.routeLinksCTA}</span>
+        <div class="flex flex-col gap-3">
+          {#each trail.links as link}
+            {@const icon =
+              link.type === 'komoot'
+                ? 'komoot'
+                : link.type === 'allTrails'
+                  ? 'allTrails'
+                  : 'website'}
+            <Button href={link.url} target="_blank" rel="noopener noreferrer">
+              <Icon name={icon} />
+              <span class="font-display text-xl">
+                {link.type === 'allTrails'
+                  ? 'AllTrails'
+                  : link.type === 'komoot'
+                    ? 'Komoot'
+                    : link.url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]}
+              </span>
+            </Button>
+          {/each}
+        </div>
+      </div>
+    {/if}
+  {/snippet}
+
+  {@render trailLinks('lg:hidden mb-8 px-4 flex')}
+
   <div class="flex flex-col lg:flex-row gap-12">
     <!-- Main content -->
     <div class="lg:w-3/4 px-4">
@@ -103,31 +133,7 @@
 
     <!-- Sidebar -->
     <div class="lg:w-1/4 px-4">
-      {#if trail.links && trail.links.length > 0}
-        <div class="mb-8 flex flex-col gap-4">
-          <span class="font-display text-4xl uppercase">{labels?.routeLinksCTA}</span>
-          <div class="flex flex-col gap-3">
-            {#each trail.links as link}
-              {@const icon =
-                link.type === 'komoot'
-                  ? 'komoot'
-                  : link.type === 'allTrails'
-                    ? 'allTrails'
-                    : 'website'}
-              <Button href={link.url} target="_blank" rel="noopener noreferrer">
-                <Icon name={icon} />
-                <span class="font-display text-xl">
-                  {link.type === 'allTrails'
-                    ? 'AllTrails'
-                    : link.type === 'komoot'
-                      ? 'Komoot'
-                      : link.url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]}
-                </span>
-              </Button>
-            {/each}
-          </div>
-        </div>
-      {/if}
+      {@render trailLinks('hidden lg:flex mb-8')}
       <RelatedContent related={trail.related} />
     </div>
   </div>
